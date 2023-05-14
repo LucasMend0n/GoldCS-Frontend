@@ -1,0 +1,28 @@
+img{
+    max-width: 3.5rem;
+}
+
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    background-color: #3100A8;
+    max-width: 100%;
+}
+.list{
+    display: flex;
+    list-style: none; 
+    align-items: center;
+}
+
+.item{
+    margin-right: 1em;
+}
+.item a{
+    color: #fff;
+    text-decoration: none;
+}
+.item a:hover{
+    opacity: 80%;
+}
+
+
