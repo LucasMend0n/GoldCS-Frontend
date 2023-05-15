@@ -7,6 +7,7 @@ img{
     justify-content: space-between;
     background-color: #3100A8;
     max-width: 100%;
+    font-size: 18px;
 }
 .list{
     display: flex;

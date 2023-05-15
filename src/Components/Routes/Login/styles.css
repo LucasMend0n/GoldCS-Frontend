@@ -41,5 +41,11 @@
     width: 150%;
     height: auto;
     margin-bottom: 2em;
-}    
+}
+
+.login-button{
+    margin: 2em 0;
+
+    border-radius: 0;
+}
   

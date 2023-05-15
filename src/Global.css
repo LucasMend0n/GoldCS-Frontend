@@ -9,26 +9,11 @@
 
 body {
     font: 400 14px Roboto, sans-serif;
-    background:  #F0F0F5;
-    -webkit-font-smoothing: antialiased;
-}
-
-input, button, textarea {
-    font: 400 18px Roboto, sans-serif;
+    background: #F7F7F7;
 }
 
 button {
     cursor: pointer;
-}
-
-form input {
-    width: 100%;
-    height: 60px;
-    color: #333333;
-    border: 1px solid#F7F7F7;
-    border-radius: 8px;
-    padding: 0 24px;
-    margin-top: 16px;
 }
 
 .button {
@@ -48,6 +33,3 @@ form input {
     transition: filter 0.3s;
 }
 
-.button:hover {
-    filter: brightness(80%);
-}

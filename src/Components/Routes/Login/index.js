@@ -1,5 +1,7 @@
 import React from 'react'
 import './styles.css'; 
+import { UIButton } from '../../Layout/UIButton/UIButton';
+import { Link } from 'react-router-dom';
 
 function Login() {
   return (
@@ -7,9 +9,10 @@ function Login() {
         <section className='form'>
         <form>
         <h1> Gold Colchões </h1>
-           <input type='email' placeholder='Email'/>
-           <input type='password' placeholder='senha'/>
-           <button class="button" type="submit">Login</button>
+           <UIButton 
+           component={Link}
+           to='/home'
+           className='login-button button'>Login</UIButton>
         </form>
 
         </section>

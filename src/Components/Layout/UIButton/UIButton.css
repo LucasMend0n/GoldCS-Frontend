@@ -1,0 +1,15 @@
+.ui-button{
+    background-color: unset;
+    border-radius: 2em;
+    color: #ffff;
+    text-decoration: none !important;
+    background-color:#3100A8;
+    padding:1em;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.ui-button:hover{
+    opacity: 80%;
+    transition: 200ms;
+}
