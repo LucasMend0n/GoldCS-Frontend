@@ -21,9 +21,13 @@ img{
 .item a{
     color: #fff;
     text-decoration: none;
+
+}
+.item a.active{
+    color: #FBD774;
+    font-weight: bold;
+    transition: .5s;
 }
 .item a:hover{
     opacity: 80%;
 }
-
-

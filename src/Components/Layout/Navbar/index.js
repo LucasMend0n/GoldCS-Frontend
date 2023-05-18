@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import Container from '../Container'
 import {HiLogout} from 'react-icons/hi'
 import './Navbar.model.css'
@@ -10,21 +10,21 @@ export class Navbar extends Component {
     return (
       <nav className="navbar">
         <Container customClass="max-width">
-          <Link to="/home"><img src={logo} alt="Logo gold" /></Link>
+          <NavLink className="anchor" to="/home"><img src={logo} alt="Logo gold" /></NavLink>
           <ul className="list">
             <li className='item'>
-              <Link to="/home">Home</Link>
+              <NavLink className="anchor" to="/home">Home</NavLink>
             </li>
             <li className='item'>
-              <Link to="/amount">Estoque</Link>
+              <NavLink className="anchor" to="/amount">Estoque</NavLink>
             </li>
             <li className='item'>
-              <Link to="/order">Pedido</Link>
+              <NavLink className="anchor" to="/order">Pedido</NavLink>
             </li>
             <li className='item'>
-              <Link to="/">
+              <NavLink className="anchor" to="/">
                 <HiLogout></HiLogout>
-              </Link>
+              </NavLink>
             </li>
           </ul>
         </Container>
