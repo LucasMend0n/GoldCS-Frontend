@@ -1,16 +1,18 @@
 import React from 'react'
 import Navbar from '../../Layout/Navbar'
-import Container from '../../Layout/Container'
 import Footer from '../../Layout/Footer'
+import styles from './newOrder.css'
+import NewOrderForm from './newOrderForm/newOrderForm'
+import Container from '../../Layout/Container'
 
 function NewOrder() {
   return (
     <>
-    <Navbar />
-    <Container>
-    <h1> New Order </h1>
-    </Container>
-    <Footer/>
+      <Navbar />
+      <Container customClass="center">
+        <NewOrderForm />
+      </Container>
+      <Footer/>
     </>
   )
 }

@@ -7,7 +7,7 @@ img{
     justify-content: space-between;
     background-color: #3100A8;
     max-width: 100%;
-    font-size: 18px;
+    font-size: 20px;
 }
 .list{
     display: flex;
@@ -17,6 +17,7 @@ img{
 
 .item{
     margin-right: 1em;
+    align-items: center;
 }
 .item a{
     color: #fff;

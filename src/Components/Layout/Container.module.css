@@ -1,9 +1,11 @@
 .container{
-    width: 1200px;
+    min-width: 100%;
+    position: relative;
     display: flex;
     justify-content: space-between;
     margin: 0 auto;
     flex-wrap: wrap;
+
 }
 
 .min-height {
@@ -17,4 +19,9 @@
 .column{
     flex-direction: column;
     justify-content: flex-start;
+}
+
+.center{
+    flex-direction: column;
+    justify-content: center;
 }

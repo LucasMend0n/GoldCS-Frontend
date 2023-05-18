@@ -4,11 +4,22 @@
     margin: 0;
     padding: 0;
     outline: 0;
+}
+
+html{
+    height: 100%;
     box-sizing: border-box;
+    margin: 0;
+
 }
 
 body {
     font: 400 16px Roboto, sans-serif;
     background: #FFF;
+    min-height: 100%;
+    position: relative;
+    box-sizing: inherit;
+    padding-bottom: 8em;
+
 }
 
