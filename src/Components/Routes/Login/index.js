@@ -1,21 +1,15 @@
 import React from 'react'
-import './styles.css'; 
-import { UIButton } from '../../Layout/UIButton/UIButton';
-import { Link } from 'react-router-dom';
+import './styles.css';
+import LoginForm from './LoginForm/LoginForm';
 
 function Login() {
   return (
-      <div className='login-container'>
-        <section className='form'>
-        <form>
-        <h1> Gold Colchões </h1>
-           <UIButton 
-           component={Link}
-           to='/home'
-           className='login-button button'>Login</UIButton>
-        </form>
-
-        </section>
+    <div className='login-container'>
+      <div className="container">
+        <h1>Bem vindo ao <span>GoldCS</span></h1>
+        <p>Entre ou cadastre-se</p>
+        <LoginForm btnTxt=""></LoginForm>
+      </div>
     </div>
   )
 }
