@@ -7,13 +7,13 @@ function LoginForm(btnTxt) {
     return ( 
         <form className={styles.form}>
             <Input
-                text="Email" 
+                text="" 
                 type="email"
                 placeholder="Insira o email"
                 name="login_email"
             />
             <Input
-                text="Senha" 
+                text="" 
                 type="password"
                 placeholder="Insira a senha"
                 name="login_password"

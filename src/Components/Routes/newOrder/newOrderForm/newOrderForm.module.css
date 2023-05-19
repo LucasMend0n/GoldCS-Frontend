@@ -15,3 +15,26 @@
     border-radius: 1.5em;
  
 }
+
+.form h1{
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+.form h2{
+    text-align: center;
+    padding: 1em;
+}
+
+.fieldset{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.actions{
+    text-align: center;
+    align-items: center;
+    padding: 1em;
+    margin-top: 2em;
+}

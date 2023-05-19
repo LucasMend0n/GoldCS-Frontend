@@ -1,17 +1,29 @@
 .form_control{
     display: flex;
     flex-direction: column;
-    margin-bottom: 1em;
+    margin-bottom: .8em;
+    justify-content: center;
+
+
+
 }
 .form_control label{
-    margin-bottom: .6em;
+    margin-bottom: 2em;
     font-weight: bold;
 }
 .form_control input {
-    padding: .7em;
-    border-radius: 0;
-    border: none; 
+    padding: 1em;
+    margin-bottom: 1em;
+    border-radius: .8em;
+    border: none;
+    max-width: 100%;
+}
+
+.form_control input:hover{
+    border: .025em solid black;
+
 }
 .form_control input::placeholder{
     color: #7b7b7b;
 }
+
