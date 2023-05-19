@@ -1,7 +1,6 @@
 import React from 'react'
 import Navbar from '../../Layout/Navbar'
 import Footer from '../../Layout/Footer'
-import styles from './newOrder.css'
 import NewOrderForm from './newOrderForm/newOrderForm'
 import Container from '../../Layout/Container'
 
