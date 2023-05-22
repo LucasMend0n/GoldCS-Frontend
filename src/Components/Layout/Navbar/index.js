@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
-import Container from '../Container'
 import {HiLogout} from 'react-icons/hi'
 import {AiOutlinePlusCircle} from 'react-icons/ai'
 import './Navbar.model.css'

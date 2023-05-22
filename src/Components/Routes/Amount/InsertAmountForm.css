@@ -1,0 +1,30 @@
+
+.Amountcontainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.AmountForm{
+    height: 65vh;
+    min-width: 75%;
+    background-color: #f7f7f7;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.formLegend{
+    text-align: center;
+    margin: 2em 0;
+    width: 100%;
+}
+.formFields{
+    width: 80%; 
+}
+
+
+

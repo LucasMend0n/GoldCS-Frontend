@@ -16,10 +16,12 @@ html{
 body {
     font: 400 16px Roboto, sans-serif;
     background: #FFF;
-    min-height: 100%;
+    min-height: 90vh;
     position: relative;
     box-sizing: inherit;
     padding-bottom: 8em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 
 }
 

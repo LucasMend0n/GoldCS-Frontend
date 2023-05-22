@@ -1,20 +1,17 @@
-import React, { Component } from 'react'
 import Navbar from '../../Layout/Navbar'
-import Container from '../../Layout/Container'
 import Footer from '../../Layout/Footer'
 
-export class Amount extends Component {
-  render() {
-    return (
-      <>
-        <Navbar></Navbar>
-        <Container>
-          <h1>Amount</h1>
-        </Container>
-        <Footer/>
-      </>
-    )
-  }
+import React from 'react'
+import InsertAmountForm from './InsertAmountForm'
+
+const Amount = () => {
+  return (
+    <>
+      <Navbar />
+        <InsertAmountForm />
+      <Footer />
+    </>
+  )
 }
 
 export default Amount

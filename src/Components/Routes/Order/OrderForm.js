@@ -4,14 +4,17 @@ import styles from './OrderForm.module.css'
 
 function OrderForm() {
   return (
-    
+
     <div className={styles.form_container}>
       <form className={styles.form} >
         <h1> PEDIDO: XXXXXXX </h1>
         <div className={styles.fieldset}>
           <h2>Dados do cliente</h2>
-          <Input text="CPF" type="text" name="cpf" value="XXXXXXXXXXXXXX" />
-          <Input text="Nome" type="text" name="nome" value="XXXXXXXXXXXXXX" />
+          <Input text="Nome" type="text" name="nome" placeholder="Digite o nome do cliente" value="XXXXXXXXXXXXXX" />
+          <Input text="CPF" type="text" name="cpf" placeholder="Digite o CPF do cliente" value="XXXXXXXXXXXXXX" />
+          <Input text="Email" type="text" name="email" placeholder="Digite o email do cliente" value="XXXXXXXXXXXXXX" />
+          <Input text="Celular" type="text" name="celphone" placeholder="Digite o celular do cliente" value="XXXXXXXXXXXXXX" />
+          <Input text="Telefone Residencial" type="text" name="phoneNumber" placeholder="Digite o celular do cliente" value="XXXXXXXXXXXXXX" />
         </div>
         <div className={styles.fieldset}>
           <h2>Dados do endereço</h2>
@@ -30,13 +33,16 @@ function OrderForm() {
         </div>
         <div className={styles.fieldset}>
           <h2>Finalização do Pedido</h2>
-          <Input text="Preço final: " type="number" value="0000.00000"  name="subtotal" step="any">  </Input>
+          <Input text="Preço final: " type="number" value="0000.00000" name="subtotal" step="any">  </Input>
         </div>
-        <div className={styles.actions}>
+        <div className={styles.fieldset}>
+          <h2>Dados do Pedido</h2>
+          <Input text="Data de entrega" type="date" name="forecastDate"/>
+          <Input text="Meio de pagamento" type="text" name="paymentMethod" value="XXXXXXXXXXXXXX"/>
         </div>
       </form>
     </div>
-    
+
   )
 }
 
