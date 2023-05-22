@@ -9,7 +9,7 @@ import NewOrder from './Components/Routes/newOrder';
 function App() {
 
   return (
-    <>
+    <main className='App'>
         <Routes>
           <Route exact path='/' element={<Login />} />
           <Route exact path='/home' element={<Home/>} />
@@ -17,7 +17,7 @@ function App() {
           <Route exact path='/order' element={<Order />} />
           <Route  path='/neworder' element={<NewOrder/>}/>
         </Routes>
-    </>
+    </main>
   );
 }
 

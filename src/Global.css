@@ -13,12 +13,45 @@ html{
 
 }
 
+input {
+    padding: 1em;
+    margin-bottom: 1em;
+    border-radius: .8em;
+    border: none;
+    max-width: 100%;
+    box-shadow: 0 1px 3px -2px #9098A9;
+}
+
+label{
+    font-weight: bold;
+    margin-bottom: 1em;
+}
+
+button{
+    background-color: #3100A8;
+    padding: 0.7em 1.2em;
+    text-decoration: none;
+    cursor: pointer;
+    color: white;
+    transition: .5s;
+    border: none;
+    border-radius: .8em;
+}
+
+button:disabled,
+button[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+  cursor: no-drop
+}
+
 body {
     font: 400 16px Roboto, sans-serif;
     background: #FFF;
-    min-height: 90vh;
+    min-height: 100vh;
     position: relative;
-    box-sizing: inherit;
+    box-sizing: border-box;
     padding-bottom: 8em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

@@ -1,29 +1,72 @@
-.login-container{
+section {
     display: flex;
     justify-content: center;
-    align-items: center;
     flex-direction: column;
-    min-height: 80vh;
+    align-items: center;
+    min-height: 100vh;
 }
 
-.container{
-    width: 450px;
-    padding: 2em;
-    border: 1px black solid;
-    border-radius: .7em;
-    min-height: 40vh;
+.form_control label {
+    margin: 0.5em 1em;
+    font-size: 18px;
+}
+
+.form_control input {
+    width: 50%;
+}
+.form_control button{
+
+    width: 40%;
+}
+.LoginForm {
+    text-align: center;
+    margin: 2em 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    padding: 3em;
     background-color: #f7f7f7;
+    border-radius: .7em;
+    gap: 1em;
+    min-width: 40%;
 }
 
-.container h1{
-    margin-bottom: 0.5em;
-    text-align: center;
-}
-.container p{
-    text-align: center;
+.LoginForm h1{
+    margin-bottom: 1em;
 }
 
+.form_control {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+.errmsg {
+    color: red;
+}
+
+.ofscreen {
+    display: none;
+    ;
+}
+
+.hide {
+    display: none;
+}
+.valid {
+    color: limegreen;
+    margin-left: 0.25rem;
+}
+
+.instructions {
+    font-size: 0.75rem;
+    border-radius: 0.5rem;
+    background: lightcoral;
+    margin-bottom: 1em;
+    color: #fff;
+    padding: 0.25rem;
+    position: relative;
+    bottom: -10px;
+}
