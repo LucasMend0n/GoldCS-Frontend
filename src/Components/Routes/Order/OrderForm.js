@@ -1,8 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Input from '../../Layout/FormFields/Input'
 import styles from './OrderForm.module.css'
+import Select from '../../Layout/FormFields/Select';
+
 
 function OrderForm() {
+
+  const options = [
+    { value: 'Cama', label: 'Cama' },
+    { value: 'box', label: 'Box' },
+    { label: 'Cabeceira', value: 'cabeceira' },
+  ];
+
+  const [value, setValue] = useState('Objeto')
+  const handleChange = (event) => {
+    setValue(event.target.value,)
+  }
+
+
   return (
 
     <div className={styles.form_container}>
@@ -28,7 +43,11 @@ function OrderForm() {
         </div>
         <div className={styles.fieldset}>
           <h2>Dados do produto</h2>
-          <Input text="Produto" name="id" value="XXXXXXXXXXXXXX" />
+          <Select 
+          options={options}
+          value={value}
+          onChange={handleChange}
+          />
           <Input text="Quantidade" name="qtd" value="XXXXXXXXXXXXXX" />
         </div>
         <div className={styles.fieldset}>
@@ -37,8 +56,8 @@ function OrderForm() {
         </div>
         <div className={styles.fieldset}>
           <h2>Dados do Pedido</h2>
-          <Input text="Data de entrega" type="date" name="forecastDate"/>
-          <Input text="Meio de pagamento" type="text" name="paymentMethod" value="XXXXXXXXXXXXXX"/>
+          <Input text="Data de entrega" type="date" name="forecastDate" />
+          <Input text="Meio de pagamento" type="text" name="paymentMethod" value="XXXXXXXXXXXXXX" />
         </div>
       </form>
     </div>

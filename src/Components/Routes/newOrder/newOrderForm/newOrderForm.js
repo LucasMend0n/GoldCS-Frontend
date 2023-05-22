@@ -1,12 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Input from '../../../Layout/FormFields/Input'
 import styles from './newOrderForm.module.css'
 import SubmitButton from '../../../Layout/FormFields/SubmitButton'
+import Select from '../../../Layout/FormFields/Select';
 
 function NewOrderForm() {
+
+  const options = [
+    { value: 'Cama', label: 'Cama' },
+    { value: 'box', label: 'Box' },
+    { label: 'Cabeceira', value: 'cabeceira' },
+  ];
+
+  const [value, setValue] = useState('Objeto')
+  const handleChange = (event) => {
+    setValue(event.target.value,)
+  }
+
   return (
     <div className={styles.form_container}>
-      
+
       <form className={styles.form} >
         <h1>Novo Pedido </h1>
         <div className={styles.fieldset}>
@@ -28,7 +41,11 @@ function NewOrderForm() {
         </div>
         <div className={styles.fieldset}>
           <h2>Dados do produto</h2>
-          <Input text="Produto" name="id" placeholder="Digite o nome do produto" />
+          <Select label="Produto"
+            options={options}
+            value={value}
+            onChange={handleChange}
+          />
           <Input text="Quantidade" name="qtd" placeholder="Digite a quantidade do produto" />
           <Input text="Preço final: " type="number" placeholder="Digite o preço final do pedido" name="subtotal">  </Input>
           <div className="actions">
