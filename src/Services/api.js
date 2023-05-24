@@ -1,7 +1,7 @@
 import axios from 'axios'; 
 
-const api = axios.create({
-    baseURL: 'https://goldcsapi.onrender.com'
+const apiGold = axios.create({
+    baseURL: 'https://goldcsapi.onrender.com/api'
 })
 
-export default api
+export default apiGold
