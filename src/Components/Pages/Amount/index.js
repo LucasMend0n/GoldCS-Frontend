@@ -1,14 +1,11 @@
 import Navbar from '../../Layout/Navbar'
 import Footer from '../../Layout/Footer'
 
-import React from 'react'
-import InsertAmountForm from './InsertAmountForm'
-
 const Amount = () => {
   return (
     <>
       <Navbar />
-        <InsertAmountForm />
+      <h1> Inserir estoque</h1>
       <Footer />
     </>
   )
