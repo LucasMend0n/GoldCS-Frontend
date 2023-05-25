@@ -1,10 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react'
+import useAuth from '../../../hooks/useAuth'
 import './Login.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import apiGold from '../../../Services/api'
 const login_URL = '/Authenticate/LoginUser'
 
 function Login() {
+
+  const { setAuth } = useAuth();
+
+  const navigate = useNavigate(); 
+  const location = useLocation(); 
+  const from = location.state?.from?.pathname || "/"
 
   const userRef = useRef();
   const errRef = useRef();
@@ -12,8 +19,7 @@ function Login() {
   const [user, setUser] = useState('');
   const [pwd, setPwd] = useState('');
   const [errMsg, setErMsg] = useState('');
-  const [success, setSuccess] = useState(false);
-
+  
   useEffect(() => {
     userRef.current.focus();
   }, [])
@@ -30,13 +36,14 @@ function Login() {
         JSON.stringify({ email: user, password: pwd }),
         {
           headers: { 'Content-Type': 'application/json' },
-        }
+        });
 
-      );
-      console.log(JSON.stringify(resp?.data))
+      const accessToken = resp?.data?.result;
+      console.log(accessToken);
+      setAuth({ user, pwd, accessToken })
       setUser('')
       setPwd('')
-      setSuccess(true)
+      navigate(from, {replace: true})
     }
     catch (err) {
 
@@ -57,60 +64,50 @@ function Login() {
 
   return (
     <>
-      {success ? (
-        <section>
-          <h1>Logado</h1>
-          <br />
-          <p>
-            <Link to='/home'>TESTE</Link>
-          </p>
-        </section>
-      ) : (
-        <section>
-          <p ref={errRef} className={errMsg ? "errmsg" : "ofscreen"}>{errMsg}</p>
+      <section className='LoginPage'>
+        <p ref={errRef} className={errMsg ? "errmsg" : "ofscreen"}>{errMsg}</p>
 
-          <form className='LoginForm' onSubmit={handleSubmit}>
-            <h1>Bem vindo ao <span>GoldCS</span></h1>
-            <div className="form_control">
-              <label htmlFor="login_username">
-                Usuário
-              </label>
-              <input
-                type='email'
-                id='login_username'
-                placeholder='Insira seu email'
-                ref={userRef}
-                autoComplete="off"
-                onChange={(e) => setUser(e.target.value)}
-                value={user}
-                required
-              />
-            </div>
+        <form className='LoginForm' onSubmit={handleSubmit}>
+          <h1>Bem vindo ao <span>GoldCS</span></h1>
+          <div className="form_control">
+            <label htmlFor="login_username">
+              Usuário
+            </label>
+            <input
+              type='email'
+              id='login_username'
+              placeholder='Insira seu email'
+              ref={userRef}
+              autoComplete="off"
+              onChange={(e) => setUser(e.target.value)}
+              value={user}
+              required
+            />
+          </div>
 
-            <div className="form_control">
-              <label htmlFor="login_password">
-                Senha
-              </label>
-              <input
-                type='password'
-                id='login_password'
-                placeholder='Insira sua senha'
-                onChange={(e) => setPwd(e.target.value)}
-                value={pwd}
-                required
-              />
-            </div>
+          <div className="form_control">
+            <label htmlFor="login_password">
+              Senha
+            </label>
+            <input
+              type='password'
+              id='login_password'
+              placeholder='Insira sua senha'
+              onChange={(e) => setPwd(e.target.value)}
+              value={pwd}
+              required
+            />
+          </div>
 
-            <div className="form_control">
-              <button>
-                Entrar
-              </button>
-            </div>
-          </form>
-          <Link to='/home'>TESTE</Link>
+          <div className="form_control">
+            <button>
+              Entrar
+            </button>
+          </div>
+        </form>
+        <Link to='/'>TESTE</Link>
 
-        </section>
-      )}
+      </section>
     </>
   )
 }

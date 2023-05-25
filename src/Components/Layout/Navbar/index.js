@@ -7,12 +7,17 @@ import logo from '../../../Assets/goldLogo.png'
 
 export class Navbar extends Component {
   render() {
+
+    const logout = () =>{
+      const dispacth = false
+    }
+
     return (
       <nav className="navbar">
-          <NavLink className="anchor" to="/home"><img src={logo} alt="Logo gold" /></NavLink>
+          <NavLink className="anchor" to="/"><img src={logo} alt="Logo gold" /></NavLink>
           <ul className="list">
             <li className='item'>
-              <NavLink className="anchor" to="/home">Home</NavLink>
+              <NavLink className="anchor" to="/">Home</NavLink>
             </li>
             <li className='item'>
               <NavLink className="anchor" to="/amount">Estoque</NavLink>
@@ -26,7 +31,7 @@ export class Navbar extends Component {
               </NavLink>
             </li>
             <li className='item'>
-              <NavLink className="anchor" to="/">
+              <NavLink className="anchor" to="/login">
                 <HiLogout></HiLogout>
               </NavLink>
             </li>

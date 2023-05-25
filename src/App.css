@@ -6,7 +6,5 @@
     box-sizing: border-box;
 }
 body{
-    background-color: grey;
-    min-width: 100vw;
     font-family: 'Roboto', sans-serif;
 }
