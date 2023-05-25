@@ -46,6 +46,10 @@ button[disabled]{
   cursor: no-drop
 }
 
+button:hover{
+    background-color:#FBD774;
+}
+
 body {
     font: 400 16px Roboto, sans-serif;
     background: #FFF;
