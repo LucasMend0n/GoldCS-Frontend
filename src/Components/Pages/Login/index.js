@@ -39,6 +39,7 @@ function Login() {
         });
 
       const accessToken = resp?.data?.result;
+      localStorage.setItem('access_token', accessToken);
       console.log(accessToken);
       setAuth({ user, pwd, accessToken })
       setUser('')

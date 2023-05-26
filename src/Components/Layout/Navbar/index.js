@@ -8,10 +8,6 @@ import logo from '../../../Assets/goldLogo.png'
 export class Navbar extends Component {
   render() {
 
-    const logout = () =>{
-      const dispacth = false
-    }
-
     return (
       <nav className="navbar">
           <NavLink className="anchor" to="/"><img src={logo} alt="Logo gold" /></NavLink>
