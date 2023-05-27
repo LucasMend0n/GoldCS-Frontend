@@ -1,28 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react'
-import useAuth from '../../../hooks/useAuth'
 import './Login.css';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import apiGold from '../../../Services/api'
-const login_URL = '/Authenticate/LoginUser'
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import useAuth from '../../../hooks/useAuth';
 
 function Login() {
 
-  const { setAuth } = useAuth();
-
-  const navigate = useNavigate(); 
-  const location = useLocation(); 
-  const from = location.state?.from?.pathname || "/"
-
-  const userRef = useRef();
+  const auth = useAuth()
   const errRef = useRef();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || "/"
 
   const [user, setUser] = useState('');
   const [pwd, setPwd] = useState('');
   const [errMsg, setErMsg] = useState('');
-  
-  useEffect(() => {
-    userRef.current.focus();
-  }, [])
+
 
   useEffect(() => {
     setErMsg('');
@@ -32,19 +25,8 @@ function Login() {
     e.preventDefault()
 
     try {
-      const resp = await apiGold.post(login_URL,
-        JSON.stringify({ email: user, password: pwd }),
-        {
-          headers: { 'Content-Type': 'application/json' },
-        });
-
-      const accessToken = resp?.data?.result;
-      localStorage.setItem('access_token', accessToken);
-      console.log(accessToken);
-      setAuth({ user, pwd, accessToken })
-      setUser('')
-      setPwd('')
-      navigate(from, {replace: true})
+      await auth.authenticate(user, pwd);
+      navigate(from, { replace: true });
     }
     catch (err) {
 
@@ -57,8 +39,6 @@ function Login() {
       } else {
         setErMsg('Login Failed');
       }
-      errRef.current.focus();
-
     }
 
   }
@@ -78,7 +58,6 @@ function Login() {
               type='email'
               id='login_username'
               placeholder='Insira seu email'
-              ref={userRef}
               autoComplete="off"
               onChange={(e) => setUser(e.target.value)}
               value={user}

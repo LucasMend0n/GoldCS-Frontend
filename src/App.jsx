@@ -17,7 +17,7 @@ function App() {
 
         <Route exact path='/login' element={<Login />} />
 
-        <Route element={<RequireAuth />} >
+        <Route element={< RequireAuth/>} >
           <Route exact path='/' element={<Home />} />
           <Route exact path='/amount' element={<Amount />} />
           <Route exact path='/order' element={<Order />} />
