@@ -20,7 +20,9 @@ export const AuthProvider = ({ children }) => {
         
         const payload = {
             token: response.result.token, 
-            email: response.result.email
+            email: response.result.email,
+            userID: response.result.userID,
+            name: response.result.name,
         }
 
         setUser(payload)
