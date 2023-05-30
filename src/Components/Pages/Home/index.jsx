@@ -1,6 +1,7 @@
 import React from 'react'
 import './Home.css';
 import { getUserLocalStorage } from '../../../context/util';
+import { Link } from 'react-router-dom';
 
 
 const Home = () => {
@@ -10,7 +11,9 @@ const Home = () => {
       <article>
 
         <h1>Bem vindo a Gold Colchões, <span>{user.name}</span></h1>
-        <button>Novo Pedido</button>
+        <Link to={'/newOrder'}>
+          <button>Novo Pedido</button>
+        </Link>
 
       </article>
     </section>

@@ -1,0 +1,13 @@
+.Form-section{
+    display: flex;
+    flex-direction: column;
+    border-bottom: #9098A9 1px solid;
+    margin-bottom: 1em;
+    margin-bottom: 1em;
+    padding: 1em;
+
+}
+.Form-section >h3{
+    padding: .7em;
+    margin-bottom: 1em;
+}

@@ -13,13 +13,15 @@ html{
 
 }
 
-input {
+input, select {
+    appearance: unset;
     padding: 1em;
     margin-bottom: 1em;
     border-radius: .8em;
     border: none;
     max-width: 100%;
     box-shadow: 0 1px 3px -2px #9098A9;
+    -webkit-appearance: none;
 }
 
 label{
