@@ -1,14 +1,34 @@
 import { DevTool } from '@hookform/devtools'
 import { useForm } from 'react-hook-form'
 import './Form.css'
+import RDialog from './Dialog'
+import { useRef } from 'react'
+
 const NewOrderForm = () => {
-    
+
   const form = useForm()
-  const { register, control } = form
+  const { register, control, setValue, setFocus } = form
+  
+  const formRef = useRef(null)
+
+  const checkCEP = (e) => {
+    const cep = formRef.current['adr-postcode'].value.replace(/\D/g, '');
+    
+    if(!cep) return; 
+
+    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+      .then(res => res.json()).then(data => {
+        setValue('adr-street', data.logradouro)
+        setValue('adr-district', data.bairro)
+        setValue('adr-city', data.localidade)
+        setValue('adr-uf', data.uf)
+        setFocus('adr-number')
+      });
+  };
 
   return (
     <>
-    <form>
+      <form ref={formRef}>
         <h1>Novo Pedido</h1>
 
         <div className="Form-section">
@@ -63,6 +83,7 @@ const NewOrderForm = () => {
             type='text'
             placeholder='Digite o CEP do cliente'
             id='adr-postcode'
+            onBlur={checkCEP}
           />
           <label htmlFor="adr-street">Endereço</label>
           <input
@@ -109,7 +130,7 @@ const NewOrderForm = () => {
         </div>
         <div className="Form-section">
           <h3>Produtos escolhidos</h3>
-          <select></select>
+          <RDialog />
         </div>
         <div className="Form-section">
           <h3>Informações do pedido</h3>
@@ -118,7 +139,7 @@ const NewOrderForm = () => {
       </form>
       <DevTool control={control} />
     </>
-    )
+  )
 }
 
 export default NewOrderForm

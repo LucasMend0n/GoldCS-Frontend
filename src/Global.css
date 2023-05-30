@@ -13,15 +13,25 @@ html{
 
 }
 
-input, select {
-    appearance: unset;
+input {    
     padding: 1em;
     margin-bottom: 1em;
     border-radius: .8em;
     border: none;
     max-width: 100%;
     box-shadow: 0 1px 3px -2px #9098A9;
+    
+}
+
+select{
+    appearance: unset;
     -webkit-appearance: none;
+    padding: 1em;
+    margin-bottom: 1em;
+    border-radius: .8em;
+    border: none;
+    max-width: 100%;
+    box-shadow: 0 1px 3px -2px #9098A9;
 }
 
 label{
