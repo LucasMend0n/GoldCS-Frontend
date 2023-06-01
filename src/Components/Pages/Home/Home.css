@@ -1,0 +1,15 @@
+.HomePage{
+    width: 100%;
+    min-height: 75vh;
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.HomePage article{
+    text-align: center;
+}
+.HomePage h1{
+    padding: 1em;
+}
