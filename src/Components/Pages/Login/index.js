@@ -85,8 +85,6 @@ function Login() {
             </button>
           </div>
         </form>
-        <Link to='/'>TESTE</Link>
-
       </section>
     </>
   )

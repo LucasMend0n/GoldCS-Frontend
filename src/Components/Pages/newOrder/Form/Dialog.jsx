@@ -2,30 +2,29 @@ import * as Dialog from '@radix-ui/react-dialog'
 import './Dialog.css'
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
+import { useEffect } from 'react';
+import apiGold from '../../../../Services/api';
 
-const RDialog = () => {
+const RDialog = ({onUpdateOrderProducts}) => {
+
+    const [products, setProducts] = useState([]);
+    
+    useEffect(() => {
+        const getProducts = async () => {
+            const response = await apiGold.get("/Product");
+            setProducts(response.data.result);
+        };
+        getProducts();
+    }, []);
+
+    products.map((product) => {
+        if (product.version === "-") {
+            product.version = "";
+        }
+    });
 
     const { register } = useForm()
-    const [camposExtras, setCamposExtras] = useState([]);
 
-    const adicionarCampo = (e) => {
-        e.preventDefault()
-        setCamposExtras([...camposExtras, '']);
-    };
-
-    const handleChange = (valor, indice, campo) => {
-        const novosCamposExtras = [...camposExtras];
-        novosCamposExtras[indice][campo] = valor;
-        setCamposExtras(novosCamposExtras);
-    };
-
-    const removerCampo = () => {
-        setCamposExtras([]);
-    };
-
-    const saveItems = () =>{
-        setCamposExtras([])
-    }
     return (
         <div className='DIALOG'>
             <Dialog.Root>
@@ -35,19 +34,21 @@ const RDialog = () => {
                 <Dialog.Portal>
                     <Dialog.Overlay className="DialogOverlay" />
                     <Dialog.Content className="DialogContent">
-                        <Dialog.Title className="DialogTitle">Adicionar Produtos</Dialog.Title>
+                        <Dialog.Title className="DialogTitle">Adicionar Produto ao pedido</Dialog.Title>
                         <Dialog.Description className="DialogDescription">
                             Adicione Produtos e insira uma quantidade neles
                         </Dialog.Description>
-
                         <form className='dialogForm'>
-
                             <label htmlFor="pd-products">Produtos</label>
-
                             <select name='pd-products'>
+                                <option key={0} value={0}> Selecione um dos Produtos da Lista... </option>
+                                {products.map((product) => (
+
+                                    <option key={product.productID} value={product.productID}>
+                                        {product.name} - {product.version}
+                                    </option>
+                                ))};
                             </select>
-
-
                             <label htmlFor="pd-qtd">Quantidade</label>
                             <input
                                 {...register('pd-qtd')}
@@ -55,51 +56,26 @@ const RDialog = () => {
                                 type='number'
                                 placeholder='Quantidade...'
                             />
-
-                            {camposExtras.map((campo, indice) => (
-                                <div className='DynamicFields' key={indice}>
-                                    <label>
-                                        Produto
-                                    </label>
-                                    <select
-                                        value={campo.selectValue}
-                                        onChange={(e) =>
-                                            handleChange(e.target.value, indice, 'selectValue')
-                                        }
-                                    >
-                                    </select>
-                                    <label>
-                                        Quantidade
-                                    </label>
-                                    <input
-                                        type="number"
-                                        placeholder='Quantidade...'
-                                        value={campo.inputValue}
-                                        onChange={(e) =>
-                                            handleChange(e.target.value, indice, 'inputValue')
-                                        }
-                                    />
-
-                                </div>
-                            ))}
-
-                            <div className='AddMoreItems'>
-                                <button onClick={adicionarCampo}> + </button>
-                            </div>
+                            <label htmlFor="pd-price">Preço</label>
+                            <input
+                                {...register('pd-price')}
+                                type='text'
+                                placeholder='Preço...'
+                            />
                         </form>
-
 
                         <div style={{ display: 'flex', marginTop: 25, justifyContent: 'flex-end' }}>
                             <Dialog.Close asChild>
-                                <button onClick={saveItems} className="Button green">Adicionar Produtos</button>
+                                <button onClick={onUpdateOrderProducts} className="Button green">Adicionar Produto</button>
                             </Dialog.Close>
                         </div>
                         <Dialog.Close asChild>
-                            <button onClick={removerCampo} className="IconButton" aria-label="Close">
+                            <button className="IconButton" aria-label="Close">
                                 X
                             </button>
                         </Dialog.Close>
                     </Dialog.Content>
+
                 </Dialog.Portal>
             </Dialog.Root>
 

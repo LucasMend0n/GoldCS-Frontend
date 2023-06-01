@@ -4,7 +4,7 @@ import apiGold from "../../../Services/api.js";
 
 // Toast
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import "react-toastify";
 
 const Amount = () => {
   const [products, setProducts] = useState([]);
@@ -46,7 +46,7 @@ const Amount = () => {
         },
       });
 
-      if (response.data.success == true) {
+      if (response.data.success === true) {
         toast.info("Estoque inserido com sucesso!", {
           position: "top-right",
           autoClose: 5000,

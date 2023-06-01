@@ -2,9 +2,11 @@ import { DevTool } from '@hookform/devtools'
 import { useForm } from 'react-hook-form'
 import './Form.css'
 import RDialog from './Dialog'
-import { useRef } from 'react'
+import { useRef} from 'react'
 
 const NewOrderForm = () => {
+
+  //const [orderProducts, setOrderProducts] = useState([]); 
 
   const form = useForm()
   const { register, control, setValue, setFocus } = form
@@ -130,7 +132,10 @@ const NewOrderForm = () => {
         </div>
         <div className="Form-section">
           <h3>Produtos escolhidos</h3>
-          <RDialog />
+          <RDialog/>
+
+        <div></div>
+
         </div>
         <div className="Form-section">
           <h3>Informações do pedido</h3>
