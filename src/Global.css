@@ -15,12 +15,17 @@ html{
 
 input {    
     padding: 1em;
+    cursor: pointer;
     margin-bottom: 1em;
     border-radius: .8em;
     border: none;
     max-width: 100%;
     box-shadow: 0 1px 3px -2px #9098A9;
     
+}
+
+input:disabled{
+    cursor: not-allowed;
 }
 
 select{
@@ -55,7 +60,7 @@ button[disabled]{
   border: 1px solid #999999;
   background-color: #cccccc;
   color: #666666;
-  cursor: no-drop
+  cursor: none;
 }
 
 button:hover{
