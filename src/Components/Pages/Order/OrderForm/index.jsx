@@ -144,7 +144,6 @@ export const OrderForm = () => {
           <label htmlFor="od-payment">Forma de pagamento</label>
           <input type='text' placeholder='Forma de pagamento' {...register('od-payment')} />
         </div>
-        <button>Enviar por email</button>
       </form>
     </>
   )
