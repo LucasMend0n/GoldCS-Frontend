@@ -4,7 +4,7 @@ import apiGold from "../../../Services/api.js";
 
 // Toast
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Amount = () => {
   const [products, setProducts] = useState([]);
