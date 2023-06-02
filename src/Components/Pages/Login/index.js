@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './Login.css';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 
 function Login() {

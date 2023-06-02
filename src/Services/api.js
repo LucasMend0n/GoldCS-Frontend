@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getUserLocalStorage } from '../context/util';
 
 const apiGold = axios.create({
-    baseURL: 'https://goldcsapi.onrender.com/api'
+    baseURL: 'https://goldcs-production-api.up.railway.app/api'
 });
 
 apiGold.interceptors.request.use(

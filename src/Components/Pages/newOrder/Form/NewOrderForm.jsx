@@ -1,22 +1,24 @@
 import { DevTool } from '@hookform/devtools'
 import { useForm } from 'react-hook-form'
 import './Form.css'
-import RDialog from './Dialog'
-import { useRef} from 'react'
+import RDialog from './Dialog/Dialog'
+import { useRef, useState } from 'react'
+import { NumericFormat } from 'react-number-format'
+
 
 const NewOrderForm = () => {
 
-  //const [orderProducts, setOrderProducts] = useState([]); 
+  const [orderProducts, setOrderProducts] = useState([])
 
   const form = useForm()
   const { register, control, setValue, setFocus } = form
-  
+
   const formRef = useRef(null)
 
   const checkCEP = (e) => {
     const cep = formRef.current['adr-postcode'].value.replace(/\D/g, '');
-    
-    if(!cep) return; 
+
+    if (!cep) return;
 
     fetch(`https://viacep.com.br/ws/${cep}/json/`)
       .then(res => res.json()).then(data => {
@@ -27,6 +29,25 @@ const NewOrderForm = () => {
         setFocus('adr-number')
       });
   };
+
+  const handleAddProducts = (products) => {
+    const selected = products['pd-productID'].split('-');
+    const productObject = {
+      id: selected[0],
+      name: selected[1],
+      version: selected[2],
+      price: products['pd-price'],
+      quantity: products['pd-qtd']
+    }
+    setOrderProducts([...orderProducts, productObject])
+  }
+
+  const handleRemoveProduct = (index) => {
+    const updatedProducts = [...orderProducts];
+    updatedProducts.splice(index, 1);
+    setOrderProducts(updatedProducts);
+  };
+  
 
   return (
     <>
@@ -131,14 +152,50 @@ const NewOrderForm = () => {
           />
         </div>
         <div className="Form-section">
-          <h3>Produtos escolhidos</h3>
-          <RDialog/>
+          <h3>Carrinho de pedidos</h3>
 
-        <div></div>
+          {orderProducts.length === 0 ? (<p id='noProducts'>Nenhum produto no carrinho</p>) : (
+            <table className='purchaseCart'>
+              <thead>
+                <tr>
+                  <th>Produto</th>
+                  <th>Versão</th>
+                  <th>Preço</th>
+                  <th>Quantidade</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                {orderProducts.map((product, index) => (
+                  <tr key={index}>
+                    <td>{product.name}</td>
+                    <td>{product.version}</td>
+                    <td>
+                      <NumericFormat
+                        value={product.price}
+                        displayType={'text'}
+                        prefix={'R$ '}
+                      />
+                    </td>
+                    <td>{product.quantity}</td>
+                    <td>
+                      <button onClick={()=> handleRemoveProduct(index)}>Remover</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+
+          <RDialog onAddProduct={handleAddProducts} />
 
         </div>
         <div className="Form-section">
           <h3>Informações do pedido</h3>
+          <label htmlFor="od-uptoDate">Data de entrega prevista</label>
+          <input type="date" {...register('od-uptoDate')} />
+          <label htmlFor="od-payment">Forma de pagamento</label>
+          <input type='text' placeholder='Forma de pagamento' {...register('od-payment')} />
         </div>
         <button>Enviar</button>
       </form>
