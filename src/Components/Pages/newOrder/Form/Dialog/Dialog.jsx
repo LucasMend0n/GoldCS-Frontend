@@ -3,12 +3,12 @@ import './Dialog.css'
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import apiGold from '../../../../Services/api';
+import apiGold from '../../../../../Services/api';
 
-const RDialog = ({onUpdateOrderProducts}) => {
+const RDialog = ({ onAddProduct }) => {
 
     const [products, setProducts] = useState([]);
-    
+
     useEffect(() => {
         const getProducts = async () => {
             const response = await apiGold.get("/Product");
@@ -23,7 +23,16 @@ const RDialog = ({onUpdateOrderProducts}) => {
         }
     });
 
-    const { register } = useForm()
+    const { register, handleSubmit, reset } = useForm()
+
+    const onSubmit = (data) => {
+        if (data['pd-product'] !== "0") {
+            onAddProduct(data)
+        }
+        reset()
+    }
+
+
 
     return (
         <div className='DIALOG'>
@@ -34,25 +43,27 @@ const RDialog = ({onUpdateOrderProducts}) => {
                 <Dialog.Portal>
                     <Dialog.Overlay className="DialogOverlay" />
                     <Dialog.Content className="DialogContent">
-                        <Dialog.Title className="DialogTitle">Adicionar Produto ao pedido</Dialog.Title>
+                        <Dialog.Title className="DialogTitle">Adicionar produto ao carrinho</Dialog.Title>
                         <Dialog.Description className="DialogDescription">
-                            Adicione Produtos e insira uma quantidade neles
+                            Selecione um produto, um preço e uma quantidade ao carrinho...
                         </Dialog.Description>
-                        <form className='dialogForm'>
-                            <label htmlFor="pd-products">Produtos</label>
-                            <select name='pd-products'>
-                                <option key={0} value={0}> Selecione um dos Produtos da Lista... </option>
-                                {products.map((product) => (
 
-                                    <option key={product.productID} value={product.productID}>
+                        <form onSubmit={handleSubmit(onSubmit)} className='dialogForm'>
+                            <label htmlFor="pd-productID">Produtos</label>
+
+                            <select {...register('pd-productID')}>
+                                <option key={0} value={0}> Selecione um dos Produtos da Lista... </option>
+
+                                {products.map((product) => (
+                                    <option key={product.productID} value={`${product.productID}-${product.name}-${product.version}`}>
                                         {product.name} - {product.version}
                                     </option>
                                 ))};
+
                             </select>
                             <label htmlFor="pd-qtd">Quantidade</label>
                             <input
                                 {...register('pd-qtd')}
-                                name='pd-qtd'
                                 type='number'
                                 placeholder='Quantidade...'
                             />
@@ -62,13 +73,15 @@ const RDialog = ({onUpdateOrderProducts}) => {
                                 type='text'
                                 placeholder='Preço...'
                             />
+                            <button>Adicionar produto</button>
                         </form>
 
                         <div style={{ display: 'flex', marginTop: 25, justifyContent: 'flex-end' }}>
                             <Dialog.Close asChild>
-                                <button onClick={onUpdateOrderProducts} className="Button green">Adicionar Produto</button>
+                                <button className="Button green">Fechar</button>
                             </Dialog.Close>
                         </div>
+
                         <Dialog.Close asChild>
                             <button className="IconButton" aria-label="Close">
                                 X

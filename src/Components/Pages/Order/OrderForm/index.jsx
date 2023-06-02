@@ -1,58 +1,17 @@
-import { DevTool } from '@hookform/devtools'
+import React from 'react'
+import './styles.css'
 import { useForm } from 'react-hook-form'
-import './Form.css'
-import RDialog from './Dialog/Dialog'
-import { useRef, useState } from 'react'
 import { NumericFormat } from 'react-number-format'
 
+export const OrderForm = () => {
 
-const NewOrderForm = () => {
-
-  const [orderProducts, setOrderProducts] = useState([])
-
-  const form = useForm()
-  const { register, control, setValue, setFocus } = form
-
-  const formRef = useRef(null)
-
-  const checkCEP = (e) => {
-    const cep = formRef.current['adr-postcode'].value.replace(/\D/g, '');
-
-    if (!cep) return;
-
-    fetch(`https://viacep.com.br/ws/${cep}/json/`)
-      .then(res => res.json()).then(data => {
-        setValue('adr-street', data.logradouro)
-        setValue('adr-district', data.bairro)
-        setValue('adr-city', data.localidade)
-        setValue('adr-uf', data.uf)
-        setFocus('adr-number')
-      });
-  };
-
-  const handleAddProducts = (products) => {
-    const selected = products['pd-productID'].split('-');
-    const productObject = {
-      id: selected[0],
-      name: selected[1],
-      version: selected[2],
-      price: products['pd-price'],
-      quantity: products['pd-qtd']
-    }
-    setOrderProducts([...orderProducts, productObject])
-  }
-
-  const handleRemoveProduct = (index) => {
-    const updatedProducts = [...orderProducts];
-    updatedProducts.splice(index, 1);
-    setOrderProducts(updatedProducts);
-  };
-  
+  const OrderForm = useForm();
+  const { register} = OrderForm
 
   return (
     <>
-      <form ref={formRef}>
-        <h1>Novo Pedido</h1>
+      <form className='OrderForm'>
+        <h1>Pedido XXXXXXXXX</h1>
 
         <div className="Form-section">
           <h3>Informações do cliente</h3>
@@ -105,8 +64,6 @@ const NewOrderForm = () => {
             {...register('adr-postcode')}
             type='text'
             placeholder='Digite o CEP do cliente'
-            id='adr-postcode'
-            onBlur={checkCEP}
           />
           <label htmlFor="adr-street">Endereço</label>
           <input
@@ -152,56 +109,43 @@ const NewOrderForm = () => {
           />
         </div>
         <div className="Form-section">
-          <h3>Carrinho de pedidos</h3>
-
-          {orderProducts.length === 0 ? (<p id='noProducts'>Nenhum produto no carrinho</p>) : (
-            <table className='purchaseCart'>
-              <thead>
-                <tr>
-                  <th>Produto</th>
-                  <th>Versão</th>
-                  <th>Preço</th>
-                  <th>Quantidade</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                {orderProducts.map((product, index) => (
-                  <tr key={index}>
-                    <td>{product.name}</td>
-                    <td>{product.version}</td>
-                    <td>
-                      <NumericFormat
-                        value={product.price}
-                        displayType={'text'}
-                        prefix={'R$ '}
-                      />
-                    </td>
-                    <td>{product.quantity}</td>
-                    <td>
-                      <button onClick={()=> handleRemoveProduct(index)}>Remover</button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-
-          <RDialog onAddProduct={handleAddProducts} />
-
+          <h3>Itens Comprados</h3>
+          <table className='purchaseCart'>
+            <thead>
+              <tr>
+                <th>Produto</th>
+                <th>Versão</th>
+                <th>Preço</th>
+                <th>Quantidade</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Colchao</td>
+                <td>2m</td>
+                <td>
+                  <NumericFormat
+                    value={'7000'}
+                    displayType={'text'}
+                    prefix={'R$ '}
+                  />
+                </td>
+                <td>800</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div className="Form-section">
-          <h3>Informações do pedido</h3>
+        <div className='Form-section'>
+          <h3>Dados da compra</h3>
+          <label htmlFor="dc-seller">Vendedor</label>
+          <input type="text" {...register('dc-seller')} />
           <label htmlFor="od-uptoDate">Data de entrega prevista</label>
           <input type="date" {...register('od-uptoDate')} />
           <label htmlFor="od-payment">Forma de pagamento</label>
           <input type='text' placeholder='Forma de pagamento' {...register('od-payment')} />
         </div>
-        <button>Enviar</button>
+        <button>Enviar por email</button>
       </form>
-      <DevTool control={control} />
     </>
   )
 }
-
-export default NewOrderForm
