@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import "./Form.css";
 import RDialog from "./Dialog/Dialog";
 import { useRef, useState } from "react";
-import { NumericFormat, PatternFormat } from "react-number-format";
+import { NumericFormat } from "react-number-format";
 import apiGold from "../../../../Services/api.js";
 
 // Toast
