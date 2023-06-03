@@ -14,7 +14,7 @@ const NewOrderForm = () => {
   const [orderProducts, setOrderProducts] = useState([]);
 
   const form = useForm();
-  const { register, control, setValue, setFocus } = form;
+  const { register, control, setValue, setFocus, reset } = form;
 
   const formRef = useRef(null);
 
@@ -35,13 +35,13 @@ const NewOrderForm = () => {
   };
 
   const handleAddProducts = (products) => {
-    const selected = products["pd-productID"].split("-");
+    const selected = products["product"].split("-");
     const productObject = {
       id: selected[0],
       name: selected[1],
       version: selected[2],
-      price: products["pd-price"],
-      quantity: products["pd-qtd"],
+      price: products["price"],
+      quantity: products["qtd"],
     };
     setOrderProducts([...orderProducts, productObject]);
   };
@@ -64,7 +64,7 @@ const NewOrderForm = () => {
               "Content-Type": "application/json",
             },
           });
-  
+
           if (response.data.success === true) {
             formRef.current["cl-name"].value = response.data.result.name;
             formRef.current["cl-email"].value = response.data.result.email;
@@ -139,6 +139,8 @@ const NewOrderForm = () => {
             theme: "light",
           }
         );
+        reset()
+        window.scrollTo(0, 0);
       }
     };
 
@@ -152,15 +154,6 @@ const NewOrderForm = () => {
 
         <div className="Form-section">
           <h3>Informações do cliente</h3>
-
-          <label htmlFor="cl-name"> Nome </label>
-          <input
-            {...register("cl-name")}
-            type="text"
-            placeholder="Digite o nome do cliente"
-            name="cl-name"
-            id="cl-name"
-          />
           <label htmlFor="cl-id"> CPF </label>
           <input
             {...register("cl-id")}
@@ -169,6 +162,14 @@ const NewOrderForm = () => {
             name="cl-id"
             onBlur={checkCPF}
             id="cl-id"
+          />
+          <label htmlFor="cl-name"> Nome </label>
+          <input
+            {...register("cl-name")}
+            type="text"
+            placeholder="Digite o nome do cliente"
+            name="cl-name"
+            id="cl-name"
           />
           <label htmlFor="cl-email"> Email </label>
           <input

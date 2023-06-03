@@ -7,6 +7,7 @@ const SearchOrder = () => {
 
   const [search, setSearch] = useState('')
   const [order, setOrder] = useState(null)
+  const [error, setError] = useState(false);
 
 
   const handleSearch = async (e) => {
@@ -17,15 +18,15 @@ const SearchOrder = () => {
       if (response.data.success) {
         const foundOrder = response.data.result
         setOrder(foundOrder)
-        console.log(foundOrder)
         setSearch('')
+        setError(false)
       }
       else {
-        console.log('sem sucesso', response.data)
+        setError(true)
       }
     } catch (error) {
-      console.log(error)
       setOrder(null)
+      setError(true)
     }
 
 
@@ -44,9 +45,9 @@ const SearchOrder = () => {
         <button onClick={handleSearch}>Buscar</button>
       </form>
 
-      {order ? (
-        <OrderForm order={order} />
-      ) : <p>Nenhum pedido encontrado</p>
+      {
+        error ? (<p>Nenhum pedido encontrado com esse Id</p>)
+          : (order ? <OrderForm order={order} /> : null)
       }
     </>
   )
