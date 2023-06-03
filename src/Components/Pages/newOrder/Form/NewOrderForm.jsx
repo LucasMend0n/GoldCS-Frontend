@@ -3,12 +3,14 @@ import { useForm } from "react-hook-form";
 import "./Form.css";
 import RDialog from "./Dialog/Dialog";
 import { useRef, useState } from "react";
-import { NumericFormat } from "react-number-format";
+import { NumericFormat, PatternFormat } from "react-number-format";
 import apiGold from "../../../../Services/api.js";
 
 // Toast
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getUserLocalStorage } from "../../../../context/util";
+import MaskedInput from "react-text-mask";
 
 const NewOrderForm = () => {
   const [orderProducts, setOrderProducts] = useState([]);
@@ -109,10 +111,12 @@ const NewOrderForm = () => {
       });
     });
 
+    const user = getUserLocalStorage()
+
     const order = {
       paymentMethod: formRef.current["od-payment"].value,
       deliveryForecast: formRef.current["od-uptoDate"].value,
-      userId: 3,
+      userId: user.userID,
       client: client,
       address: address,
       orderProducts: products,
@@ -141,6 +145,7 @@ const NewOrderForm = () => {
         );
         reset()
         window.scrollTo(0, 0);
+        setOrderProducts([])
       }
     };
 
@@ -155,13 +160,14 @@ const NewOrderForm = () => {
         <div className="Form-section">
           <h3>Informações do cliente</h3>
           <label htmlFor="cl-id"> CPF </label>
-          <input
+          <MaskedInput
             {...register("cl-id")}
             type="text"
             placeholder="Digite o CPF do cliente"
             name="cl-id"
             onBlur={checkCPF}
             id="cl-id"
+            mask={[/\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "-", /\d/, /\d/]}
           />
           <label htmlFor="cl-name"> Nome </label>
           <input
@@ -199,8 +205,9 @@ const NewOrderForm = () => {
         <div className="Form-section">
           <h3>Endereço do cliente</h3>
           <label htmlFor="adr-postcode">CEP</label>
-          <input
+          <MaskedInput
             {...register("adr-postcode")}
+            mask={[/\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/]}
             type="text"
             placeholder="Digite o CEP do cliente"
             id="adr-postcode"
@@ -283,7 +290,7 @@ const NewOrderForm = () => {
                     </td>
                     <td>{product.quantity}</td>
                     <td>
-                      <button onClick={() => handleRemoveProduct(index)}>
+                      <button type="button" onClick={() => handleRemoveProduct(index)}>
                         Remover
                       </button>
                     </td>
