@@ -3,16 +3,17 @@ import './styles.css'
 import { useForm } from 'react-hook-form'
 import { NumericFormat } from 'react-number-format'
 import { format } from 'date-fns'
-import { DevTool } from '@hookform/devtools'
 
 const OrderForm = ({ order }) => {
 
-  const formattedDate = format(new Date(order.deliveryForecast), 'dd/MM/yyyy')
+  const formatedDeliveryDate = format(new Date(order.deliveryForecast), 'dd/MM/yyyy')
+  const formatedOrderDate = format(new Date(order.orderDate), 'dd/MM/yyyy')
 
   const OrderForm = useForm({
     defaultValues: {
       dcseller: order.userName,
-      odSendDate: formattedDate,
+      odSendDate: formatedDeliveryDate,
+      odOrderDate: formatedOrderDate,
       odPayment: order.paymentMethod,
       clientName: order.client.name,
       clientID: order.client.cpf,
@@ -29,7 +30,7 @@ const OrderForm = ({ order }) => {
 
     }
   });
-  const { register, control } = OrderForm
+  const { register } = OrderForm
 
   return (
     <>
@@ -40,6 +41,8 @@ const OrderForm = ({ order }) => {
           <h3>Dados da compra</h3>
           <label htmlFor="dcseller">Vendedor</label>
           <input type="text" {...register('dcseller')} disabled />
+          <label htmlFor="odOrderDate">Data que o Pedido foi realizado</label>
+          <input type="text" {...register('odOrderDate')} disabled />
           <label htmlFor="odSendDate">Data de entrega prevista</label>
           <input type="text" {...register('odSendDate')} disabled />
           <label htmlFor="odPaymentt">Forma de pagamento</label>
@@ -158,7 +161,9 @@ const OrderForm = ({ order }) => {
                   <td>
                     <NumericFormat value={item.finalPrice} allowNegative={false} fixedDecimalScale decimalScale={2} displayType={'text'} prefix={'R$ '} />
                   </td>
-                  <td>{item.total}</td>
+                  <td>
+                    <NumericFormat value={item.finalPrice * item.quantity} allowNegative={false} fixedDecimalScale decimalScale={2} displayType={'text'} prefix={'R$ '} />
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -168,7 +173,6 @@ const OrderForm = ({ order }) => {
         </h3>
 
       </form>
-      <DevTool control={control} />
     </>
   )
 }
