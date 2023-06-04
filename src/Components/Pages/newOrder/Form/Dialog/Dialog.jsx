@@ -1,6 +1,5 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import './Dialog.css'
-import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import apiGold from '../../../../../Services/api';
@@ -8,6 +7,9 @@ import apiGold from '../../../../../Services/api';
 const RDialog = ({ onAddProduct }) => {
 
     const [products, setProducts] = useState([]);
+    const [product, setProduct] = useState('')
+    const [qtd, setQtd] = useState(0)
+    const [price, setPrice] = useState(0)
 
     useEffect(() => {
         const getProducts = async () => {
@@ -23,15 +25,23 @@ const RDialog = ({ onAddProduct }) => {
         }
     });
 
-    const { register, handleSubmit, reset } = useForm()
-
-    const onSubmit = (data) => {
-        if (data['pd-product'] !== "0") {
-            onAddProduct(data)
+    const sendProducts = (e) => {
+        e.preventDefault(); 
+        const data = {
+            product,
+            qtd,
+            price,
         }
-        reset()
+        console.log(data)
+        onAddProduct(data);
+        resetFields();
     }
 
+    const resetFields = () => {
+        setProduct('');
+        setQtd(0);
+        setPrice(0);
+    }
 
 
     return (
@@ -48,11 +58,14 @@ const RDialog = ({ onAddProduct }) => {
                             Selecione um produto, um preço e uma quantidade ao carrinho...
                         </Dialog.Description>
 
-                        <form onSubmit={handleSubmit(onSubmit)} className='dialogForm'>
-                            <label htmlFor="pd-productID">Produtos</label>
+                        <div className="Fields">
+                            <label htmlFor="product">Produtos</label>
 
-                            <select {...register('pd-productID')}>
-                                <option key={0} value={0}> Selecione um dos Produtos da Lista... </option>
+                            <select name='product' value={product} onChange={(e) => setProduct(e.target.value)} >
+
+                                <option key={0} value={0}>
+                                    Selecione um dos Produtos da Lista...
+                                </option>
 
                                 {products.map((product) => (
                                     <option key={product.productID} value={`${product.productID}-${product.name}-${product.version}`}>
@@ -61,20 +74,26 @@ const RDialog = ({ onAddProduct }) => {
                                 ))};
 
                             </select>
-                            <label htmlFor="pd-qtd">Quantidade</label>
+                            <label htmlFor="quantity">Quantidade</label>
                             <input
-                                {...register('pd-qtd')}
+                                name='quantity'
+                                value={qtd}
+                                onChange={(e) => setQtd(e.target.value)}
                                 type='number'
                                 placeholder='Quantidade...'
                             />
-                            <label htmlFor="pd-price">Preço</label>
+                            <label htmlFor="price">Preço</label>
                             <input
-                                {...register('pd-price')}
+                                name='price'
+                                value={price}
+                                onChange={(e) => setPrice(e.target.value)}
                                 type='text'
                                 placeholder='Preço...'
                             />
-                            <button>Adicionar produto</button>
-                        </form>
+
+
+                            <button type='button' onClick={sendProducts}>Adicionar produto</button>
+                        </div>
 
                         <div style={{ display: 'flex', marginTop: 25, justifyContent: 'flex-end' }}>
                             <Dialog.Close asChild>
