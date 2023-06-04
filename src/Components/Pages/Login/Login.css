@@ -3,7 +3,7 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    min-height: auto;
+    min-height: 80vh;
 }
 
 .form_control label {
