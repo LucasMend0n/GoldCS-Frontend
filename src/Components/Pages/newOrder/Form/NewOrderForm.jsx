@@ -143,6 +143,17 @@ const NewOrderForm = () => {
             theme: "light",
           }
         );
+
+        const response2 = await apiGold.post(`/Mail/${response.data.result}`, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (response2.data.success === true) {
+          console.log("Email enviado com sucesso!");
+        }
+
         reset()
         window.scrollTo(0, 0);
         setOrderProducts([])
