@@ -2,150 +2,179 @@ import React from 'react'
 import './styles.css'
 import { useForm } from 'react-hook-form'
 import { NumericFormat } from 'react-number-format'
+import { format } from 'date-fns'
 
-export const OrderForm = () => {
+const OrderForm = ({ order }) => {
 
-  const OrderForm = useForm();
-  const { register} = OrderForm
+  const formatedDeliveryDate = format(new Date(order.deliveryForecast), 'dd/MM/yyyy')
+  const formatedOrderDate = format(new Date(order.orderDate), 'dd/MM/yyyy')
+
+  const OrderForm = useForm({
+    defaultValues: {
+      dcseller: order.userName,
+      odSendDate: formatedDeliveryDate,
+      odOrderDate: formatedOrderDate,
+      odPayment: order.paymentMethod,
+      clientName: order.client.name,
+      clientID: order.client.cpf,
+      clientEmail: order.client.email,
+      clientCelphone: order.client.cellPhone,
+      clientLandphone: order.client.landlinePhone,
+      adressCep: order.address.cep,
+      adressStreet: order.address.addressName,
+      adressNumber: order.address.number,
+      adressComplement: order.address.complement,
+      adressCity: order.address.city,
+      adressDistrict: order.address.district,
+      adressUF: order.address.uf
+
+    }
+  });
+  const { register } = OrderForm
 
   return (
     <>
       <form className='OrderForm'>
-        <h1>Pedido XXXXXXXXX</h1>
+        <h1>Pedido {order.orderID}</h1>
+
+        <div className='Form-section'>
+          <h3>Dados da compra</h3>
+          <label htmlFor="dcseller">Vendedor</label>
+          <input type="text" {...register('dcseller')} disabled />
+          <label htmlFor="odOrderDate">Data que o Pedido foi realizado</label>
+          <input type="text" {...register('odOrderDate')} disabled />
+          <label htmlFor="odSendDate">Data de entrega prevista</label>
+          <input type="text" {...register('odSendDate')} disabled />
+          <label htmlFor="odPaymentt">Forma de pagamento</label>
+          <input type='text' placeholder='Forma de pagamento' disabled {...register('odPayment')} />
+        </div>
 
         <div className="Form-section">
           <h3>Informações do cliente</h3>
 
-          <label htmlFor="cl-name"> Nome </label>
+          <label htmlFor="clientName"> Nome </label>
           <input
-            {...register('cl-name')}
+            disabled
+            {...register('clientName')}
             type='text'
             placeholder='Digite o nome do cliente'
-            name='cl-name'
-            id='cl-name'
           />
-          <label htmlFor="cl-id"> CPF </label>
+          <label htmlFor="clientID"> CPF </label>
           <input
-            {...register('cl-id')}
+            disabled
+            {...register('clientID')}
             type='text'
             placeholder='Digite o CPF do cliente'
-            name='cl-id'
-            id='cl-id'
+
           />
-          <label htmlFor="cl-email"> Email </label>
+          <label htmlFor="clientEmail"> Email </label>
           <input
-            {...register('cl-email')}
+            disabled
+            {...register('clientEmail')}
             type='email'
             placeholder='Digite o email do cliente'
-            name='cl-email'
-            id='cl-email'
           />
-          <label htmlFor="cl-celphone"> Telefone celular </label>
+          <label htmlFor="clientCelphone"> Telefone celular </label>
           <input
-            {...register('cl-celphone')}
+            disabled
+            {...register('clientCelphone')}
             type='text'
             placeholder='Digite o celular do cliente'
-            name='cl-celphone'
-            id='cl-celphone'
           />
-          <label htmlFor="cl-landPhone"> Telefone Fixo </label>
+          <label htmlFor="clientLandphone"> Telefone Fixo </label>
           <input
-            {...register('cl-landPhone')}
+            disabled
+            {...register('clientLandphone')}
             type='text'
             placeholder='Digite o telefone fixo do cliente'
-            name='cl-landPhone'
-            id='cl-landPhone'
           />
         </div>
         <div className="Form-section">
           <h3>Endereço do cliente</h3>
-          <label htmlFor="adr-postcode">CEP</label>
+          <label htmlFor="adressCep">CEP</label>
           <input
-            {...register('adr-postcode')}
+            disabled
+            {...register('adressCep')}
             type='text'
             placeholder='Digite o CEP do cliente'
           />
-          <label htmlFor="adr-street">Endereço</label>
+          <label htmlFor="adressStreet">Endereço</label>
           <input
-            {...register('adr-street')}
+            disabled
+            {...register('adressStreet')}
             type='text'
             placeholder='Digite o endereço do cliente'
-            id='adr-street'
           />
-          <label htmlFor="adr-number">Numero</label>
+          <label htmlFor="adressNumber">Numero</label>
           <input
-            {...register('adr-number')}
+            disabled
+            {...register('adressNumber')}
             type='text'
             placeholder='Digite o número do cliente'
-            id='adr-number'
           />
-          <label htmlFor="adr-complement">Complemento</label>
+          <label htmlFor="adressComplement">Complemento</label>
           <input
-            {...register('adr-complement')}
+            disabled
+            {...register('adressComplement')}
             type='text'
             placeholder='Digite o complemento do cliente'
-            id='adr-complement'
           />
-          <label htmlFor="adr-city">Cidade</label>
+          <label htmlFor="adressCity">Cidade</label>
           <input
-            {...register('adr-city')}
+            disabled
+            {...register('adressCity')}
             type='text'
             placeholder='Digite a cidade do cliente'
-            id='adr-city'
           />
-          <label htmlFor="adr-district">Bairro</label>
+          <label htmlFor="adressDistrict">Bairro</label>
           <input
-            {...register('adr-district')}
+            disabled
+            {...register('adressDistrict')}
             type='text'
             placeholder='Digite o bairro do cliente'
-            id='adr-district'
           />
-          <label htmlFor="adr-uf">UF</label>
+          <label htmlFor="adressUF">UF</label>
           <input
-            {...register('adr-uf')}
+            disabled
+            {...register('adressUF')}
             type='text'
             placeholder='Digite o estado do cliente'
-            id='adr-uf'
           />
         </div>
         <div className="Form-section">
           <h3>Itens Comprados</h3>
-          <table className='purchaseCart'>
+
+          <table className='orderProductsTable'>
             <thead>
               <tr>
                 <th>Produto</th>
-                <th>Versão</th>
-                <th>Preço</th>
                 <th>Quantidade</th>
+                <th>Preço</th>
+                <th>Total</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Colchao</td>
-                <td>2m</td>
-                <td>
-                  <NumericFormat
-                    value={'7000'}
-                    displayType={'text'}
-                    prefix={'R$ '}
-                  />
-                </td>
-                <td>800</td>
-              </tr>
+              {order.orderProducts.map((item) => (
+                <tr key={item.productID}>
+                  <td>{item.productName}</td>
+                  <td>{item.quantity}</td>
+                  <td>
+                    <NumericFormat value={item.finalPrice} allowNegative={false} fixedDecimalScale decimalScale={2} displayType={'text'} prefix={'R$ '} />
+                  </td>
+                  <td>
+                    <NumericFormat value={item.finalPrice * item.quantity} allowNegative={false} fixedDecimalScale decimalScale={2} displayType={'text'} prefix={'R$ '} />
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
-        <div className='Form-section'>
-          <h3>Dados da compra</h3>
-          <label htmlFor="dc-seller">Vendedor</label>
-          <input type="text" {...register('dc-seller')} />
-          <label htmlFor="od-uptoDate">Data de entrega prevista</label>
-          <input type="date" {...register('od-uptoDate')} />
-          <label htmlFor="od-payment">Forma de pagamento</label>
-          <input type='text' placeholder='Forma de pagamento' {...register('od-payment')} />
-        </div>
-        <button>Enviar por email</button>
+        <h3> Total do pedido:  <NumericFormat value={order.total} allowNegative={false} fixedDecimalScale decimalScale={2} displayType={'text'} prefix={'R$ '} />
+        </h3>
+
       </form>
     </>
   )
 }
+
+export default OrderForm
