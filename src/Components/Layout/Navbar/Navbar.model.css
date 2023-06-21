@@ -1,0 +1,37 @@
+img{
+    max-width: 3.5rem;
+    text-align: center;
+}
+
+.navbar{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #3100A8;
+    max-width: 100%;
+    font-size: 20px;
+    padding: .7em;
+}
+.list{
+    display: flex;
+    list-style: none; 
+    align-items: center;
+}
+
+.item{
+    margin-right: 1em;
+    align-items: center;
+}
+.item a{
+    color: #fff;
+    text-decoration: none;
+
+}
+.item a.active{
+    color: #FBD774;
+    font-weight: bold;
+    transition: .5s;
+}
+.item a:hover{
+    opacity: 80%;
+}
