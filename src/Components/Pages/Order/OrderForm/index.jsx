@@ -1,4 +1,3 @@
-import React from 'react'
 import './styles.css'
 import { useForm } from 'react-hook-form'
 import { NumericFormat } from 'react-number-format'

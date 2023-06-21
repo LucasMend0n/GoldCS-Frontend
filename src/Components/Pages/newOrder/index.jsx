@@ -1,5 +1,4 @@
 import './newOrder.css'
-import React from 'react'
 import NewOrderForm from './Form/NewOrderForm'
 const NewOrder = () => {
 

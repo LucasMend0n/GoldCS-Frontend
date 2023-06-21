@@ -1,4 +1,3 @@
-import { DevTool } from "@hookform/devtools";
 import { useForm } from "react-hook-form";
 import "./Form.css";
 import RDialog from "./Dialog/Dialog";
@@ -16,11 +15,11 @@ const NewOrderForm = () => {
   const [orderProducts, setOrderProducts] = useState([]);
 
   const form = useForm();
-  const { register, control, setValue, setFocus, reset } = form;
+  const { register, setValue, setFocus, reset } = form;
 
   const formRef = useRef(null);
 
-  const checkCEP = (e) => {
+  const checkCEP = () => {
     const cep = formRef.current["adr-postcode"].value.replace(/\D/g, "");
 
     if (!cep) return;
@@ -75,6 +74,7 @@ const NewOrderForm = () => {
               response.data.result.landlinePhone;
           }
         } catch (e) {
+          console.log(e)
         }
       };
 
@@ -326,7 +326,6 @@ const NewOrderForm = () => {
         </div>
         <button>Enviar</button>
       </form>
-      <DevTool control={control} />
       <ToastContainer />
     </>
   );

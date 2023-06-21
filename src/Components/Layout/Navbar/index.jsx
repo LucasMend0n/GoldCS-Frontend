@@ -1,4 +1,3 @@
-import React from 'react'
 import { NavLink } from 'react-router-dom'
 import {HiLogout} from 'react-icons/hi'
 import {AiOutlinePlusCircle} from 'react-icons/ai'

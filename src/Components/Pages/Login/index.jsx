@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './Login.css';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 
 function Login() {
@@ -85,6 +85,8 @@ function Login() {
             </button>
           </div>
         </form>
+
+        <Link to={'/amount'}>Teste</Link>
       </section>
     </>
   )
