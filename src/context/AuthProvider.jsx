@@ -7,6 +7,7 @@ const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState({});
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const user = getUserLocalStorage()
@@ -18,7 +19,6 @@ export const AuthProvider = ({ children }) => {
 
 
     async function authenticate(email, password) {
-        var backendResponse; 
         try {
             const response = await loginRequest(email, password);
             if ('success' in response) {
@@ -30,25 +30,26 @@ export const AuthProvider = ({ children }) => {
                 }
                 setUser(payload);
                 setUserLocalStorage(payload);
-                backendResponse = response.response.data;
+                return true; 
             }
-            else{
-                backendResponse = response.response.data;
+            else if (response.response && response.response.data && response.response.data.Message) {
+                setError(response.response.data.Message)
+            } else {
+                setError('Erro desconhecido'); 
             }
-            return backendResponse; 
-
         } catch (error) {
-            console.log(error);
+            setError(error.message);
         }
     }
 
     function logout() {
         setUser(null)
         setUserLocalStorage(null)
+        setError(null)
     }
 
     return (
-        <AuthContext.Provider value={{ ...user, authenticate, logout }}>
+        <AuthContext.Provider value={{ ...user, error, authenticate, logout }}>
             {children}
         </AuthContext.Provider>
     )

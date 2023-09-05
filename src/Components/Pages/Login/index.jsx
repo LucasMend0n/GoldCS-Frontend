@@ -7,7 +7,6 @@ import { Button, Col, Container, FloatingLabel, Form, Row, Spinner, Stack } from
 function Login() {
 
   const auth = useAuth()
-  const errRef = useRef();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -15,31 +14,29 @@ function Login() {
 
   const [user, setUser] = useState('');
   const [pwd, setPwd] = useState('');
-  const [errMsg, setErMsg] = useState('');
   const [loading, setLoading] = useState(null);
-
-  useEffect(() => {
-    setErMsg('');
-  }, [user, pwd])
+  
+  const { error} = auth;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
       setLoading(true);
-      await auth.authenticate(user, pwd);
+      const loginSuccess = await auth.authenticate(user, pwd);
       setLoading(false);
-      navigate(from, { replace: true });
-    }
-    catch (err) {
-
-    }
+      if(loginSuccess){
+        navigate(from, { replace: true });
+      }
+      setUser('');
+      setPwd('');  
   }
 
   return (
     <>
       <Container className='initialPage d-flex justify-content-center align-items-center' fluid='xxl'>
         <Container fluid="md" className='loginback  d-flex flex-column justify-content-center align-items-center shadow p-3 mb-5 bg-body-tertiary rounded'>
-          <p ref={errRef} className={errMsg ? "errmsg" : "ofscreen"}>{errMsg}</p>
+          {error &&(
+            <p className="errmsg">{error}</p>
+          )}
           <Row>
             <Col md={15}>
               <h1 className='login_title'>LOGOTIPO</h1>
