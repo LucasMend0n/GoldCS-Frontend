@@ -15,19 +15,31 @@ export const AuthProvider = ({ children }) => {
         }
     }, [])
 
+
+
     async function authenticate(email, password) {
+        var backendResponse; 
+        try {
+            const response = await loginRequest(email, password);
+            if ('success' in response) {
+                const payload = {
+                    token: response.result.token,
+                    email: response.result.email,
+                    userID: response.result.userID,
+                    name: response.result.name,
+                }
+                setUser(payload);
+                setUserLocalStorage(payload);
+                backendResponse = response.response.data;
+            }
+            else{
+                backendResponse = response.response.data;
+            }
+            return backendResponse; 
 
-        const response = await loginRequest(email, password); 
-        
-        const payload = {
-            token: response.result.token, 
-            email: response.result.email,
-            userID: response.result.userID,
-            name: response.result.name,
+        } catch (error) {
+            console.log(error);
         }
-
-        setUser(payload)
-        setUserLocalStorage(payload)
     }
 
     function logout() {

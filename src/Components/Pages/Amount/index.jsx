@@ -37,8 +37,6 @@ const Amount = () => {
       productID: e.target.product.value,
       quantity: e.target.qtd.value,
     });
-    console.log(json);
-
     const postAmount = async () => {
       const response = await apiGold.post("/Product/insertAmount", json, {
         headers: {
