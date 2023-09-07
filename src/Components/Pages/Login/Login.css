@@ -1,7 +1,7 @@
 .initialPage {
   min-height: 100vh;
   min-width: 100%;
-  background-color: #225de7;
+  background-color: #1e0fa0;
 }
 
 .btn-primary {
@@ -12,14 +12,12 @@
   transition: 0.5s;
   border: none;
   border-radius: 0.6em;
-  background-color: #225de7;
+  background-color: #1e0fa0;
 }
 
 .btn-primary:hover {
   background-color: #ffb703;
 }
-
-
 
 .loginback {
   min-height: 75vh;
@@ -28,14 +26,12 @@
 
 .LoginForm {
   min-width: 75%;
+  margin-top: 1em;
+  margin-bottom: 3em;
 }
 
 .buttons {
   margin-top: 5em;
-}
-
-.login_title {
-  margin: 2em 0;
 }
 
 .errmsg {
@@ -48,19 +44,4 @@
 
 .hide {
   display: none;
-}
-.valid {
-  color: limegreen;
-  margin-left: 0.25rem;
-}
-
-.instructions {
-  font-size: 0.75rem;
-  border-radius: 0.5rem;
-  background: lightcoral;
-  margin-bottom: 1em;
-  color: #fff;
-  padding: 0.25rem;
-  position: relative;
-  bottom: -10px;
 }

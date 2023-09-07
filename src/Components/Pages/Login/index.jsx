@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import './Login.css';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
-import { Button, Col, Container, FloatingLabel, Form, Row, Spinner, Stack } from 'react-bootstrap';
+import { Button, Col, Container, FloatingLabel, Form, Image, Row, Spinner, Stack } from 'react-bootstrap';
 
 function Login() {
 
@@ -15,32 +15,30 @@ function Login() {
   const [user, setUser] = useState('');
   const [pwd, setPwd] = useState('');
   const [loading, setLoading] = useState(null);
-  
-  const { error} = auth;
+
+  const { error } = auth;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-      setLoading(true);
-      const loginSuccess = await auth.authenticate(user, pwd);
-      setLoading(false);
-      if(loginSuccess){
-        navigate(from, { replace: true });
-      }
-      setUser('');
-      setPwd('');  
+    setLoading(true);
+    const loginSuccess = await auth.authenticate(user, pwd);
+    setLoading(false);
+    if (loginSuccess) {
+      navigate(from, { replace: true });
+    }
+    setUser('');
+    setPwd('');
   }
 
   return (
     <>
-      <Container className='initialPage d-flex justify-content-center align-items-center' fluid='xxl'>
-        <Container fluid="md" className='loginback  d-flex flex-column justify-content-center align-items-center shadow p-3 mb-5 bg-body-tertiary rounded'>
-          {error &&(
+      <Container className='initialPage d-flex justify-content-center align-items-center justify-content-sm-center'>
+        <Container fluid="md" className='loginback d-flex flex-column justify-content-center align-items-center shadow p-2 mb-3 bg-body-tertiary rounded'>
+          {error && (
             <p className="errmsg">{error}</p>
           )}
-          <Row>
-            <Col md={15}>
-              <h1 className='login_title'>LOGOTIPO</h1>
-            </Col>
+          <Row xs={1}>
+              <Image src="/src/Assets/logo2-SVG.svg" rounded fluid/>
           </Row>
           <Form className='LoginForm' onSubmit={handleSubmit}>
 
@@ -73,7 +71,7 @@ function Login() {
                 className='btn'
                 type='submit'
                 variant="primary"
-              >{ loading ? <Spinner> <span className="visually-hidden">Loading...</span> </Spinner> : <><span >ENTRAR</span></> }
+              >{loading ? <Spinner> <span className="visually-hidden">Loading...</span> </Spinner> : <><span >ENTRAR</span></>}
               </Button>
             </Stack>
           </Form>
