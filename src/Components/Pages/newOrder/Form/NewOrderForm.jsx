@@ -74,7 +74,7 @@ const NewOrderForm = () => {
               response.data.result.landlinePhone;
           }
         } catch (e) {
-          console.log(e)
+          
         }
       };
 

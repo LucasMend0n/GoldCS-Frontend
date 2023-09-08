@@ -32,7 +32,6 @@ const RDialog = ({ onAddProduct }) => {
             qtd,
             price,
         }
-        console.log(data)
         onAddProduct(data);
         resetFields();
     }
