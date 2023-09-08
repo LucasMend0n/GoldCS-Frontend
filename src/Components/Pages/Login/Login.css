@@ -19,6 +19,12 @@
   background-color: #ffb703;
 }
 
+.btn-primary:disabled {
+  background-color: #cccccc;
+  color: #666666;
+  cursor: none;
+}
+
 .loginback {
   min-height: 75vh;
   max-width: 35%;
@@ -32,16 +38,4 @@
 
 .buttons {
   margin-top: 5em;
-}
-
-.errmsg {
-  color: red;
-}
-
-.ofscreen {
-  display: none;
-}
-
-.hide {
-  display: none;
 }

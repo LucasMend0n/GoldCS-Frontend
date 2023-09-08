@@ -21,7 +21,7 @@ function Login() {
   const [isUserInteracting, setIsUserInteracting] = useState(false);
 
   const { error } = auth;
-  
+
   useEffect(() => {
     if (error) {
       setErrorAlert(true);
@@ -31,7 +31,7 @@ function Login() {
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }, [error]); 
+  }, [error]);
 
   const handleUserInteraction = () => {
     setIsUserInteracting(true);
@@ -48,13 +48,19 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const loginSuccess = await auth.authenticate(user, pwd);
-    setLoading(false);
-    if (loginSuccess) {
-      navigate(from, { replace: true });
+    try {
+      const loginSuccess = await auth.authenticate(user, pwd);
+      if (loginSuccess) {
+        navigate(from, { replace: true });
+      }
+
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setUser('');
+      setPwd('');
+      setLoading(false);
     }
-    setUser('');
-    setPwd('');
   }
 
   return (
@@ -78,12 +84,14 @@ function Login() {
               className="mb-3"
             >
               <Form.Control
+                className='inpt'
                 type='email'
                 id='login_username'
                 placeholder=''
                 onChange={(e) => setUser(e.target.value)}
                 onFocus={handleUserInteraction}
                 onBlur={handleUserInteractionEnd}
+                disabled={loading}
                 value={user}
                 required />
             </FloatingLabel>
@@ -92,12 +100,14 @@ function Login() {
               className="mb-3"
             >
               <Form.Control
+                className='inpt'
                 type='password'
                 id='login_password'
                 placeholder=''
                 onFocus={handleUserInteraction}
                 onBlur={handleUserInteractionEnd}
                 onChange={(e) => setPwd(e.target.value)}
+                disabled={loading}
                 value={pwd}
                 required />
             </FloatingLabel>
@@ -106,6 +116,7 @@ function Login() {
                 className='btn'
                 type='submit'
                 variant="primary"
+                disabled={loading}
               >{loading ? <Spinner> <span className="visually-hidden">Loading...</span> </Spinner> : <><span >ENTRAR</span></>}
               </Button>
             </Stack>
