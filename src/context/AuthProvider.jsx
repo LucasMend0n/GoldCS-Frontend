@@ -30,12 +30,25 @@ export const AuthProvider = ({ children }) => {
                 }
                 setUser(payload);
                 setUserLocalStorage(payload);
-                return true; 
+                return true;
             }
-            else if (response.response && response.response.data && response.response.data.Message) {
-                setError(response.response.data.Message)
+            else if (response.response && response.response.data && response.response.data.StatusCode) {
+                const statusCode = response.response.data.StatusCode;
+                let errorMessage = ''
+                switch (statusCode) {
+                    case 404:
+                        errorMessage = 'Usuário não encontrado. Tente novamente'
+                        break;
+                    case 400:
+                        errorMessage = 'Usuário ou senha inválidos. Tente novamente'
+                        break;
+                    default:
+                        errorMessage = 'Ocorreu um erro, tente novamente mais tarde.'
+                        break;
+                }
+                setError(errorMessage);
             } else {
-                setError('Erro desconhecido'); 
+                setError('Erro desconhecido');
             }
         } catch (error) {
             setError(error.message);
@@ -48,8 +61,12 @@ export const AuthProvider = ({ children }) => {
         setError(null)
     }
 
+    function clearLoginError() {
+        setError(null);
+    }
+
     return (
-        <AuthContext.Provider value={{ ...user, error, authenticate, logout }}>
+        <AuthContext.Provider value={{ ...user, error, authenticate, clearLoginError, logout }}>
             {children}
         </AuthContext.Provider>
     )
