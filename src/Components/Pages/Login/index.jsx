@@ -33,6 +33,12 @@ function Login() {
     }
   }, [error]);
 
+  useEffect(() => {
+    if (auth.token) {
+      navigate('/'); 
+    }
+  }, [auth.token, navigate]);
+
   const handleUserInteraction = () => {
     setIsUserInteracting(true);
   }
@@ -51,7 +57,7 @@ function Login() {
     try {
       const loginSuccess = await auth.authenticate(user, pwd);
       if (loginSuccess) {
-        navigate(from, { replace: true });
+        navigate('/');
       }
 
     } catch (error) {
