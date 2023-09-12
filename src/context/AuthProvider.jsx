@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { createContext, useEffect, useState } from "react";
 import { getUserLocalStorage, loginRequest, setUserLocalStorage } from "./util";
+import jwt from 'jwt-decode'
 
 const AuthContext = createContext({});
 
@@ -22,12 +23,13 @@ export const AuthProvider = ({ children }) => {
         try {
             const response = await loginRequest(email, password);
             if ('success' in response) {
-                const payload = {
+                const retLogin = {
                     token: response.result.token,
-                    email: response.result.email,
-                    userID: response.result.userID,
-                    name: response.result.name,
+                    refreshToken: response.result.refreshToken
                 }
+
+                const payload = jwt(retLogin.token)
+                payload.token = retLogin.token
                 setUser(payload);
                 setUserLocalStorage(payload);
                 return true;
