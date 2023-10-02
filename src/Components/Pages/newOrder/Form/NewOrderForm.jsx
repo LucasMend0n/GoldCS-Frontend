@@ -116,7 +116,7 @@ const NewOrderForm = () => {
     const order = {
       paymentMethod: formRef.current["od-payment"].value,
       deliveryForecast: formRef.current["od-uptoDate"].value,
-      userId: user.userID,
+      userId: user.userId,
       client: client,
       address: address,
       orderProducts: products,
