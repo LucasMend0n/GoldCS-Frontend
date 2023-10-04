@@ -11,7 +11,7 @@ export const SidebarData = [
     },
     {
       title: 'Produto',
-      path: '/',
+      path: '/product',
       icon: <BsFillBoxSeamFill />,
       cName: 'nav-text'
     },
@@ -29,7 +29,7 @@ export const SidebarData = [
     },
     {
       title: 'Perfil',
-      path: '/',
+      path: '/profile',
       icon: <AiOutlineUser/>,
       cName: 'nav-text'
     },
