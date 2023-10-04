@@ -8,7 +8,13 @@
 
 html {
   box-sizing: border-box;
+
   margin: 0;
+}
+
+.App{
+  font-family: Roboto, sans-serif;
+  display: flex;
 }
 
 body {
@@ -23,6 +29,17 @@ body {
 
 .inpt:disabled{
     cursor: not-allowed;  
+}
+
+.btn-global{
+  background-color: #1E0FA0;
+  cursor: pointer;
+  padding: 0.7em 1.2em;
+  text-decoration: none;
+  color: white;
+  border: none;
+  border-radius: .8em;
+
 }
 
 /* input {    
