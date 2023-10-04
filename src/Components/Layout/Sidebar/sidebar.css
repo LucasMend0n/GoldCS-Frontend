@@ -14,13 +14,24 @@
     background: none;
     color: #FFFFFF;
 }
+.menu-bars:hover{
+    color: #FFB703;
+    font-weight: bold;
+}
+
+#btn-close {
+    padding: 0;
+}
 
 #btn-close:hover {
     color: #FFB703;
 }
+
 .nav-menu {
     background-color: #1E0FA0;
     width: 250px;
+    max-height: 100%;
+    overflow-y: auto;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -56,7 +67,7 @@
     border-radius: 4px;
 }
 
-.nav-text a.active{
+.nav-text a.active {
     color: #FFB703;
     font-weight: bold;
     transition: .5s;
@@ -83,7 +94,7 @@
 
 .logout-btn {
     margin-left: 8em;
-    margin-top: 22em;
+    margin-top: 15em;
 }
 
 .logout-btn svg {
@@ -96,7 +107,11 @@
 }
 
 .logo-active {
-    max-width: 200px;
+    max-width: 150px;
+    margin-bottom: 6em;
+    margin-top: 3em;
+    margin-left: 2em;
+    margin-right: 3em;
 }
 
 span {

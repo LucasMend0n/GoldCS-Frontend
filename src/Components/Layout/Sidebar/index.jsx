@@ -3,7 +3,7 @@ import { FaBars } from 'react-icons/fa';
 import { AiOutlineClose } from 'react-icons/ai';
 import { Link, NavLink } from 'react-router-dom';
 import { SidebarData } from './SidebarData';
-import logoNav from '../../../Assets/logo-navbar.svg'
+import logoNav from '../../../Assets/logo1-variant-2-vector.svg'
 import './sidebar.css'
 import { FiLogOut } from 'react-icons/fi'
 import useAuth from '../../../hooks/useAuth';
@@ -28,7 +28,7 @@ const Sidebar = () => {
               <AiOutlineClose />
             </button>
           </li>
-          <NavLink to="/"><img src={logoNav} alt="Logo gold" className='logo-active' /></NavLink>
+          <img src={logoNav} alt="Logo gold" className='logo-active' />
           {SidebarData.map((item, index) => {
             return (
               <li key={index} className={item.cName}>
