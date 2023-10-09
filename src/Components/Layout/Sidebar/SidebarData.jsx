@@ -1,6 +1,6 @@
 import {AiFillHome, AiOutlineUser} from 'react-icons/ai'
-import {BsFillBoxSeamFill, BsFillArchiveFill} from 'react-icons/bs'
-import {BiNotepad} from 'react-icons/bi' 
+import {BsFillBoxSeamFill, BsFillArchiveFill, BsFillFileTextFill} from 'react-icons/bs'
+
 
 export const SidebarData = [
     {
@@ -18,7 +18,7 @@ export const SidebarData = [
     {
       title: 'Pedido',
       path: '/order',
-      icon: <BiNotepad/>,
+      icon: <BsFillFileTextFill/>,
       cName: 'nav-text'
     },
     {

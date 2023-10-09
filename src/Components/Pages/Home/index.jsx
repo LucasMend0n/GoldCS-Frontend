@@ -1,19 +1,35 @@
 import React from 'react'
 import './Home.css';
 import { getUserLocalStorage } from '../../../context/util';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import { AiOutlineUser } from 'react-icons/ai'
+import { BsFillBoxSeamFill, BsFillArchiveFill, BsFillFileTextFill } from 'react-icons/bs'
 
 
 const Home = () => {
   const user = getUserLocalStorage()
   return (
     <section className="HomePage">
-      <article>
-
-        <h1>Bem vindo a Gold Colchões, <span>{user.name}</span></h1>
-        <Link to={'/newOrder'}>
-          <button>Novo Pedido</button>
-        </Link>
+      <div className='display-user'>Bem vindo, {user.name}</div>
+      <article className='buttons_section'>
+        <div className='home_buttons'>
+          <NavLink id='order' className={'btn-global btn-home'} to={'/order'}>
+            <BsFillFileTextFill />
+            Pedido
+          </NavLink>
+          <NavLink className={'btn-global btn-home'} to={'/product'}>
+            <BsFillBoxSeamFill />
+            Produto
+          </NavLink>
+          <NavLink className={'btn-global btn-home'} to={'/amount'}>
+            <BsFillArchiveFill />
+            Estoque
+          </NavLink>
+          <NavLink className={'btn-global btn-home'} to={'/profile'}>
+            <AiOutlineUser />
+            Perfil
+          </NavLink>
+        </div>
 
       </article>
     </section>
