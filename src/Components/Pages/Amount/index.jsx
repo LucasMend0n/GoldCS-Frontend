@@ -5,6 +5,7 @@ import apiGold from "../../../Services/api.js";
 // Toast
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Button, Form } from "react-bootstrap";
 
 const Amount = () => {
   const [products, setProducts] = useState([]);
@@ -66,24 +67,38 @@ const Amount = () => {
   return (
     <section className="AmountPage">
       <form onSubmit={submit}>
-        <h1>Inserir Estoque</h1>
-        <div className="formSelect">
-          <label htmlFor="product">Produto</label>
-          <select name="product">
-            {products.map((product) => (
-              <option key={product.productID} value={product.productID}>
-                {product.name} - {product.version}
-              </option>
-            ))}
-            ;
-          </select>
+        <h1>INSERIR ESTOQUE</h1>
+        <div className="formContent">
+
+          <div className="formSelect">
+            <Form.Select
+              size="lg"
+              name="product"
+              id="product"
+            >
+              <option>Produto...</option>
+              {products.map((product) => (
+                <option key={product.productID} value={product.productID}>
+                  {product.name} - {product.version}
+                </option>
+              ))}
+              ;
+            </Form.Select>
+          </div>
+          <div className="form_submit">
+
+            <Form.Control
+              id="qtd"
+              placeholder="Quantidade..."
+              type="number"
+              name="qtd"
+            />
+            <button className="btn-global" id="submit-amount">ADICIONAR</button>
+          </div>
         </div>
-        <label htmlFor="qtd">Quantidade</label>
-        <input type="number" name="qtd" />
-        <button>Enviar</button>
       </form>
       <ToastContainer />
-    </section>
+    </section >
   );
 };
 
