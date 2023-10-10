@@ -9,6 +9,7 @@ import { Button, Form } from "react-bootstrap";
 
 const Amount = () => {
   const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState("");
 
   useEffect(() => {
     const getProducts = async () => {
@@ -28,9 +29,15 @@ const Amount = () => {
     e.preventDefault();
 
     const qtde = e.target.qtd.value;
+    if (selectedProduct === "") {
+      toast.error("Selecione um produto válido!");
+      setSelectedProduct("");
+      return;
+    }
     if (qtde <= 0) {
       toast.error("Quantidade inválida!");
       e.target.qtd.value = "";
+      setSelectedProduct("");
       return;
     }
 
@@ -58,6 +65,7 @@ const Amount = () => {
         });
 
         e.target.qtd.value = "";
+        setSelectedProduct("");
       }
     };
 
@@ -75,8 +83,10 @@ const Amount = () => {
               size="lg"
               name="product"
               id="product"
+              value={selectedProduct}
+              onChange={(e) => setSelectedProduct(e.target.value)}
             >
-              <option>Produto...</option>
+              <option value={""}>Produto...</option>
               {products.map((product) => (
                 <option key={product.productID} value={product.productID}>
                   {product.name} - {product.version}
