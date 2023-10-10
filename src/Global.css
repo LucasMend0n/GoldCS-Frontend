@@ -17,6 +17,15 @@ html {
   display: flex;
 }
 
+input{
+  appearance: unset;
+  -webkit-appearance: none;
+}
+input[type=number]{
+  appearance: unset;
+  -moz-appearance: textfield;
+}
+
 body {
   font: 400 16px Roboto, sans-serif;
   background: #d9d9d9;

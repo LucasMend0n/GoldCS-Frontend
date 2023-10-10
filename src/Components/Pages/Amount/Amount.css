@@ -1,4 +1,4 @@
-.AmountPage{
+.AmountPage {
     width: 100%;
     min-height: 100vh;
     display: flex;
@@ -7,26 +7,24 @@
     align-items: center;
 }
 
-.AmountPage form{
+.AmountPage form {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    row-gap: 1.5em;
+    height: 35em;
+    width: 50em;
     flex-direction: column;
-    background-color: #f7f7f7;
+    background-color: #e9e7f6;
     border-radius: .8em;
     padding: 2em;
     box-shadow: 0 1px 3px -2px #9098A9;
-    width: 20%;
     margin: 3em 0;
 }
-
-.AmountPage form > button{
-    text-align: center;
-    margin: 1em 0;
-    padding: 1em;
-}
-
-.AmountPage form >h1{
+.AmountPage form>h1 {
     text-align: center;
     margin-bottom: 1em;
+    font-size: 3em;
 }
 
 .formSelect{
@@ -34,5 +32,28 @@
     flex-direction: column;
     margin-bottom: 1em;
     margin-bottom: 1em;
+}
+
+.form_submit {
+    display: flex;
+    gap: 1em;
+    margin-top: 1em;
+}
+#submit-amount{
+    padding: 0.5em;
+    border-radius: .5em;
+    background-color: #FFB703;
+    width: 12em;
+    color: black;
+}
+#submit-amount:hover{
+    transform: scale(1.05);
+    transition: transform 0.2s ;
+}
+#qtd {
+    width: 15em;
+}
+#product{
+    width: 100%;
 }
 
