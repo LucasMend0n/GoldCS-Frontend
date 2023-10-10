@@ -1,0 +1,19 @@
+.profile_page {
+    gap: 5em;
+    width: 100%;
+    min-height: 100%;
+
+}
+
+.page_content{
+    width: 50%;
+}
+
+.profile_form {
+    background-color: #e9e7f6;
+    border-radius: .8em;
+    height:60%;
+    width: 55%;
+    padding: 4em;
+    box-shadow: 0 1px 3px -2px #9098A9;
+}

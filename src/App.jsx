@@ -8,6 +8,7 @@ import Order from './Components/Pages/Order';
 import NewOrder from './Components/Pages/newOrder';
 import Layout from './Components/Layout/Layout';
 import RequireAuth from './Components/RequireAuth';
+import Profile from './Components/Pages/Profile/Profile';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
           <Route exact path='/' element={<Home />} />
           <Route exact path='/amount' element={<Amount />} />
           <Route exact path='/order' element={<Order />} />
+          <Route path='/profile' element={<Profile />} />
           <Route path='/neworder' element={<NewOrder />} />
         </Route>
       </Route>
