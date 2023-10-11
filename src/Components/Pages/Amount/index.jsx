@@ -73,12 +73,15 @@ const Amount = () => {
   }
 
   return (
-    <section className="AmountPage">
-      <form onSubmit={submit}>
-        <h1>INSERIR ESTOQUE</h1>
-        <div className="formContent">
+    <section className="AmountPage d-flex flex-column mb-3 justify-content-start align-items-center">
+      <div className='display-user'><h2>Estoque</h2></div>
 
-          <div className="formSelect">
+      <form onSubmit={submit} className="d-flex flex-column my-3 justify-content-start p-5 w-50">
+        <div className="form_header d-flex flex-column mt-5 mb-3 justify-content-start align-items-center">
+          <h3>INSERIR ESTOQUE</h3>
+        </div>
+        <div className="formContent d-flex flex-column justify-content-center align-items-center">
+          <div className="formSelect w-75">
             <Form.Select
               size="lg"
               name="product"
@@ -95,7 +98,7 @@ const Amount = () => {
               ;
             </Form.Select>
           </div>
-          <div className="form_submit">
+          <div className="form_submit  w-75 d-flex ">
 
             <Form.Control
               id="qtd"
@@ -103,7 +106,7 @@ const Amount = () => {
               type="number"
               name="qtd"
             />
-            <button className="btn-global" id="submit-amount">ADICIONAR</button>
+            <button className="btn-global btn-amount w-50 mx-3">ADICIONAR</button>
           </div>
         </div>
       </form>
