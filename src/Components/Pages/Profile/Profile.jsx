@@ -21,20 +21,28 @@ const Profile = () => {
     const { register, setValue, getValues } = profileForm;
 
     const [isDisable, setIsDisable] = useState(true);
+    const [confirmPasswordEnabled, setConfirmPasswordEnabled] = useState(false);
 
-    const editForm = (e) => {
+
+    const editForm = e => {
         e.preventDefault();
         if (isDisable === false) {
             setValue("user_name", browserUser.name);
             setValue("user_email", browserUser.email);
             setValue("user_password", "");
             setValue("confirm_password", "");
+            setConfirmPasswordEnabled(false);
         }
         setIsDisable(!isDisable);
     }
+
+    const enableConfirmPassword = () => {
+        setConfirmPasswordEnabled(true);
+    };
     const isFieldEmpty = (obj) => {
         return Object.keys(obj).length === 0;
     }
+
     const enviarAlteracoes = async (e) => {
         e.preventDefault();
         try {
@@ -44,14 +52,15 @@ const Profile = () => {
             const confirmPwd = getValues("confirm_password");
 
             let submittedData = {}
-            
-            let formValues ={
-                name: name, 
-                email: email, 
+
+            let formValues = {
+                name: name,
+                email: email,
                 password: pwd
             }
 
             for (const key in formValues) {
+                //validação para retirar campos vazios do formulario no JSON
                 if (isFieldEmpty(formValues[key])) {
                     delete formValues[key];
                 }
@@ -114,8 +123,8 @@ const Profile = () => {
                                 type='password'
                                 placeholder=''
                                 name='user_password'
+                                onKeyUp={enableConfirmPassword}
                                 disabled={isDisable}
-
                             />
                         </FloatingLabel>
                         <FloatingLabel
@@ -127,7 +136,7 @@ const Profile = () => {
                                 type='password'
                                 placeholder=''
                                 name='confirm_password'
-                                disabled={isDisable}
+                                disabled={!confirmPasswordEnabled || isDisable}
                             />
                         </FloatingLabel>
                     </div>
