@@ -32,27 +32,37 @@ const Profile = () => {
         }
         setIsDisable(!isDisable);
     }
+    const isFieldEmpty = (obj) => {
+        return Object.keys(obj).length === 0;
+    }
     const enviarAlteracoes = async (e) => {
         e.preventDefault();
-        
-        const pwd = getValues("user_password");
-        const confirmPwd = getValues("confirm_password");
-        const profileData = {
-            name: getValues("user_name"),
-            email: getValues("user_email"),
-        };
-
-        if (pwd != "" && confirmPwd != "") {
-            profileData.password = pwd; 
-        }
-        console.log(profileData);
         try {
-            const id = browserUser.userId;
-            const response = await apiGold.put(`Authenticate/Update/${id}`, profileData);
+            const name = getValues("user_name");
+            const email = getValues("user_email");
+            const pwd = getValues("user_password");
+            const confirmPwd = getValues("confirm_password");
 
-            if(response.data.success){
-                console.log("DEU CERTO"); 
+            let submittedData = {}
+            
+            let formValues ={
+                name: name, 
+                email: email, 
+                password: pwd
             }
+
+            for (const key in formValues) {
+                if (isFieldEmpty(formValues[key])) {
+                    delete formValues[key];
+                }
+                submittedData = formValues;
+            }
+            console.log(submittedData);
+            // const id = browserUser.userId;
+            // const response = await apiGold.put(`Authenticate/Update/${id}`, profileData);
+            // if (response.data.success) {
+            //     console.log("DEU CERTO");
+            // }
 
         } catch (error) {
             console.log(error)
@@ -65,7 +75,7 @@ const Profile = () => {
                 <div className='display-user'><h2>Perfil</h2></div>
 
                 <Form onSubmit={enviarAlteracoes} className='profile_form d-flex flex-column mb-3 justify-content-center '>
-                    <div className="form_header d-flex flex-column mb-5 justify-content-center align-items-start">
+                    <div className="form_header d-flex flex-column my-5 justify-content-center align-items-start">
                         <h3>Dados do seu usuário</h3>
                     </div>
                     <div>
@@ -121,7 +131,7 @@ const Profile = () => {
                             />
                         </FloatingLabel>
                     </div>
-                    <div className='form-buttons d-flex justify-content-center mt-3'>
+                    <div className='form-buttons d-flex justify-content-center my-3'>
                         <button className={`btn w-25 ${isDisable ? 'btn-outline-primary' : ' btn-outline-danger'}`} onClick={editForm}>
                             {isDisable ? 'Editar' : 'Cancelar'}
                         </button>
