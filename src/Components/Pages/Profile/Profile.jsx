@@ -6,7 +6,7 @@ const Profile = () => {
     return (
         <>
             <section className='profile_page d-flex flex-column mb-3 justify-content-start align-items-center'>
-                <div className='display-user'>Perfil</div>
+                <div className='display-user'><h2>Perfil</h2></div>
 
                 <Form className='profile_form d-flex flex-column mb-3 justify-content-center '>
                     <div className="form_header d-flex flex-column mb-5 justify-content-center align-items-start">
@@ -31,10 +31,16 @@ const Profile = () => {
                         >
                             <Form.Control />
                         </FloatingLabel>
+                        <FloatingLabel
+                            label="Confirmar senha"
+                            className="mb-3"
+                        >
+                            <Form.Control />
+                        </FloatingLabel>
                     </div>
-                    <div className='form-buttons d-flex justify-content-start mt-3'>
-                        <button className="btn-global">Editar</button>
-                        <button className="btn-global mx-3">Salvar</button>
+                    <div className='form-buttons d-flex justify-content-center mt-3'>
+                        <button className="btn btn-outline-primary w-25">Editar</button>
+                        <button className="btn-global btn-profile w-25 mx-3">Salvar</button>
 
                     </div>
                 </Form>
