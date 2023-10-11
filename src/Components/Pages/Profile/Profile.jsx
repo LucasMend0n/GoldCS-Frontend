@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Profile.css'
 import { FloatingLabel, Form, FormControl } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { getUserLocalStorage } from '../../../context/util'
 import apiGold from '../../../Services/api'
+import useAuth from '../../../hooks/useAuth'
+import { Alert, Slide, Snackbar } from '@mui/material'
 
 const Profile = () => {
-
+    const auth = useAuth()
     const browserUser = getUserLocalStorage();
 
     const profileForm = useForm({
@@ -18,10 +20,11 @@ const Profile = () => {
         }
     });
 
-    const { register, setValue, getValues } = profileForm;
+    const { register, setValue, getValues, reset } = profileForm;
 
     const [isDisable, setIsDisable] = useState(true);
     const [confirmPasswordEnabled, setConfirmPasswordEnabled] = useState(false);
+    const [error, setError] = useState(false);
 
 
     const editForm = e => {
@@ -42,14 +45,38 @@ const Profile = () => {
     const isFieldEmpty = (obj) => {
         return Object.keys(obj).length === 0;
     }
+    const isPasswordMatching = () => {
+        const password = getValues('user_password');
+        const confirmPassword = getValues('confirm_password');
+        return password === confirmPassword;
+    };
+    const transitionAlert = (props) => {
+        return <Slide {...props} direction="left" />;
+    }
+
+    useEffect(() => {
+        if (error) {
+            const timer = setTimeout(() => {
+                setError(false);
+            }, 5000);
+            return () => clearTimeout(timer);
+        }
+    }, [error]);
 
     const enviarAlteracoes = async (e) => {
         e.preventDefault();
+        //validação de senhas iguais
+        if (!isPasswordMatching()) {
+            setError(true);
+            setValue("user_password", "");
+            setValue("confirm_password", "");
+            return;
+        }
+
         try {
             const name = getValues("user_name");
             const email = getValues("user_email");
             const pwd = getValues("user_password");
-            const confirmPwd = getValues("confirm_password");
 
             let submittedData = {}
 
@@ -67,6 +94,7 @@ const Profile = () => {
                 submittedData = formValues;
             }
             console.log(submittedData);
+
             // const id = browserUser.userId;
             // const response = await apiGold.put(`Authenticate/Update/${id}`, profileData);
             // if (response.data.success) {
@@ -76,6 +104,9 @@ const Profile = () => {
         } catch (error) {
             console.log(error)
         }
+        finally {
+            //           auth.logout()
+        }
     }
 
     return (
@@ -84,8 +115,13 @@ const Profile = () => {
                 <div className='display-user'><h2>Perfil</h2></div>
 
                 <Form onSubmit={enviarAlteracoes} className='profile_form d-flex flex-column mb-3 justify-content-center '>
-                    <div className="form_header d-flex flex-column my-5 justify-content-center align-items-start">
+                    <div className="form_header d-flex flex-column mt-5 mb-4 justify-content-center align-items-start">
                         <h3>Dados do seu usuário</h3>
+                        <div className='description d-flex align-items-center'>
+                            {!isDisable ? <p className='mx-1'>Não é necessário atualizar todos os campos.</p> : <></>}
+                            {!isDisable ? <p>Ao concluir a alteração, você será deslogado.</p> : <></>}
+
+                        </div>
                     </div>
                     <div>
                         <FloatingLabel
@@ -139,6 +175,11 @@ const Profile = () => {
                                 disabled={!confirmPasswordEnabled || isDisable}
                             />
                         </FloatingLabel>
+                        {error && (
+                            <Snackbar open={error} anchorOrigin={{ horizontal: 'right', vertical: 'top' }} TransitionComponent={transitionAlert}>
+                                <Alert severity='error'> Senha e confirmar senha precisam ser iguais! </Alert>
+                            </Snackbar>
+                        )}
                     </div>
                     <div className='form-buttons d-flex justify-content-center my-3'>
                         <button className={`btn w-25 ${isDisable ? 'btn-outline-primary' : ' btn-outline-danger'}`} onClick={editForm}>
