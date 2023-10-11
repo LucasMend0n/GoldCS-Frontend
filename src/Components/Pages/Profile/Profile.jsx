@@ -3,6 +3,7 @@ import './Profile.css'
 import { FloatingLabel, Form, FormControl } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { getUserLocalStorage } from '../../../context/util'
+import apiGold from '../../../Services/api'
 
 const Profile = () => {
 
@@ -12,22 +13,50 @@ const Profile = () => {
         defaultValues: {
             user_name: browserUser.name,
             user_email: browserUser.email,
+            user_password: "",
+            confirm_password: ""
         }
     });
 
-    const { register, setValue } = profileForm;
+    const { register, setValue, getValues } = profileForm;
 
     const [isDisable, setIsDisable] = useState(true);
 
     const editForm = (e) => {
         e.preventDefault();
-        if(isDisable === false){
-            setValue("user_name", browserUser.name); 
-            setValue("user_email", browserUser.email); 
-            setValue("user_password", ""); 
-            setValue("confirm_password", ""); 
+        if (isDisable === false) {
+            setValue("user_name", browserUser.name);
+            setValue("user_email", browserUser.email);
+            setValue("user_password", "");
+            setValue("confirm_password", "");
         }
         setIsDisable(!isDisable);
+    }
+    const enviarAlteracoes = async (e) => {
+        e.preventDefault();
+        
+        const pwd = getValues("user_password");
+        const confirmPwd = getValues("confirm_password");
+        const profileData = {
+            name: getValues("user_name"),
+            email: getValues("user_email"),
+        };
+
+        if (pwd != "" && confirmPwd != "") {
+            profileData.password = pwd; 
+        }
+        console.log(profileData);
+        try {
+            const id = browserUser.userId;
+            const response = await apiGold.put(`Authenticate/Update/${id}`, profileData);
+
+            if(response.data.success){
+                console.log("DEU CERTO"); 
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
@@ -35,7 +64,7 @@ const Profile = () => {
             <section className='profile_page d-flex flex-column mb-3 justify-content-start align-items-center'>
                 <div className='display-user'><h2>Perfil</h2></div>
 
-                <Form className='profile_form d-flex flex-column mb-3 justify-content-center '>
+                <Form onSubmit={enviarAlteracoes} className='profile_form d-flex flex-column mb-3 justify-content-center '>
                     <div className="form_header d-flex flex-column mb-5 justify-content-center align-items-start">
                         <h3>Dados do seu usuário</h3>
                     </div>
@@ -69,7 +98,7 @@ const Profile = () => {
                         <FloatingLabel
                             label="Nova senha"
                             className="mb-3"
-                            password>
+                        >
                             <Form.Control
                                 {...register("user_password")}
                                 type='password'
