@@ -19,7 +19,7 @@
 .btn-profile{
     border-radius: .4em;
 }
-.btn-profile:hover{
+.btn-profile:hover:enabled{
     transform: scale(1.05);
     transition: transform 0.2s ;
 }

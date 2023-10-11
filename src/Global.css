@@ -12,10 +12,11 @@ html {
   margin: 0;
 }
 
-.App{
+.App {
   font-family: Roboto, sans-serif;
   display: flex;
 }
+
 .display-user {
   display: flex;
   flex-direction: column;
@@ -33,11 +34,12 @@ html {
 }
 
 
-input{
+input {
   appearance: unset;
   -webkit-appearance: none;
 }
-input[type=number]{
+
+input[type=number] {
   appearance: unset;
   -moz-appearance: textfield;
 }
@@ -52,11 +54,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.inpt:disabled{
-    cursor: not-allowed;  
+.inpt:disabled {
+  cursor: not-allowed;
 }
 
-.btn-global{
+.btn-global {
   background-color: #1E0FA0;
   cursor: pointer;
   padding: 0.7em 1.2em;
@@ -65,6 +67,17 @@ body {
   border: none;
   border-radius: .8em;
 
+}
+
+input:disabled {
+  cursor: not-allowed;
+}
+
+button:disabled,
+button[disabled] {
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
 }
 
 /* input {    
@@ -78,9 +91,6 @@ body {
     
 }
 
-input:disabled{
-    cursor: not-allowed;
-}
 
 select{
     appearance: unset;
@@ -109,13 +119,6 @@ button{
     border-radius: .8em;
 }
 
-button:disabled,
-button[disabled]{
-  border: 1px solid #999999;
-  background-color: #cccccc;
-  color: #666666;
-  cursor: none;
-}
 
 button:hover{
     background-color:#FBD774;
