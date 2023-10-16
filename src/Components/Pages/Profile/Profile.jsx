@@ -24,14 +24,20 @@ const Profile = () => {
 
     const [isDisable, setIsDisable] = useState(true);
     const [confirmPasswordEnabled, setConfirmPasswordEnabled] = useState(false);
-    const [error, setError] = useState(false);
+    const [passwordEqualsError, setpasswordEqualsError] = useState(false);
+    const [emptyInputsError, setEmptyInputsError] = useState(false); 
 
 
     const editForm = e => {
         e.preventDefault();
+        setIsDisable(!isDisable)
+        if (isDisable === true) {
+            setValue("user_name", "")
+            setValue("user_email", "")
+        }
         if (isDisable === false) {
-            setValue("user_name", browserUser.name);
-            setValue("user_email", browserUser.email);
+            setValue("user_name", browserUser.name)
+            setValue("user_email", browserUser.email)
             setValue("user_password", "");
             setValue("confirm_password", "");
             setConfirmPasswordEnabled(false);
@@ -55,19 +61,31 @@ const Profile = () => {
     }
 
     useEffect(() => {
-        if (error) {
+        if (passwordEqualsError) {
             const timer = setTimeout(() => {
-                setError(false);
+                setpasswordEqualsError(false);
             }, 5000);
             return () => clearTimeout(timer);
         }
-    }, [error]);
+        if (emptyInputsError) {
+            const timer = setTimeout(() => {
+                setEmptyInputsError(false);
+            }, 5000);
+            return () => clearTimeout(timer);
+        }
+        
+    }, [passwordEqualsError, emptyInputsError]);
+
+    function allInputsEmpty(){
+        let form = getValues(); 
+        return !Object.keys(form).some(k => form[k] !== "");
+    }
 
     const enviarAlteracoes = async (e) => {
         e.preventDefault();
         //validação de senhas iguais
         if (!isPasswordMatching()) {
-            setError(true);
+            setpasswordEqualsError(true);
             setValue("user_password", "");
             setValue("confirm_password", "");
             return;
@@ -85,15 +103,21 @@ const Profile = () => {
                 email: email,
                 password: pwd
             }
+            // validação de se todos os inputs estão nulos
+            if(allInputsEmpty()){
+                setEmptyInputsError(true);
+                return 
+            }
 
+            //validação para retirar campos vazios do formulario no JSON
             for (const key in formValues) {
-                //validação para retirar campos vazios do formulario no JSON
                 if (isFieldEmpty(formValues[key])) {
                     delete formValues[key];
                 }
                 submittedData = formValues;
             }
             console.log(submittedData);
+            console.log(allInputsEmpty())
 
             // const id = browserUser.userId;
             // const response = await apiGold.put(`Authenticate/Update/${id}`, profileData);
@@ -127,7 +151,7 @@ const Profile = () => {
                     <div>
                         <FloatingLabel
                             label="Nome"
-                            className="mb-3"    
+                            className="mb-3"
                         >
                             <Form.Control
                                 {...register("user_name")}
@@ -176,9 +200,14 @@ const Profile = () => {
                                 disabled={!confirmPasswordEnabled || isDisable}
                             />
                         </FloatingLabel>
-                        {error && (
-                            <Snackbar open={error} anchorOrigin={{ horizontal: 'right', vertical: 'top' }} TransitionComponent={transitionAlert}>
+                        {passwordEqualsError && (
+                            <Snackbar open={passwordEqualsError} anchorOrigin={{ horizontal: 'right', vertical: 'top' }} TransitionComponent={transitionAlert}>
                                 <Alert severity='error'> Senha e confirmar senha precisam ser iguais! </Alert>
+                            </Snackbar>
+                        )}
+                        {emptyInputsError && (
+                            <Snackbar open={emptyInputsError} anchorOrigin={{ horizontal: 'right', vertical: 'top' }} TransitionComponent={transitionAlert}>
+                                <Alert severity='error'> Ao menos um campo deve ser alterado </Alert>
                             </Snackbar>
                         )}
                     </div>
