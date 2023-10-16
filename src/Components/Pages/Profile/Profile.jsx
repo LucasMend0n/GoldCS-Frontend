@@ -111,22 +111,23 @@ const Profile = () => {
 
     return (
         <>
-            <section className='profile_page d-flex flex-column mb-3 justify-content-start align-items-center'>
+            <section className='profile_page d-flex flex-column justify-content-start align-items-center'>
                 <div className='display-user'><h2>Perfil</h2></div>
 
-                <Form onSubmit={enviarAlteracoes} className='profile_form d-flex flex-column mb-3 justify-content-center '>
-                    <div className="form_header d-flex flex-column mt-5 mb-4 justify-content-center align-items-start">
+                <Form onSubmit={enviarAlteracoes} className='profile_form d-flex flex-column justify-content-center '>
+                    <div className="form_header d-flex flex-column justify-content-center align-items-start">
                         <h3>Dados do seu usuário</h3>
                         <div className='description d-flex align-items-center'>
-                            {!isDisable ? <p className='mx-1'>Não é necessário atualizar todos os campos.</p> : <></>}
-                            {!isDisable ? <p>Ao concluir a alteração, você será deslogado.</p> : <></>}
-
+                            <div className={`edit-description  d-${!isDisable ? 'flex ' : 'none'}`} >
+                                <p>Não é necessário atualizar todos os campos.</p>
+                                <p>Ao concluir a alteração, você será deslogado.</p>
+                            </div>
                         </div>
                     </div>
                     <div>
                         <FloatingLabel
                             label="Nome"
-                            className="mb-3"
+                            className="mb-3"    
                         >
                             <Form.Control
                                 {...register("user_name")}
@@ -181,12 +182,11 @@ const Profile = () => {
                             </Snackbar>
                         )}
                     </div>
-                    <div className='form-buttons d-flex justify-content-center my-3'>
-                        <button className={`btn w-25 ${isDisable ? 'btn-outline-primary' : ' btn-outline-danger'}`} onClick={editForm}>
+                    <div className='form-buttons d-flex justify-content-center mt-2'>
+                        <button className={` btn btn-profile w-25 ${isDisable ? 'btn-outline-primary' : ' btn-outline-danger'}`} onClick={editForm}>
                             {isDisable ? 'Editar' : 'Cancelar'}
                         </button>
                         <button className="btn-global btn-profile w-25 mx-3" disabled={isDisable}>Salvar</button>
-
                     </div>
                 </Form>
             </section>
