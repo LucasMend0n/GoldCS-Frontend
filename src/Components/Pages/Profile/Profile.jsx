@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './Profile.css'
-import { FloatingLabel, Form, FormControl } from 'react-bootstrap'
+import { FloatingLabel, Form, FormControl, Spinner } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { getUserLocalStorage } from '../../../context/util'
 import apiGold from '../../../Services/api'
@@ -25,7 +25,8 @@ const Profile = () => {
     const [isDisable, setIsDisable] = useState(true);
     const [confirmPasswordEnabled, setConfirmPasswordEnabled] = useState(false);
     const [passwordEqualsError, setpasswordEqualsError] = useState(false);
-    const [emptyInputsError, setEmptyInputsError] = useState(false); 
+    const [emptyInputsError, setEmptyInputsError] = useState(false);
+    const [loading, setIsloading] = useState(null);
 
 
     const editForm = e => {
@@ -73,23 +74,17 @@ const Profile = () => {
             }, 5000);
             return () => clearTimeout(timer);
         }
-        
+
     }, [passwordEqualsError, emptyInputsError]);
 
-    function allInputsEmpty(){
-        let form = getValues(); 
+    function allInputsEmpty() {
+        let form = getValues();
         return !Object.keys(form).some(k => form[k] !== "");
     }
 
     const enviarAlteracoes = async (e) => {
         e.preventDefault();
-        //validação de senhas iguais
-        if (!isPasswordMatching()) {
-            setpasswordEqualsError(true);
-            setValue("user_password", "");
-            setValue("confirm_password", "");
-            return;
-        }
+        setIsloading(true);
 
         try {
             const name = getValues("user_name");
@@ -103,10 +98,21 @@ const Profile = () => {
                 email: email,
                 password: pwd
             }
+
+            //validação de senhas iguais
+            if (!isPasswordMatching()) {
+                setpasswordEqualsError(true);
+                setValue("user_password", "");
+                setValue("confirm_password", "");
+                setIsloading(false);
+                return;
+            }
+
             // validação de se todos os inputs estão nulos
-            if(allInputsEmpty()){
+            if (allInputsEmpty()) {
                 setEmptyInputsError(true);
-                return 
+                setIsloading(false);
+                return
             }
 
             //validação para retirar campos vazios do formulario no JSON
@@ -117,7 +123,16 @@ const Profile = () => {
                 submittedData = formValues;
             }
             console.log(submittedData);
-            console.log(allInputsEmpty())
+            console.log(allInputsEmpty());
+            setIsDisable(true);
+            setIsloading(false);
+
+            reset({
+                user_name: "",
+                user_email: "",
+                user_password: "",
+                confirm_password: ""
+            })
 
             // const id = browserUser.userId;
             // const response = await apiGold.put(`Authenticate/Update/${id}`, profileData);
@@ -129,7 +144,8 @@ const Profile = () => {
             console.log(error)
         }
         finally {
-            //           auth.logout()
+            //reset(); 
+            //auth.logout()
         }
     }
 
@@ -215,7 +231,9 @@ const Profile = () => {
                         <button className={` btn btn-profile w-25 ${isDisable ? 'btn-outline-primary' : ' btn-outline-danger'}`} onClick={editForm}>
                             {isDisable ? 'Editar' : 'Cancelar'}
                         </button>
-                        <button className="btn-global btn-profile w-25 mx-3" disabled={isDisable}>Salvar</button>
+                        <button className="btn-global btn-profile w-25 mx-3" disabled={isDisable}>
+                            {loading ? <Spinner> <span className="visually-hidden">Loading...</span> </Spinner> : <>Salvar</>}
+                        </button>
                     </div>
                 </Form>
             </section>
