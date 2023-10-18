@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import './styles.css'
+import './SearchOrder.css'
 import apiGold from '../../../../Services/api'
-import OrderForm from '../OrderForm'
+import OrderForm from './OrderForm'
 
 const SearchOrder = () => {
 
@@ -34,21 +34,23 @@ const SearchOrder = () => {
 
   return (
     <>
-      <form className='searchForm' >
-        <h1>Encontrar pedido</h1>
-        <input
-          type="text"
-          placeholder='Buscar Pedido...'
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <button onClick={handleSearch}>Buscar</button>
-      </form>
+      <section className='searchOrderPage d-flex flex-column justify-content-start align-items-center'>
+        <form className='searchForm' >
+          <h1>Encontrar pedido</h1>
+          <input
+            type="text"
+            placeholder='Buscar Pedido...'
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button onClick={handleSearch}>Buscar</button>
+        </form>
 
-      {
-        error ? (<p>Nenhum pedido encontrado com esse Id</p>)
-          : (order ? <OrderForm order={order} /> : null)
-      }
+        {
+          error ? (<p>Nenhum pedido encontrado com esse Id</p>)
+            : (order ? <OrderForm order={order} /> : null)
+        }
+      </section>
     </>
   )
 }

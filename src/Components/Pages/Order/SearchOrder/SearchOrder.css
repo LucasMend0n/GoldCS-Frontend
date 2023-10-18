@@ -1,4 +1,9 @@
-.searchForm{
+.searchOrderPage {
+    width: 100%;
+    min-height: 100vh;  
+}
+
+.searchForm {
     display: flex;
     flex-direction: column;
     background-color: #f7f7f7;
@@ -9,7 +14,7 @@
     margin: 1em 0;
 }
 
-.searchForm h1{
+.searchForm h1 {
     text-align: center;
     margin-bottom: 1em;
 }
