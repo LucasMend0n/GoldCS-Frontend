@@ -1,26 +1,5 @@
 .NewOrderPage{
     width: 100%;
-    min-height: 75vh;
-    display: flex; 
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    min-height: 100vh;
+    gap: 6em;
 }
-
-.NewOrderPage form{
-    display: flex;
-    flex-direction: column;
-    background-color: #f7f7f7;
-    border-radius: .8em;
-    padding: 2em;
-    box-shadow: 0 1px 3px -2px #9098A9;
-    min-width: 40%;
-    margin: 3em 0;
-}
-
-.NewOrderPage form > h1{
-    text-align: center;
-    margin-bottom: 1em ;
-}
-
-

@@ -10,6 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getUserLocalStorage } from "../../../../context/util";
 import MaskedInput from "react-text-mask";
+import { Form } from "react-bootstrap";
 
 const NewOrderForm = () => {
   const [orderProducts, setOrderProducts] = useState([]);
@@ -70,17 +71,22 @@ const NewOrderForm = () => {
             formRef.current["cl-name"].value = response.data.result.name;
             formRef.current["cl-email"].value = response.data.result.email;
             formRef.current["cl-celphone"].value = response.data.result.cellPhone;
-            formRef.current["cl-landPhone"].value =
-              response.data.result.landlinePhone;
+            formRef.current["cl-landPhone"].value = response.data.result.landlinePhone;
           }
         } catch (e) {
-          
+
         }
       };
 
       searchClient();
     }
   };
+
+  const limparForm = (e) =>{
+    e.preventDefault(); 
+    setOrderProducts([])
+    reset(); 
+  }
 
   const enviarPedido = (e) => {
     e.preventDefault();
@@ -165,119 +171,149 @@ const NewOrderForm = () => {
 
   return (
     <>
-      <form ref={formRef} onSubmit={enviarPedido}>
+      <form className="newOrderForm d-flex flex-column justify-content-center mx-auto" ref={formRef}>
         <h1>Novo Pedido</h1>
 
-        <div className="Form-section">
-          <h3>Informações do cliente</h3>
-          <label htmlFor="cl-id"> CPF </label>
-          <MaskedInput
-            {...register("cl-id")}
-            type="text"
-            placeholder="Digite o CPF do cliente"
-            name="cl-id"
-            onBlur={checkCPF}
-            id="cl-id"
-            mask={[/\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "-", /\d/, /\d/]}
-          />
-          <label htmlFor="cl-name"> Nome </label>
-          <input
-            {...register("cl-name")}
-            type="text"
-            placeholder="Digite o nome do cliente"
-            name="cl-name"
-            id="cl-name"
-          />
-          <label htmlFor="cl-email"> Email </label>
-          <input
-            {...register("cl-email")}
-            type="email"
-            placeholder="Digite o email do cliente"
-            name="cl-email"
-            id="cl-email"
-          />
-          <label htmlFor="cl-celphone"> Telefone celular </label>
-          <input
-            {...register("cl-celphone")}
-            type="text"
-            placeholder="Digite o celular do cliente"
-            name="cl-celphone"
-            id="cl-celphone"
-          />
-          <label htmlFor="cl-landPhone"> Telefone Fixo </label>
-          <input
-            {...register("cl-landPhone")}
-            type="text"
-            placeholder="Digite o telefone fixo do cliente"
-            name="cl-landPhone"
-            id="cl-landPhone"
-          />
+        <div className="form_section_horizontal  d-flex flex-column ">
+          <h3 className="w-100 border-bottom">Informações do cliente</h3>
+          <div className="form_line d-flex " >
+            <Form.Group className="d-flex flex-column">
+              <label htmlFor="cl-id"> CPF </label>
+              <Form.Control
+                {...register("cl-id")}
+                type="text"
+                as={MaskedInput}
+                placeholder="Digite o CPF do cliente"
+                name="cl-id"
+                onBlur={checkCPF}
+                id="cl-id"
+                mask={[/\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "-", /\d/, /\d/]}
+              />
+            </Form.Group>
+            <Form.Group className="d-flex flex-column" >
+              <label htmlFor="cl-name"> Nome </label>
+              <Form.Control
+                {...register("cl-name")}
+                type="text"
+                placeholder="Digite o nome do cliente"
+                name="cl-name"
+                id="cl-name"
+              />
+            </Form.Group>
+            <Form.Group className="d-flex flex-column">
+              <label htmlFor="cl-email"> Email </label>
+              <Form.Control
+                {...register("cl-email")}
+                type="email"
+                placeholder="Digite o email do cliente"
+                name="cl-email"
+                id="cl-email"
+              />
+            </Form.Group>
+            <Form.Group className="d-flex flex-column">
+              <label htmlFor="cl-celphone"> Telefone celular </label>
+              <Form.Control
+                {...register("cl-celphone")}
+                type="text"
+                placeholder="Digite o celular do cliente"
+                name="cl-celphone"
+                id="cl-celphone"
+              />
+            </Form.Group>
+            <Form.Group className="d-flex flex-column">
+              <label htmlFor="cl-landPhone"> Telefone Fixo </label>
+              <Form.Control
+                {...register("cl-landPhone")}
+                type="text"
+                placeholder="Digite o telefone fixo do cliente"
+                name="cl-landPhone"
+                id="cl-landPhone"
+              />
+            </Form.Group>
+          </div>
         </div>
-        <div className="Form-section">
-          <h3>Endereço do cliente</h3>
-          <label htmlFor="adr-postcode">CEP</label>
-          <MaskedInput
-            {...register("adr-postcode")}
-            mask={[/\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/]}
-            type="text"
-            placeholder="Digite o CEP do cliente"
-            id="adr-postcode"
-            onBlur={checkCEP}
-          />
-          <label htmlFor="adr-street">Endereço</label>
-          <input
-            {...register("adr-street")}
-            type="text"
-            placeholder=""
-            disabled={true}
-            id="adr-street"
-          />
-          <label htmlFor="adr-number">Numero</label>
-          <input
-            {...register("adr-number")}
-            type="text"
-            placeholder="Digite o número do cliente"
-            id="adr-number"
-          />
-          <label htmlFor="adr-complement">Complemento</label>
-          <input
-            {...register("adr-complement")}
-            type="text"
-            placeholder="Digite o complemento do cliente"
-            id="adr-complement"
-          />
-          <label htmlFor="adr-city">Cidade</label>
-          <input
-            {...register("adr-city")}
-            type="text"
-            placeholder=""
-            disabled={true}
-            id="adr-city"
-          />
-          <label htmlFor="adr-district">Bairro</label>
-          <input
-            {...register("adr-district")}
-            type="text"
-            placeholder=""
-            disabled={true}
-            id="adr-district"
-          />
-          <label htmlFor="adr-uf">UF</label>
-          <input
-            {...register("adr-uf")}
-            type="text"
-            placeholder=""
-            disabled={true}
-            id="adr-uf"
-          />
+        <div className="form_section_horizontal  d-flex flex-column ">
+          <h3 className="w-100 border-bottom">Endereço do cliente</h3>
+          <div className="form_line d-flex ">
+            <Form.Group className="d-flex flex-column">
+              <label htmlFor="adr-postcode">CEP</label>
+              <Form.Control
+                {...register("adr-postcode")}
+                as={MaskedInput}
+                mask={[/\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/]}
+                type="text"
+                placeholder="Digite o CEP do cliente"
+                id="adr-postcode"
+                onBlur={checkCEP}
+              />
+            </Form.Group>
+            <Form.Group className="d-flex flex-column">
+              <label htmlFor="adr-street">Rua</label>
+              <Form.Control
+                {...register("adr-street")}
+                type="text"
+                placeholder=""
+                disabled={true}
+                id="adr-street"
+              />
+            </Form.Group>
+            <Form.Group className="d-flex flex-column">
+              <label htmlFor="adr-number">Numero</label>
+              <Form.Control
+                {...register("adr-number")}
+                type="text"
+                placeholder="Digite o número do cliente"
+                id="adr-number"
+              />
+            </Form.Group>
+            <Form.Group className="d-flex flex-column">
+              <label htmlFor="adr-complement">Complemento</label>
+              <Form.Control
+                {...register("adr-complement")}
+                type="text"
+                placeholder="Digite o complemento do cliente"
+                id="adr-complement"
+              />
+            </Form.Group>
+            <Form.Group className="d-flex flex-column">
+              <label htmlFor="adr-city">Cidade</label>
+              <Form.Control
+                {...register("adr-city")}
+                type="text"
+                placeholder=""
+                disabled={true}
+                id="adr-city"
+              />
+            </Form.Group>
+            <Form.Group className="d-flex flex-column">
+              <label htmlFor="adr-district">Bairro</label>
+              <Form.Control
+                {...register("adr-district")}
+                type="text"
+                placeholder=""
+                disabled={true}
+                id="adr-district"
+              />
+            </Form.Group>
+            <Form.Group className="d-flex flex-column">
+              <label htmlFor="adr-uf">UF</label>
+              <Form.Control
+                {...register("adr-uf")}
+                type="text"
+                placeholder=""
+                disabled={true}
+                id="adr-uf"
+              />
+            </Form.Group>
+          </div>
         </div>
-        <div className="Form-section">
-          <h3>Carrinho de pedidos</h3>
+        <div className="form_section_horizontal  d-flex flex-column ">
+          <h3 className="w-100 border-bottom">Carrinho de produtos</h3>
 
           {orderProducts.length === 0 ? (
             <p id="noProducts">Nenhum produto no carrinho</p>
           ) : (
-            <table className="purchaseCart">
+            <table>
               <thead>
                 <tr>
                   <th>Produto</th>
@@ -310,21 +346,34 @@ const NewOrderForm = () => {
               </tbody>
             </table>
           )}
-
           <RDialog onAddProduct={handleAddProducts} />
         </div>
-        <div className="Form-section">
-          <h3>Informações do pedido</h3>
-          <label htmlFor="od-uptoDate">Data de entrega prevista</label>
-          <input type="date" {...register("od-uptoDate")} />
-          <label htmlFor="od-payment">Forma de pagamento</label>
-          <input
-            type="text"
-            placeholder="Forma de pagamento"
-            {...register("od-payment")}
-          />
+        <div className="form_section_horizontal  d-flex flex-column ">
+          <h3 className="w-100 border-bottom">Informações do pedido</h3>
+          <div className="form_line d-flex ">
+            <Form.Group className="d-flex flex-column">
+              <label htmlFor="od-uptoDate">Data de entrega prevista</label>
+              <Form.Control type="date" {...register("od-uptoDate")} />
+            </Form.Group>
+            <Form.Group className="d-flex flex-column">
+              <label htmlFor="od-payment">Forma de pagamento</label>
+              <Form.Select
+                {...register("od-payment")}
+              >
+                <option value={""}>Selecione a forma de pagamento...</option>
+                <option value={"Pix"}>Pix</option>
+                <option value={"Débito"}>Débito</option>
+                <option value={"Crédito"}>Crédito</option>
+                <option value={"Dinheiro"}>Dinheiro</option>
+                <option value={"Cheque"}>Cheque</option>
+              </Form.Select>
+            </Form.Group>
+          </div>
         </div>
-        <button>Enviar</button>
+        <div className="d-flex justify-content-end">
+          <button onClick={limparForm}>Limpar</button>
+          <button onClick={enviarPedido}>Enviar</button>
+        </div>
       </form>
       <ToastContainer />
     </>

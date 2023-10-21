@@ -92,8 +92,8 @@ button[disabled] {
   color: #666666;
   cursor: not-allowed;
 }
-
-/* input {    
+/*
+input {    
     padding: 1em;
     cursor: pointer;
     margin-bottom: 1em;
@@ -102,18 +102,6 @@ button[disabled] {
     max-width: 100%;
     box-shadow: 0 1px 3px -2px #9098A9;
     
-}
-
-
-select{
-    appearance: unset;
-    -webkit-appearance: none;
-    padding: 1em;
-    margin-bottom: 1em;
-    border-radius: .8em;
-    border: none;
-    max-width: 100%;
-    box-shadow: 0 1px 3px -2px #9098A9;
 }
 
 label{
@@ -131,8 +119,4 @@ button{
     border: none;
     border-radius: .8em;
 }
-
-
-button:hover{
-    background-color:#FBD774;
-} */
+*/
