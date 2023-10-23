@@ -8,3 +8,7 @@
 .form_line{
     max-width: 100%;
 }
+.newOrderForm label{
+    padding-bottom: 0.5em;
+    font-weight: 700;
+}

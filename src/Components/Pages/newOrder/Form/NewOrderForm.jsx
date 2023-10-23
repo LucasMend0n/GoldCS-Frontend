@@ -82,10 +82,10 @@ const NewOrderForm = () => {
     }
   };
 
-  const limparForm = (e) =>{
-    e.preventDefault(); 
+  const limparForm = (e) => {
+    e.preventDefault();
     setOrderProducts([])
-    reset(); 
+    reset();
   }
 
   const enviarPedido = (e) => {
@@ -171,111 +171,103 @@ const NewOrderForm = () => {
 
   return (
     <>
-      <form className="newOrderForm d-flex flex-column justify-content-center mx-auto" ref={formRef}>
-        <h1>Novo Pedido</h1>
+      <form className="newOrderForm d-flex flex-column justify-content-center my-5 p-5" ref={formRef}>
+        <h1 className="mb-4">Novo Pedido</h1>
 
         <div className="form_section_horizontal  d-flex flex-column ">
-          <h3 className="w-100 border-bottom">Informações do cliente</h3>
-          <div className="form_line d-flex " >
-            <Form.Group className="d-flex flex-column">
+          <h3 className="w-100 border-bottom mb-3 pb-3">Dados do cliente</h3>
+          <div className="form_line justif d-flex mb-4">
+            <Form.Group className="d-flex flex-column px-2">
               <label htmlFor="cl-id"> CPF </label>
               <Form.Control
                 {...register("cl-id")}
                 type="text"
                 as={MaskedInput}
-                placeholder="Digite o CPF do cliente"
                 name="cl-id"
                 onBlur={checkCPF}
                 id="cl-id"
                 mask={[/\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "-", /\d/, /\d/]}
               />
             </Form.Group>
-            <Form.Group className="d-flex flex-column" >
+            <Form.Group className="d-flex w-25 flex-column px-2" >
               <label htmlFor="cl-name"> Nome </label>
               <Form.Control
                 {...register("cl-name")}
                 type="text"
-                placeholder="Digite o nome do cliente"
                 name="cl-name"
                 id="cl-name"
               />
             </Form.Group>
-            <Form.Group className="d-flex flex-column">
+            <Form.Group className="d-flex w-25 flex-column px-2">
               <label htmlFor="cl-email"> Email </label>
               <Form.Control
                 {...register("cl-email")}
                 type="email"
-                placeholder="Digite o email do cliente"
                 name="cl-email"
                 id="cl-email"
               />
             </Form.Group>
-            <Form.Group className="d-flex flex-column">
+            <Form.Group className="d-flex flex-column px-2">
               <label htmlFor="cl-celphone"> Telefone celular </label>
               <Form.Control
                 {...register("cl-celphone")}
                 type="text"
-                placeholder="Digite o celular do cliente"
                 name="cl-celphone"
                 id="cl-celphone"
               />
             </Form.Group>
-            <Form.Group className="d-flex flex-column">
+            <Form.Group className="d-flex flex-column px-2">
               <label htmlFor="cl-landPhone"> Telefone Fixo </label>
               <Form.Control
                 {...register("cl-landPhone")}
                 type="text"
-                placeholder="Digite o telefone fixo do cliente"
                 name="cl-landPhone"
                 id="cl-landPhone"
               />
             </Form.Group>
           </div>
         </div>
-        <div className="form_section_horizontal  d-flex flex-column ">
-          <h3 className="w-100 border-bottom">Endereço do cliente</h3>
-          <div className="form_line d-flex ">
-            <Form.Group className="d-flex flex-column">
+
+        <div className="form_section_horizontal  d-flex flex-column">
+          <h3 className="w-100 border-bottom mb-3 pb-3">Endereço do cliente</h3>
+          <div className="form_line d-flex mb-4 ">
+            <Form.Group className="d-flex flex-column px-2">
               <label htmlFor="adr-postcode">CEP</label>
               <Form.Control
                 {...register("adr-postcode")}
                 as={MaskedInput}
                 mask={[/\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/]}
                 type="text"
-                placeholder="Digite o CEP do cliente"
                 id="adr-postcode"
                 onBlur={checkCEP}
               />
             </Form.Group>
-            <Form.Group className="d-flex flex-column">
+            <Form.Group className="d-flex flex-column px-2">
               <label htmlFor="adr-street">Rua</label>
               <Form.Control
                 {...register("adr-street")}
                 type="text"
-                placeholder=""
                 disabled={true}
                 id="adr-street"
               />
             </Form.Group>
-            <Form.Group className="d-flex flex-column">
+            <Form.Group className="d-flex flex-column px-2">
               <label htmlFor="adr-number">Numero</label>
               <Form.Control
                 {...register("adr-number")}
                 type="text"
-                placeholder="Digite o número do cliente"
                 id="adr-number"
               />
             </Form.Group>
-            <Form.Group className="d-flex flex-column">
+            <Form.Group className="d-flex flex-column px-2">
               <label htmlFor="adr-complement">Complemento</label>
               <Form.Control
                 {...register("adr-complement")}
                 type="text"
-                placeholder="Digite o complemento do cliente"
                 id="adr-complement"
               />
             </Form.Group>
-            <Form.Group className="d-flex flex-column">
+            <Form.Group className="d-flex flex-column px-2">
               <label htmlFor="adr-city">Cidade</label>
               <Form.Control
                 {...register("adr-city")}
@@ -285,73 +277,74 @@ const NewOrderForm = () => {
                 id="adr-city"
               />
             </Form.Group>
-            <Form.Group className="d-flex flex-column">
-              <label htmlFor="adr-district">Bairro</label>
-              <Form.Control
-                {...register("adr-district")}
-                type="text"
-                placeholder=""
-                disabled={true}
-                id="adr-district"
-              />
-            </Form.Group>
-            <Form.Group className="d-flex flex-column">
+            <Form.Group className="d-flex flex-column px-2">
               <label htmlFor="adr-uf">UF</label>
               <Form.Control
                 {...register("adr-uf")}
                 type="text"
-                placeholder=""
                 disabled={true}
                 id="adr-uf"
               />
             </Form.Group>
+            <Form.Group className="d-flex flex-column px-2">
+              <label htmlFor="adr-district">Bairro</label>
+              <Form.Control
+                {...register("adr-district")}
+                type="text"
+                disabled={true}
+                id="adr-district"
+              />
+            </Form.Group>
           </div>
         </div>
-        <div className="form_section_horizontal  d-flex flex-column ">
-          <h3 className="w-100 border-bottom">Carrinho de produtos</h3>
-
-          {orderProducts.length === 0 ? (
-            <p id="noProducts">Nenhum produto no carrinho</p>
-          ) : (
-            <table>
-              <thead>
-                <tr>
-                  <th>Produto</th>
-                  <th>Versão</th>
-                  <th>Preço</th>
-                  <th>Quantidade</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                {orderProducts.map((product, index) => (
-                  <tr key={index}>
-                    <td>{product.name}</td>
-                    <td>{product.version}</td>
-                    <td>
-                      <NumericFormat
-                        value={product.price}
-                        displayType={"text"}
-                        prefix={"R$ "}
-                      />
-                    </td>
-                    <td>{product.quantity}</td>
-                    <td>
-                      <button type="button" onClick={() => handleRemoveProduct(index)}>
-                        Remover
-                      </button>
-                    </td>
+        <div className="form_section_horizontal  d-flex flex-column">
+          <h3 className="w-100 border-bottom mb-3 pb-3">Carrinho de produtos</h3>
+          <div className="form_table_line d-flex justify-content-around p-3 mb-4 ">
+            {orderProducts.length === 0 ? (
+              <p id="noProducts">Nenhum produto no carrinho</p>
+            ) : (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Produto</th>
+                    <th>Versão</th>
+                    <th>Preço</th>
+                    <th>Quantidade</th>
+                    <th>Ações</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-          <RDialog onAddProduct={handleAddProducts} />
+                </thead>
+                <tbody>
+                  {orderProducts.map((product, index) => (
+                    <tr key={index}>
+                      <td>{product.name}</td>
+                      <td>{product.version}</td>
+                      <td>
+                        <NumericFormat
+                          value={product.price}
+                          displayType={"text"}
+                          prefix={"R$ "}
+                        />
+                      </td>
+                      <td>{product.quantity}</td>
+                      <td>
+                        <button type="button" onClick={() => handleRemoveProduct(index)}>
+                          Remover
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+            <RDialog onAddProduct={handleAddProducts} />
+
+          </div>
+
         </div>
         <div className="form_section_horizontal  d-flex flex-column ">
-          <h3 className="w-100 border-bottom">Informações do pedido</h3>
-          <div className="form_line d-flex ">
-            <Form.Group className="d-flex flex-column">
+          <h3 className="w-100 border-bottom mb-3 pb-3">Dados do pedido</h3>
+          <div className="form_line d-flex mb-4">
+            <Form.Group className="d-flex flex-column px-3">
               <label htmlFor="od-uptoDate">Data de entrega prevista</label>
               <Form.Control type="date" {...register("od-uptoDate")} />
             </Form.Group>
