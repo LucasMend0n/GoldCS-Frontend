@@ -3,6 +3,8 @@ import './Dialog.css'
 import { useState } from 'react';
 import { useEffect } from 'react';
 import apiGold from '../../../../../Services/api';
+import { Form } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
 
 const RDialog = ({ onAddProduct }) => {
 
@@ -10,6 +12,13 @@ const RDialog = ({ onAddProduct }) => {
     const [product, setProduct] = useState('')
     const [qtd, setQtd] = useState(0)
     const [price, setPrice] = useState(0)
+
+    const modalForm = useForm();
+    const { register, getValues, reset } = modalForm;
+
+    const formValues = getValues()
+    const quantidade = getValues("quantidade")
+    const preco = getValues("preco")
 
     useEffect(() => {
         const getProducts = async () => {
@@ -26,27 +35,27 @@ const RDialog = ({ onAddProduct }) => {
     });
 
     const sendProducts = (e) => {
-        e.preventDefault(); 
+        e.preventDefault();
         const data = {
             product,
-            qtd,
-            price,
+            quantidade,
+            preco,
         }
         onAddProduct(data);
         resetFields();
+        console.log(data, quantidade)
     }
 
     const resetFields = () => {
         setProduct('');
-        setQtd(0);
-        setPrice(0);
+        reset()
     }
 
 
     return (
         <div className='DIALOG'>
             <Dialog.Root>
-                <Dialog.Trigger>
+                <Dialog.Trigger className='open_dialog btn-global' id='yellow_button'>
                     +
                 </Dialog.Trigger>
                 <Dialog.Portal>
@@ -56,47 +65,56 @@ const RDialog = ({ onAddProduct }) => {
                         <Dialog.Description className="DialogDescription">
                             Selecione um produto, um preço e uma quantidade ao carrinho...
                         </Dialog.Description>
+                        <form>
+                            <div className="Fields mb-4">
+                                <Form.Group className="d-flex my-2 flex-column px-2">
+                                    <label htmlFor="product">Produtos</label>
+                                    <Form.Select
+                                        name='product'
+                                        value={product}
+                                        onChange={(e) => setProduct(e.target.value)}
+                                    >
+                                        <option key={0} value={0}>
+                                            Selecione um dos Produtos da Lista...
+                                        </option>
 
-                        <div className="Fields">
-                            <label htmlFor="product">Produtos</label>
+                                        {products.map((product) => (
+                                            <option key={product.productID} value={`${product.productID}-${product.name}-${product.version}`}>
+                                                {product.name} - {product.version}
+                                            </option>
+                                        ))};
 
-                            <select name='product' value={product} onChange={(e) => setProduct(e.target.value)} >
+                                    </Form.Select>
+                                </Form.Group>
+                                <Form.Group className="d-flex my-2 flex-column px-2">
+                                    <label>Quantidade</label>
+                                    <Form.Control
+                                        {...register("quantidade")}
+                                        name='quantidade'
+                                        type='number'
+                                        placeholder='Quantidade...'
+                                    />
 
-                                <option key={0} value={0}>
-                                    Selecione um dos Produtos da Lista...
-                                </option>
-
-                                {products.map((product) => (
-                                    <option key={product.productID} value={`${product.productID}-${product.name}-${product.version}`}>
-                                        {product.name} - {product.version}
-                                    </option>
-                                ))};
-
-                            </select>
-                            <label htmlFor="quantity">Quantidade</label>
-                            <input
-                                name='quantity'
-                                value={qtd}
-                                onChange={(e) => setQtd(e.target.value)}
-                                type='number'
-                                placeholder='Quantidade...'
-                            />
-                            <label htmlFor="price">Preço</label>
-                            <input
-                                name='price'
-                                value={price}
-                                onChange={(e) => setPrice(e.target.value)}
-                                type='text'
-                                placeholder='Preço...'
-                            />
+                                </Form.Group>
+                                <Form.Group className="d-flex my-2 flex-column px-2">
+                                    <label htmlFor="price">Preço</label>
+                                    <Form.Control
+                                        {...register("preco")}
+                                        name='preco'
+                                        type='number'
+                                        placeholder='Preço...'
+                                    />
+                                </Form.Group>
 
 
-                            <button type='button' onClick={sendProducts}>Adicionar produto</button>
-                        </div>
+                            </div>
+                            <button type='button' className='btn-global btn-hv' onClick={sendProducts}>Adicionar produto</button>
+                        </form>
+
 
                         <div style={{ display: 'flex', marginTop: 25, justifyContent: 'flex-end' }}>
                             <Dialog.Close asChild>
-                                <button className="Button green">Fechar</button>
+                                <button className="btn-global btn-hv">Fechar</button>
                             </Dialog.Close>
                         </div>
 

@@ -42,9 +42,10 @@ const NewOrderForm = () => {
       id: selected[0],
       name: selected[1],
       version: selected[2],
-      price: products["price"],
-      quantity: products["qtd"],
+      price: products["preco"],
+      quantity: products["quantidade"],
     };
+    console.log('NEWORDERFORM: ', products)
     setOrderProducts([...orderProducts, productObject]);
   };
 
