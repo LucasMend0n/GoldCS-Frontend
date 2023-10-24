@@ -12,3 +12,28 @@
     padding-bottom: 0.5em;
     font-weight: 700;
 }
+.purchaseCart {
+    background-color: #FFFFFF;
+    width: 60%;
+    border-radius: .7em;
+    margin-right: 2em;
+
+}
+.form_table_line{
+    gap: 2em;
+}
+
+.purchaseCart tr, th{
+    padding-top: 2em;
+}
+
+.purchaseCart td, thead {
+    text-align: center;
+    padding: 2em 0;
+}
+#noProducts{
+    font-size: 12px;
+    text-align: center;
+    margin: 2em 0 ;
+    color: red;
+}

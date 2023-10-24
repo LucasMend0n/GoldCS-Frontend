@@ -4,6 +4,8 @@ import RDialog from "./Dialog/Dialog";
 import { useRef, useState } from "react";
 import { NumericFormat } from "react-number-format";
 import apiGold from "../../../../Services/api.js";
+import {ImBin2} from 'react-icons/im'
+
 
 // Toast
 import { ToastContainer, toast } from "react-toastify";
@@ -299,21 +301,21 @@ const NewOrderForm = () => {
         </div>
         <div className="form_section_horizontal  d-flex flex-column">
           <h3 className="w-100 border-bottom mb-3 pb-3">Carrinho de produtos</h3>
-          <div className="form_table_line d-flex justify-content-around p-3 mb-4 ">
+          <div className="form_table_line d-flex justify-content-center align-items-center p-3 mb-4 ">
             {orderProducts.length === 0 ? (
               <p id="noProducts">Nenhum produto no carrinho</p>
             ) : (
-              <table>
+              <table className="my-3 purchaseCart">
                 <thead>
                   <tr>
-                    <th>Produto</th>
-                    <th>Versão</th>
-                    <th>Preço</th>
-                    <th>Quantidade</th>
-                    <th>Ações</th>
+                    <th scope="col">Produto</th>
+                    <th scope="col">Versão</th>
+                    <th scope="col">Preço</th>
+                    <th scope="col">Quantidade</th>
+                    <th scope="col">Ações</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="">
                   {orderProducts.map((product, index) => (
                     <tr key={index}>
                       <td>{product.name}</td>
@@ -327,8 +329,8 @@ const NewOrderForm = () => {
                       </td>
                       <td>{product.quantity}</td>
                       <td>
-                        <button type="button" onClick={() => handleRemoveProduct(index)}>
-                          Remover
+                        <button type="button" className="btn-global btn-hv w-50" onClick={() => handleRemoveProduct(index)}>
+                          <ImBin2 />
                         </button>
                       </td>
                     </tr>
@@ -364,8 +366,8 @@ const NewOrderForm = () => {
           </div>
         </div>
         <div className="d-flex justify-content-end">
-          <button onClick={limparForm}>Limpar</button>
-          <button onClick={enviarPedido}>Enviar</button>
+          <button className="btn-global btn btn-outline-danger btn-profile" onClick={limparForm}>Limpar</button>
+          <button className="btn-global btn-profile mx-3" onClick={enviarPedido}>Enviar</button>
         </div>
       </form>
       <ToastContainer />
