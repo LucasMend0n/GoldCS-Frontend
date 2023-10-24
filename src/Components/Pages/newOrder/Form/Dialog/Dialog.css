@@ -59,23 +59,14 @@
 
   .IconButton {
     background-color: transparent;
-    font-family: inherit;
-    border-radius: 90%;
     height: 25px;
     width: 25px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--violet11);
     position: absolute;
     top: 10px;
     right: 10px;
-    color: white;
-  }
-  .IconButton:hover {
-    background-color: transparent;
-    opacity: 50%;
-    color: #777171;
   }
   .IconButton:focus {
     box-shadow: 0 0 0 2px var(--violet7);
