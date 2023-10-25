@@ -3,43 +3,42 @@ import { useForm } from 'react-hook-form'
 import { NumericFormat } from 'react-number-format'
 import { format } from 'date-fns'
 import { Form } from 'react-bootstrap'
+import { useEffect } from 'react'
 
 const OrderForm = ({ order }) => {
-
   const formatedDeliveryDate = format(new Date(order.deliveryForecast), 'dd/MM/yyyy')
   const formatedOrderDate = format(new Date(order.orderDate), 'dd/MM/yyyy')
 
-  const OrderForm = useForm({
-    defaultValues: {
-      dcseller: order.userName,
-      odSendDate: formatedDeliveryDate,
-      odOrderDate: formatedOrderDate,
-      odPayment: order.paymentMethod,
-      clientName: order.client.name,
-      clientID: order.client.cpf,
-      clientEmail: order.client.email,
-      clientCelphone: order.client.cellPhone,
-      clientLandphone: order.client.landlinePhone,
-      adressCep: order.address.cep,
-      adressStreet: order.address.addressName,
-      adressNumber: order.address.number,
-      adressComplement: order.address.complement,
-      adressCity: order.address.city,
-      adressDistrict: order.address.district,
-      adressUF: order.address.uf
+  const OrderForm = useForm();
+  const { register, setValue } = OrderForm
 
-    }
-  });
-  const { register } = OrderForm
+  useEffect(() => {
+    setValue('dcseller', order.userName);
+    setValue('odSendDate', formatedDeliveryDate);
+    setValue('odOrderDate', formatedOrderDate);
+    setValue('odPayment', order.paymentMethod);
+    setValue('clientName', order.client.name);
+    setValue('clientID', order.client.cpf);
+    setValue('clientEmail', order.client.email);
+    setValue('clientCelphone', order.client.cellPhone);
+    setValue('clientLandphone', order.client.landlinePhone);
+    setValue('adressCep', order.address.cep);
+    setValue('adressStreet', order.address.addressName);
+    setValue('adressNumber', order.address.number);
+    setValue('adressComplement', order.address.complement);
+    setValue('adressCity', order.address.city);
+    setValue('adressDistrict', order.address.district);
+    setValue('adressUF', order.address.uf);
+  }, [order]);
 
   return (
     <>
-      <form className='OrderForm d-flex flex-column justify-content-center my-5 p-5'>
+      <form className='OrderForm d-flex flex-column justify-content-center my-3 p-5'>
         <h1 className='mb-4'>Pedido {order.orderID}</h1>
         <div className='form_section_horizontal  d-flex flex-column '>
           <h3 className="w-100 border-bottom mb-3 pb-3">Dados da compra</h3>
           <div className="form_line justif d-flex mb-4">
-            <Form.Group className="d-flex flex-column px-2">
+            <Form.Group className="d-flex flex-column px-2 w-25">
               <label htmlFor="dcseller">Vendedor</label>
               <Form.Control type="text" {...register('dcseller')} disabled />
             </Form.Group>
@@ -61,7 +60,7 @@ const OrderForm = ({ order }) => {
         <div className="form_section_horizontal d-flex flex-column ">
           <h3 className='w-100 border-bottom mb-3 pb-3'>Informações do cliente</h3>
           <div className="form_line justif d-flex mb-4">
-            <Form.Group className="d-flex flex-column px-2">
+            <Form.Group className="d-flex flex-column px-2 w-25">
               <label htmlFor="clientName"> Nome </label>
               <Form.Control
                 disabled
@@ -79,7 +78,7 @@ const OrderForm = ({ order }) => {
 
               />
             </Form.Group>
-            <Form.Group className="d-flex flex-column px-2">
+            <Form.Group className="d-flex flex-column px-2 w-25">
               <label htmlFor="clientEmail"> Email </label>
               <Form.Control
                 disabled

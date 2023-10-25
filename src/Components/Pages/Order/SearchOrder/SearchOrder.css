@@ -5,9 +5,12 @@
 }
 
 .searchForm {
-    gap: 2em;
+    gap: 1em;
     width: 40%;
 }
 .search_buttons{
     gap: 1em;
+}
+.error_message{
+    color: red;
 }

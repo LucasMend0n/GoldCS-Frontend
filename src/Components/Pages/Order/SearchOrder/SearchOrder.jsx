@@ -57,7 +57,7 @@ const SearchOrder = () => {
         </form>
 
         {
-          error ? (<p>Nenhum pedido encontrado com esse Id</p>) : (order ? <OrderForm order={order} /> : null)
+          error ? (<p className='error_message'>Nenhum pedido encontrado com esse Id</p>) : (order ? <OrderForm order={order} /> : null)
         }
       </section>
     </>
