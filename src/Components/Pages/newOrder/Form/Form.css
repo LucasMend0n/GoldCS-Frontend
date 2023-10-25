@@ -1,5 +1,5 @@
 .newOrderForm{
-    background-color: #FFF5DB;
+    background-color: #FFF5DB !important;
     border-radius: .8em;
     padding: 2em;
     box-shadow: 0 1px 3px -2px #9098A9;
@@ -13,16 +13,15 @@
     font-weight: 700;
 }
 .purchaseCart {
-    background-color: #FFFFFF;
+    background-color: #F4F4F4;
     width: 60%;
-    border-radius: .7em;
+    border-radius: .7em !important;
     margin-right: 2em;
 
 }
 .form_table_line{
     gap: 2em;
 }
-
 .purchaseCart tr, th{
     padding-top: 2em;
 }

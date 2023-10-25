@@ -4,7 +4,7 @@ import RDialog from "./Dialog/Dialog";
 import { useRef, useState } from "react";
 import { NumericFormat } from "react-number-format";
 import apiGold from "../../../../Services/api.js";
-import {ImBin2} from 'react-icons/im'
+import { ImBin2 } from 'react-icons/im'
 
 
 // Toast
@@ -175,7 +175,6 @@ const NewOrderForm = () => {
     <>
       <form className="newOrderForm d-flex flex-column justify-content-center my-5 p-5" ref={formRef}>
         <h1 className="mb-4">Novo Pedido</h1>
-
         <div className="form_section_horizontal  d-flex flex-column ">
           <h3 className="w-100 border-bottom mb-3 pb-3">Dados do cliente</h3>
           <div className="form_line justif d-flex mb-4">
@@ -189,6 +188,8 @@ const NewOrderForm = () => {
                 onBlur={checkCPF}
                 id="cl-id"
                 mask={[/\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "-", /\d/, /\d/]}
+                guide={false}
+
               />
             </Form.Group>
             <Form.Group className="d-flex w-25 flex-column px-2" >
@@ -212,6 +213,9 @@ const NewOrderForm = () => {
             <Form.Group className="d-flex flex-column px-2">
               <label htmlFor="cl-celphone"> Telefone celular </label>
               <Form.Control
+                as={MaskedInput}
+                mask={["(", /\d/, /\d/, ")", /\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/]}
+                guide={false}
                 {...register("cl-celphone")}
                 type="text"
                 name="cl-celphone"
@@ -221,6 +225,9 @@ const NewOrderForm = () => {
             <Form.Group className="d-flex flex-column px-2">
               <label htmlFor="cl-landPhone"> Telefone Fixo </label>
               <Form.Control
+                as={MaskedInput}
+                mask={["(", /\d/, /\d/, ")", /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/]}
+                guide={false}
                 {...register("cl-landPhone")}
                 type="text"
                 name="cl-landPhone"
@@ -239,6 +246,7 @@ const NewOrderForm = () => {
                 {...register("adr-postcode")}
                 as={MaskedInput}
                 mask={[/\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/]}
+                guide={false}
                 type="text"
                 id="adr-postcode"
                 onBlur={checkCEP}
@@ -305,7 +313,7 @@ const NewOrderForm = () => {
             {orderProducts.length === 0 ? (
               <p id="noProducts">Nenhum produto no carrinho</p>
             ) : (
-              <table className="my-3 purchaseCart">
+              <table className="p-3 my-3 purchaseCart">
                 <thead>
                   <tr>
                     <th scope="col">Produto</th>
@@ -315,7 +323,7 @@ const NewOrderForm = () => {
                     <th scope="col">Ações</th>
                   </tr>
                 </thead>
-                <tbody className="">
+                <tbody className="p-3">
                   {orderProducts.map((product, index) => (
                     <tr key={index}>
                       <td>{product.name}</td>
@@ -329,7 +337,7 @@ const NewOrderForm = () => {
                       </td>
                       <td>{product.quantity}</td>
                       <td>
-                        <button type="button" className="btn-global btn-hv w-50" onClick={() => handleRemoveProduct(index)}>
+                        <button type="button" className="btn-global btn-profile btn-hv" onClick={() => handleRemoveProduct(index)}>
                           <ImBin2 />
                         </button>
                       </td>
@@ -339,9 +347,7 @@ const NewOrderForm = () => {
               </table>
             )}
             <RDialog onAddProduct={handleAddProducts} />
-
           </div>
-
         </div>
         <div className="form_section_horizontal  d-flex flex-column ">
           <h3 className="w-100 border-bottom mb-3 pb-3">Dados do pedido</h3>
@@ -366,8 +372,8 @@ const NewOrderForm = () => {
           </div>
         </div>
         <div className="d-flex justify-content-end">
-          <button className="btn-global btn btn-outline-danger btn-profile" onClick={limparForm}>Limpar</button>
-          <button className="btn-global btn-profile mx-3" onClick={enviarPedido}>Enviar</button>
+          <button id='search_order' className="w-25 btn-global btn-profile" onClick={limparForm}>Limpar</button>
+          <button className="w-25 btn-global btn-profile mx-3" onClick={enviarPedido}>Enviar</button>
         </div>
       </form>
       <ToastContainer />

@@ -1,0 +1,32 @@
+.OrderForm{
+    background-color: #FFF5DB !important;
+    border-radius: .8em;
+    padding: 2em;
+    box-shadow: 0 1px 3px -2px #9098A9;
+    width: 80%;
+}
+.form_line{
+    max-width: 100%;
+}
+.newOrderForm label{
+    padding-bottom: 0.5em;
+    font-weight: 700;
+}
+.orderProductsTable {
+    background-color: #F4F4F4;
+    width: 60%;
+    border-radius: .7em !important;
+    margin-right: 2em;
+
+}
+.form_table_line{
+    gap: 2em;
+}
+.orderProductsTable tr, th{
+    padding-top: 2em;
+}
+
+.orderProductsTable td, thead {
+    text-align: center;
+    padding: 2em 0;
+}
