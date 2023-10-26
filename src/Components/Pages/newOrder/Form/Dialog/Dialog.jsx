@@ -4,6 +4,9 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import apiGold from '../../../../../Services/api';
 import { Form } from 'react-bootstrap';
+import { ToastContainer, toast } from "react-toastify";
+import { ImBin2 } from 'react-icons/im';
+
 
 const RDialog = ({ onAddProduct }) => {
 
@@ -11,6 +14,7 @@ const RDialog = ({ onAddProduct }) => {
     const [product, setProduct] = useState('')
     const [qtd, setQtd] = useState('')
     const [price, setPrice] = useState('')
+    const [productMinValue, setProductMinValue] = useState();
 
     useEffect(() => {
         const getProducts = async () => {
@@ -28,12 +32,23 @@ const RDialog = ({ onAddProduct }) => {
 
     const sendProducts = (e) => {
         e.preventDefault();
-        const data = {
-            product,
-            qtd,
-            price,
+        if (product == '') {
+            toast.error("Selecione um produto!");
+            return
+        }else if (qtd < 0) {
+            toast.error("Quantidade inválida!");
+            return
+        } else if (price < productMinValue) {
+            toast.error("Produto com valor abaixo do permitido!");
+            return
+        } else {
+            const data = {
+                product,
+                qtd,
+                price,
+            }
+            onAddProduct(data);
         }
-        onAddProduct(data);
         resetFields();
     }
 
@@ -41,6 +56,20 @@ const RDialog = ({ onAddProduct }) => {
         setProduct('');
         setQtd('');
         setPrice('');
+    }
+
+    function getProductMinimumValue(selectValue) {
+        setProduct(selectValue);
+        const productSelected = selectValue.split("-");
+        const idSelected = productSelected[0];
+        let minmumValue;
+
+        products.map((productIndex) => {
+            if (productIndex.productID == idSelected) {
+                minmumValue = productIndex.price
+            }
+        })
+        setProductMinValue(minmumValue);
     }
 
 
@@ -64,7 +93,7 @@ const RDialog = ({ onAddProduct }) => {
                                 <Form.Select
                                     name='product'
                                     value={product}
-                                    onChange={(e) => setProduct(e.target.value)}
+                                    onChange={(e) => getProductMinimumValue(e.target.value)}
                                 >
                                     <option key={0} value={0}>
                                         Selecione um dos Produtos da Lista...
@@ -100,7 +129,10 @@ const RDialog = ({ onAddProduct }) => {
                                 />
                             </Form.Group>
                         </div>
-                        <button className='btn-global btn-hv w-50' type='button' onClick={sendProducts}>Adicionar produto</button>
+                        <div className='end_buttons d-flex justify-content-between'>
+                            <button className='btn-global btn-hv w-50' type='button' onClick={sendProducts}>Adicionar produto</button>
+                            <button className='btn btn-danger btn-hv ' type='button' onClick={resetFields}><ImBin2 /></button>
+                        </div>
 
                         <Dialog.Close asChild>
                             <button className="IconButton btn btn-outline-danger" aria-label="Close">
@@ -112,6 +144,7 @@ const RDialog = ({ onAddProduct }) => {
 
                 </Dialog.Portal>
             </Dialog.Root>
+            <ToastContainer />
 
         </div>
 

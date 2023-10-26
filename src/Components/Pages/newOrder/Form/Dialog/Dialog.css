@@ -115,6 +115,9 @@
     font-weight: 500;
     height: 35px;
   }
+  .end_buttons{
+    gap: 2em;
+  }
 
   @keyframes overlayShow {
     from {
