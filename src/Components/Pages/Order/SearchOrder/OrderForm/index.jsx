@@ -38,12 +38,12 @@ const OrderForm = ({ order }) => {
         <div className='form_section_horizontal  d-flex flex-column '>
           <h3 className="w-100 border-bottom mb-3 pb-3">Dados da compra</h3>
           <div className="form_line justif d-flex mb-4">
-            <Form.Group className="d-flex flex-column px-2 w-25">
+            <Form.Group className="d-flex flex-column px-2 w-50">
               <label htmlFor="dcseller">Vendedor</label>
               <Form.Control type="text" {...register('dcseller')} disabled />
             </Form.Group>
             <Form.Group className="d-flex flex-column px-2">
-              <label htmlFor="odOrderDate">Data que o Pedido foi realizado</label>
+              <label htmlFor="odOrderDate">Data da compra</label>
               <Form.Control type="text" {...register('odOrderDate')} disabled />
             </Form.Group>
             <Form.Group className="d-flex flex-column px-2">
@@ -115,8 +115,8 @@ const OrderForm = ({ order }) => {
                 type='text'
               />
             </Form.Group>
-            <Form.Group className="d-flex flex-column px-2">
-              <label htmlFor="adressStreet">Endereço</label>
+            <Form.Group className="d-flex flex-column px-2 w-50">
+              <label htmlFor="adressStreet">Rua</label>
               <Form.Control
                 disabled
                 {...register('adressStreet')}
@@ -140,19 +140,21 @@ const OrderForm = ({ order }) => {
 
               />
             </Form.Group>
-            <Form.Group className="d-flex flex-column px-2">
-              <label htmlFor="adressCity">Cidade</label>
-              <Form.Control
-                disabled
-                {...register('adressCity')}
-                type='text'
-              />
-            </Form.Group>
-            <Form.Group className="d-flex flex-column px-2">
+          </div>
+          <div className="form_line justif d-flex mb-4">
+            <Form.Group className="d-flex flex-column px-2 w-50">
               <label htmlFor="adressDistrict">Bairro</label>
               <Form.Control
                 disabled
                 {...register('adressDistrict')}
+                type='text'
+              />
+            </Form.Group>
+            <Form.Group className="d-flex flex-column px-2 w-50">
+              <label htmlFor="adressCity">Cidade</label>
+              <Form.Control
+                disabled
+                {...register('adressCity')}
                 type='text'
               />
             </Form.Group>

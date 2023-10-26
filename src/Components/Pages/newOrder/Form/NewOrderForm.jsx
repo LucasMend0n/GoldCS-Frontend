@@ -39,7 +39,7 @@ const NewOrderForm = () => {
     const selected = products.product.split("-");
     const productID = selected[0];
     const existingProductIndex = orderProducts.findIndex((product) => product.id === productID);
-  
+
     if (existingProductIndex !== -1) {
       const updatedProducts = [...orderProducts];
       updatedProducts[existingProductIndex].quantity += parseInt(products.qtd, 10);
@@ -91,49 +91,16 @@ const NewOrderForm = () => {
     reset();
   }
 
-  const enviarPedido = (e) => {
-    e.preventDefault();
-    const client = {
-      cpf: formRef.current["cl-id"].value,
-      name: formRef.current["cl-name"].value,
-      email: formRef.current["cl-email"].value,
-      cellphone: formRef.current["cl-celphone"].value,
-      landlinePhone: formRef.current["cl-landPhone"].value,
-    };
+  const isEveryInputEmpty = () => {
+    var inputs = document.querySelectorAll('input');
+    for (const input of inputs)
+      if (input.value !== '') return false;
+    return true;
+  }
 
-    const address = {
-      cep: formRef.current["adr-postcode"].value,
-      addressName: formRef.current["adr-street"].value,
-      city: formRef.current["adr-city"].value,
-      district: formRef.current["adr-district"].value,
-      uf: formRef.current["adr-uf"].value,
-      number: formRef.current["adr-number"].value,
-      complement: formRef.current["adr-complement"].value,
-    };
-
-    var products = [];
-    orderProducts.forEach((product) => {
-      products.push({
-        productID: product.id,
-        quantity: product.quantity,
-        finalPrice: product.price,
-      });
-    });
-
-    const user = getUserLocalStorage()
-
-    const order = {
-      paymentMethod: formRef.current["od-payment"].value,
-      deliveryForecast: formRef.current["od-uptoDate"].value,
-      userId: user.userId,
-      client: client,
-      address: address,
-      orderProducts: products,
-    };
-
-    const postOrder = async () => {
+  const postOrder = async (order) => {
+    try {
       const response = await apiGold.post("/Order", order);
-
       if (response.data.success === true) {
         toast.info(
           `Pedido inserido com sucesso - ID: ${response.data.result}!`,
@@ -148,18 +115,67 @@ const NewOrderForm = () => {
             theme: "light",
           }
         );
+      }
+      try {
         const response2 = await apiGold.post(`/Mail/${response.data.result}`);
         if (response2.data.success === true) {
           console.log("Email enviado com sucesso!");
         }
-
-        reset()
-        window.scrollTo(0, 0);
-        setOrderProducts([])
+      } catch (error) {
+        console.log("Erro na requisição de PostEmail: : ", error)
       }
-    };
+    } catch (error) {
+      console.log("Erro na requisição de postOrder", error);
+    } finally {
+      reset();
+      window.scrollTo(0, 0);
+      setOrderProducts([])
+    }
+  };
 
-    postOrder();
+  const enviarPedido = (e) => {
+    e.preventDefault();
+    if (!isEveryInputEmpty()) {
+      // valores do formulario para serem tratados como json
+      const client = {
+        cpf: formRef.current["cl-id"].value,
+        name: formRef.current["cl-name"].value,
+        email: formRef.current["cl-email"].value,
+        cellphone: formRef.current["cl-celphone"].value,
+        landlinePhone: formRef.current["cl-landPhone"].value,
+      };
+      const address = {
+        cep: formRef.current["adr-postcode"].value,
+        addressName: formRef.current["adr-street"].value,
+        city: formRef.current["adr-city"].value,
+        district: formRef.current["adr-district"].value,
+        uf: formRef.current["adr-uf"].value,
+        number: formRef.current["adr-number"].value,
+        complement: formRef.current["adr-complement"].value,
+      };
+      var products = [];
+      orderProducts.forEach((product) => {
+        products.push({
+          productID: product.id,
+          quantity: product.quantity,
+          finalPrice: product.price,
+        });
+      });
+      const user = getUserLocalStorage()
+      const orderObject = {
+        paymentMethod: formRef.current["od-payment"].value,
+        deliveryForecast: formRef.current["od-uptoDate"].value,
+        userId: user.userId,
+        client: client,
+        address: address,
+        orderProducts: products,
+      };
+      //chamada da função que faz o post para API
+      postOrder(orderObject);
+    } else {
+      toast.error("O formulário deve ser preenchido!")
+      return;
+    }
   };
 
   return (
@@ -172,7 +188,7 @@ const NewOrderForm = () => {
             <Form.Group className="d-flex flex-column px-2">
               <label htmlFor="cl-id"> CPF </label>
               <Form.Control
-                {...register("cl-id")}
+                {...register("cl-id").required}
                 type="text"
                 as={MaskedInput}
                 name="cl-id"
@@ -180,7 +196,6 @@ const NewOrderForm = () => {
                 id="cl-id"
                 mask={[/\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "-", /\d/, /\d/]}
                 guide={false}
-
               />
             </Form.Group>
             <Form.Group className="d-flex w-25 flex-column px-2" >
@@ -231,7 +246,7 @@ const NewOrderForm = () => {
         <div className="form_section_horizontal  d-flex flex-column">
           <h3 className="w-100 border-bottom mb-3 pb-3">Endereço do cliente</h3>
           <div className="form_line d-flex mb-4 ">
-            <Form.Group className="d-flex flex-column px-2">
+            <Form.Group className="d-flex flex-column w-50 px-2">
               <label htmlFor="adr-postcode">CEP</label>
               <Form.Control
                 {...register("adr-postcode")}
@@ -243,7 +258,7 @@ const NewOrderForm = () => {
                 onBlur={checkCEP}
               />
             </Form.Group>
-            <Form.Group className="d-flex flex-column px-2">
+            <Form.Group className="d-flex flex-column w-50 px-2">
               <label htmlFor="adr-street">Rua</label>
               <Form.Control
                 {...register("adr-street")}
@@ -268,7 +283,18 @@ const NewOrderForm = () => {
                 id="adr-complement"
               />
             </Form.Group>
-            <Form.Group className="d-flex flex-column px-2">
+          </div>
+          <div className="form_line d-flex mb-4 ">
+            <Form.Group className="d-flex flex-column px-2 w-50">
+              <label htmlFor="adr-district">Bairro</label>
+              <Form.Control
+                {...register("adr-district")}
+                type="text"
+                disabled={true}
+                id="adr-district"
+              />
+            </Form.Group>
+            <Form.Group className="d-flex flex-column w-50 px-2">
               <label htmlFor="adr-city">Cidade</label>
               <Form.Control
                 {...register("adr-city")}
@@ -285,15 +311,6 @@ const NewOrderForm = () => {
                 type="text"
                 disabled={true}
                 id="adr-uf"
-              />
-            </Form.Group>
-            <Form.Group className="d-flex flex-column px-2">
-              <label htmlFor="adr-district">Bairro</label>
-              <Form.Control
-                {...register("adr-district")}
-                type="text"
-                disabled={true}
-                id="adr-district"
               />
             </Form.Group>
           </div>
