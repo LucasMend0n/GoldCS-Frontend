@@ -5,9 +5,6 @@ import { useRef, useState } from "react";
 import { NumericFormat } from "react-number-format";
 import apiGold from "../../../../Services/api.js";
 import { ImBin2 } from 'react-icons/im'
-
-
-// Toast
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getUserLocalStorage } from "../../../../context/util";
@@ -39,15 +36,24 @@ const NewOrderForm = () => {
   };
 
   const handleAddProducts = (products) => {
-    const selected = products["product"].split("-");
-    const productObject = {
-      id: selected[0],
-      name: selected[1],
-      version: selected[2],
-      price: products["price"],
-      quantity: products["qtd"],
-    };
-    setOrderProducts([...orderProducts, productObject]);
+    const selected = products.product.split("-");
+    const productID = selected[0];
+    const existingProductIndex = orderProducts.findIndex((product) => product.id === productID);
+  
+    if (existingProductIndex !== -1) {
+      const updatedProducts = [...orderProducts];
+      updatedProducts[existingProductIndex].quantity += parseInt(products.qtd, 10);
+      setOrderProducts(updatedProducts);
+    } else {
+      const productObject = {
+        id: productID,
+        name: selected[1],
+        version: selected[2],
+        price: parseFloat(products.price),
+        quantity: parseInt(products.qtd, 10),
+      };
+      setOrderProducts([...orderProducts, productObject]);
+    }
   };
 
   const handleRemoveProduct = (index) => {
@@ -63,12 +69,7 @@ const NewOrderForm = () => {
     if (cpf !== "") {
       const searchClient = async () => {
         try {
-          const response = await apiGold.get(`/Client/${cpf}`, {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-
+          const response = await apiGold.get(`/Client/${cpf}`);
           if (response.data.success === true) {
             formRef.current["cl-name"].value = response.data.result.name;
             formRef.current["cl-email"].value = response.data.result.email;
@@ -131,11 +132,7 @@ const NewOrderForm = () => {
     };
 
     const postOrder = async () => {
-      const response = await apiGold.post("/Order", order, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await apiGold.post("/Order", order);
 
       if (response.data.success === true) {
         toast.info(
@@ -151,13 +148,7 @@ const NewOrderForm = () => {
             theme: "light",
           }
         );
-
-        const response2 = await apiGold.post(`/Mail/${response.data.result}`, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-
+        const response2 = await apiGold.post(`/Mail/${response.data.result}`);
         if (response2.data.success === true) {
           console.log("Email enviado com sucesso!");
         }
