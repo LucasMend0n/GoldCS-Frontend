@@ -5,7 +5,9 @@ const NewOrder = () => {
 
 
   return (
-    <section className='NewOrderPage'>
+    <section className='NewOrderPage d-flex flex-column justify-content-start align-items-center'>
+      <div className='display-page'><h2>Pedido</h2></div>
+
       <NewOrderForm />
     </section>
   )

@@ -3,13 +3,18 @@ import './Dialog.css'
 import { useState } from 'react';
 import { useEffect } from 'react';
 import apiGold from '../../../../../Services/api';
+import { Form } from 'react-bootstrap';
+import { ToastContainer, toast } from "react-toastify";
+import { ImBin2 } from 'react-icons/im';
+
 
 const RDialog = ({ onAddProduct }) => {
 
     const [products, setProducts] = useState([]);
     const [product, setProduct] = useState('')
-    const [qtd, setQtd] = useState(0)
-    const [price, setPrice] = useState(0)
+    const [qtd, setQtd] = useState('')
+    const [price, setPrice] = useState('')
+    const [productMinValue, setProductMinValue] = useState();
 
     useEffect(() => {
         const getProducts = async () => {
@@ -26,89 +31,120 @@ const RDialog = ({ onAddProduct }) => {
     });
 
     const sendProducts = (e) => {
-        e.preventDefault(); 
-        const data = {
-            product,
-            qtd,
-            price,
+        e.preventDefault();
+        if (product == '') {
+            toast.error("Selecione um produto!");
+            return
+        }else if (qtd < 0) {
+            toast.error("Quantidade inválida!");
+            return
+        } else if (price < productMinValue) {
+            toast.error("Produto com valor abaixo do permitido!");
+            return
+        } else {
+            const data = {
+                product,
+                qtd,
+                price,
+            }
+            onAddProduct(data);
         }
-        onAddProduct(data);
         resetFields();
     }
 
     const resetFields = () => {
         setProduct('');
-        setQtd(0);
-        setPrice(0);
+        setQtd('');
+        setPrice('');
+    }
+
+    function getProductMinimumValue(selectValue) {
+        setProduct(selectValue);
+        const productSelected = selectValue.split("-");
+        const idSelected = productSelected[0];
+        let minmumValue;
+
+        products.map((productIndex) => {
+            if (productIndex.productID == idSelected) {
+                minmumValue = productIndex.price
+            }
+        })
+        setProductMinValue(minmumValue);
     }
 
 
     return (
         <div className='DIALOG'>
             <Dialog.Root>
-                <Dialog.Trigger>
+                <Dialog.Trigger id='yellow_button' className='btn-global'>
                     +
                 </Dialog.Trigger>
                 <Dialog.Portal>
-                    <Dialog.Overlay className="DialogOverlay" />
-                    <Dialog.Content className="DialogContent">
+                    <Dialog.Overlay className="DialogOverlay p-5" />
+                    <Dialog.Content className="DialogContent px-5 py-5">
                         <Dialog.Title className="DialogTitle">Adicionar produto ao carrinho</Dialog.Title>
                         <Dialog.Description className="DialogDescription">
                             Selecione um produto, um preço e uma quantidade ao carrinho...
                         </Dialog.Description>
 
-                        <div className="Fields">
-                            <label htmlFor="product">Produtos</label>
-
-                            <select name='product' value={product} onChange={(e) => setProduct(e.target.value)} >
-
-                                <option key={0} value={0}>
-                                    Selecione um dos Produtos da Lista...
-                                </option>
-
-                                {products.map((product) => (
-                                    <option key={product.productID} value={`${product.productID}-${product.name}-${product.version}`}>
-                                        {product.name} - {product.version}
+                        <div className="Fields mb-4">
+                            <Form.Group className="d-flex my-2 flex-column px-2">
+                                <label htmlFor="product">Produtos</label>
+                                <Form.Select
+                                    name='product'
+                                    value={product}
+                                    onChange={(e) => getProductMinimumValue(e.target.value)}
+                                >
+                                    <option key={0} value={0}>
+                                        Selecione um dos Produtos da Lista...
                                     </option>
-                                ))};
 
-                            </select>
-                            <label htmlFor="quantity">Quantidade</label>
-                            <input
-                                name='quantity'
-                                value={qtd}
-                                onChange={(e) => setQtd(e.target.value)}
-                                type='number'
-                                placeholder='Quantidade...'
-                            />
-                            <label htmlFor="price">Preço</label>
-                            <input
-                                name='price'
-                                value={price}
-                                onChange={(e) => setPrice(e.target.value)}
-                                type='text'
-                                placeholder='Preço...'
-                            />
+                                    {products.map((product) => (
+                                        <option key={product.productID} value={`${product.productID}-${product.name}-${product.version}`}>
+                                            {product.name} - {product.version}
+                                        </option>
+                                    ))};
 
+                                </Form.Select>
+                            </Form.Group>
+                            <Form.Group className="d-flex my-2 flex-column px-2">
+                                <label>Quantidade</label>
+                                <Form.Control
+                                    name='quantidade'
+                                    value={qtd}
+                                    onChange={(e) => setQtd(e.target.value)}
+                                    type='number'
+                                    placeholder='Quantidade...'
+                                />
 
-                            <button type='button' onClick={sendProducts}>Adicionar produto</button>
+                            </Form.Group>
+                            <Form.Group className="d-flex my-2 flex-column px-2">
+                                <label htmlFor="price">Preço</label>
+                                <Form.Control
+                                    value={price}
+                                    onChange={(e) => setPrice(e.target.value)}
+                                    name='preco'
+                                    type='number'
+                                    placeholder='Preço...'
+                                />
+                            </Form.Group>
                         </div>
-
-                        <div style={{ display: 'flex', marginTop: 25, justifyContent: 'flex-end' }}>
-                            <Dialog.Close asChild>
-                                <button className="Button green">Fechar</button>
-                            </Dialog.Close>
+                        <div className='end_buttons d-flex justify-content-between'>
+                            <button className='btn-global btn-hv w-50' type='button' onClick={sendProducts}>Adicionar produto</button>
+                            <button className='btn btn-danger btn-hv ' type='button' onClick={resetFields}><ImBin2 /></button>
                         </div>
 
                         <Dialog.Close asChild>
-                            <button className="IconButton" aria-label="Close">
+                            <button className="IconButton btn btn-outline-danger" aria-label="Close">
                                 X
                             </button>
                         </Dialog.Close>
+
                     </Dialog.Content>
 
                 </Dialog.Portal>
             </Dialog.Root>
+            <ToastContainer />
 
         </div>
 

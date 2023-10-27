@@ -65,12 +65,29 @@ body {
   text-decoration: none;
   color: white;
   border: none;
-  border-radius: .8em;
+  border-radius: .4em;
 
+}
+
+.btn-hv:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s ease;
 }
 
 input:disabled {
   cursor: not-allowed;
+}
+
+#yellow_button {
+  background-color: #FFB703;
+  color: black;
+  font-weight: 700;
+  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.25);
+}
+
+#yellow_button:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s ease;
 }
 
 button:disabled,
@@ -80,7 +97,8 @@ button[disabled] {
   cursor: not-allowed;
 }
 
-/* input {    
+/*
+input {    
     padding: 1em;
     cursor: pointer;
     margin-bottom: 1em;
@@ -89,18 +107,6 @@ button[disabled] {
     max-width: 100%;
     box-shadow: 0 1px 3px -2px #9098A9;
     
-}
-
-
-select{
-    appearance: unset;
-    -webkit-appearance: none;
-    padding: 1em;
-    margin-bottom: 1em;
-    border-radius: .8em;
-    border: none;
-    max-width: 100%;
-    box-shadow: 0 1px 3px -2px #9098A9;
 }
 
 label{
@@ -118,8 +124,4 @@ button{
     border: none;
     border-radius: .8em;
 }
-
-
-button:hover{
-    background-color:#FBD774;
-} */
+*/

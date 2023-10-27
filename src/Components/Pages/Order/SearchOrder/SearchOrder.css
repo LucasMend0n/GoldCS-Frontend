@@ -1,0 +1,16 @@
+.searchOrderPage {
+    width: 100%;
+    gap: 4em;
+    min-height: 100vh;  
+}
+
+.searchForm {
+    gap: 1em;
+    width: 40%;
+}
+.search_buttons{
+    gap: 1em;
+}
+.error_message{
+    color: red;
+}

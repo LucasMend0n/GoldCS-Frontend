@@ -9,6 +9,7 @@ import NewOrder from './Components/Pages/newOrder';
 import Layout from './Components/Layout/Layout';
 import RequireAuth from './Components/RequireAuth';
 import Profile from './Components/Pages/Profile/Profile';
+import SearchOrder from './Components/Pages/Order/SearchOrder/SearchOrder';
 
 function App() {
 
@@ -19,12 +20,14 @@ function App() {
 
         <Route exact path='/login' element={<Login />} />
 
-        <Route element={< RequireAuth/>} >
+        <Route element={< RequireAuth />} >
           <Route exact path='/' element={<Home />} />
           <Route exact path='/amount' element={<Amount />} />
-          <Route exact path='/order' element={<Order />} />
-          <Route path='/profile' element={<Profile />} />
+          <Route path='/order/' element={<Order />}>
+          </Route>
           <Route path='/neworder' element={<NewOrder />} />
+          <Route path='/searchorder' element={<SearchOrder />} />
+          <Route path='/profile' element={<Profile />} />
         </Route>
       </Route>
 
