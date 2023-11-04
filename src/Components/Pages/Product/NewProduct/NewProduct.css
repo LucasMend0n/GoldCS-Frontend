@@ -1,0 +1,22 @@
+.NewProductPage {
+    width: 100%;
+    gap: 5em;
+    min-height: 100vh;
+}
+
+.newProductForm {
+    background-color: #D2E0FF !important;
+    border-radius: .8em;
+    padding: 2em;
+    box-shadow: 0 1px 3px -2px #9098A9;
+    width: 40%;
+}
+
+.form_line {
+    max-width: 100%;
+}
+
+.newProductForm label {
+    padding-bottom: 0.5em;
+    font-weight: 700;
+}

@@ -1,0 +1,9 @@
+.searchProductPage{
+    width: 100%;
+    gap: 4em;
+    min-height: 100vh;  
+}
+.searchProduct{
+    width: 100%;
+    gap: 5em;
+}
