@@ -17,3 +17,15 @@
 .table-striped>tbody>tr:nth-child(2n+1)>th {
     background-color: #D2E0FF;
 }
+
+.deleteButton {
+    background-color: transparent;
+    color: #CC1717;
+    border: none;
+    border-radius: .4em;
+    margin-left: 12em;
+}
+
+.deleteButton:hover {
+    opacity: 58%;
+}
