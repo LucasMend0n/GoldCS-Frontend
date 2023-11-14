@@ -10,6 +10,9 @@ import Layout from './Components/Layout/Layout';
 import RequireAuth from './Components/RequireAuth';
 import Profile from './Components/Pages/Profile/Profile';
 import SearchOrder from './Components/Pages/Order/SearchOrder/SearchOrder';
+import Product from './Components/Pages/Product/Product';
+import NewProduct from './Components/Pages/Product/NewProduct'
+import ListProducts from './Components/Pages/Product/ListProducts';
 
 function App() {
 
@@ -27,6 +30,9 @@ function App() {
           </Route>
           <Route path='/neworder' element={<NewOrder />} />
           <Route path='/searchorder' element={<SearchOrder />} />
+          <Route path='/product' element={<Product />} />
+          <Route path='/newproduct' element={<NewProduct/>} />
+          <Route path='/listproducts' element={<ListProducts />} />
           <Route path='/profile' element={<Profile />} />
         </Route>
       </Route>

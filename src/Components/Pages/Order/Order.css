@@ -34,6 +34,10 @@
     font-weight: 700;
     border-color: #1E0FA0;
 }
+#search_order:disabled{
+    color: #666666;
+    border-color: #666666;
+}
 
 .buttons_section {
     text-align: center;

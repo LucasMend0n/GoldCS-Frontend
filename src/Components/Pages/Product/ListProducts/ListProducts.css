@@ -1,0 +1,24 @@
+.searchProductPage {
+    width: 100%;
+    gap: 4em;
+    min-height: 100vh;
+}
+
+.searchProduct {
+    width: 100%;
+    gap: 5em;
+}
+
+.productsTable {
+    border-radius: .8em !important;
+}
+
+.table-striped>tbody>tr:nth-child(2n+1)>td,
+.table-striped>tbody>tr:nth-child(2n+1)>th {
+    background-color: #D2E0FF;
+}
+
+#deleteButton {
+    border-radius: .4em;
+    margin-left: 29em;
+}

@@ -18,7 +18,7 @@ const RDialog = ({ onAddProduct }) => {
 
     useEffect(() => {
         const getProducts = async () => {
-            const response = await apiGold.get("/Product");
+            const response = await apiGold.get("Product/WithoutPagination");
             setProducts(response.data.result);
         };
         getProducts();
