@@ -17,20 +17,20 @@ const ListProducts = () => {
   const [showModal, setShowModal] = useState(false);
   const [isDisable, setIsDisable] = useState(true);
   const [loading, setIsloading] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
+  const getProducts = async () => {
+    const response = await apiGold.get("/Product/WithoutPagination");
+    setProducts(response.data.result);
+  };
   useEffect(() => {
-    const getProducts = async () => {
-      const response = await apiGold.get("/Product/WithoutPagination");
-      setProducts(response.data.result);
-    };
-    getProducts();
     const getCategories = async () => {
       const response = await apiGold.get("/Category");
       setCategories(response.data.result);
     };
-    getProducts();
     getCategories();
-  }, [ ,products]);
+    getProducts();
+  }, []);
 
 
   const filteredProducts = products.filter(product => {
@@ -55,9 +55,12 @@ const ListProducts = () => {
   };
 
   const closeModal = () => {
+    setShowModal(false);
     setSelectedProduct(null);
     setIsDisable(true);
-    setShowModal(false);
+  };
+  const openDeleteModal = () => {
+    setShowDeleteModal(true);
   };
 
   const productForm = useForm({});
@@ -145,15 +148,20 @@ const ListProducts = () => {
 
       const putResonse = await apiGold.put(`/Product/${newProductID}`, newProduct);
       if (putResonse.data.success) {
-        const updatedProducts = [...products];
-        const updatedProductIndex = updatedProducts.findIndex(product => product.productID === newProductID);
-        if (updatedProductIndex !== -1) {
-          updatedProducts[updatedProductIndex] = {
-            ...updatedProducts[updatedProductIndex],
-            ...formattedNewProduct,
-          };
-          setProducts(updatedProducts);
-        }
+        toast.info(
+          `Produto com id: ${newProductID}, foi atualizado com sucesso com sucesso!`,
+          {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          }
+        );
+        getProducts();
       }
 
     } catch (error) {
@@ -161,6 +169,42 @@ const ListProducts = () => {
     }
     finally {
       setIsloading(false);
+      setShowDeleteModal(false);
+      setShowModal(false);
+      setSelectedProduct(null);
+      setIsDisable(true);
+    }
+  }
+  const handleDeleteProduct = async (e) => {
+    e.preventDefault();
+    setIsloading(true);
+    try {
+      const deleteProductID = getValues("product_id");
+      const deleteResponse = await apiGold.delete(`/Product/${deleteProductID}`);
+      if (deleteResponse.data.success) {
+        toast.info(
+          ` Produto com id: ${deleteProductID}, foi deletado com sucesso`,
+          {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          }
+        );
+        getProducts();
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setIsloading(false);
+      setShowDeleteModal(false);
+      setShowModal(false);
+      setSelectedProduct(null);
+      setIsDisable(true);
     }
   }
 
@@ -215,6 +259,7 @@ const ListProducts = () => {
 
         {/*Inicio do modal de editar e excluir*/}
         <Modal
+          size="lg"
           centered
           show={showModal}
           onHide={closeModal}
@@ -222,7 +267,15 @@ const ListProducts = () => {
         >
           <Modal.Header closeButton>
             <Modal.Title>Dados do Produto</Modal.Title>
-            <button title='Deletar produto' id='deleteButton' className='btn btn-danger btn-hv '><BsFillTrashFill /></button>
+            <button
+              title='Deletar produto'
+              onClick={openDeleteModal}
+              id='deleteButton'
+              className='btn btn-danger btn-hv '
+              disabled={loading}
+            >
+              <BsFillTrashFill />
+            </button>
           </Modal.Header>
           <Modal.Body>
             <>
@@ -299,6 +352,19 @@ const ListProducts = () => {
               </button>
             </div>
           </Modal.Footer>
+        </Modal>
+        <Modal size="sm" centered show={showDeleteModal} onHide={() => setShowDeleteModal(false)} backdrop="static">
+          <Modal.Body>
+            <p>Deseja realmente excluir este produto?</p>
+            <div className='form_buttons mx-auto d-flex justify-content-center mt-2'>
+              <button className="btn btn-outline-danger btn-hv w-50" onClick={() => setShowDeleteModal(false)}>
+                Cancelar
+              </button>
+              <button onClick={handleDeleteProduct} className="btn btn-danger btn-hv mx-3 w-75">
+                {loading ? <Spinner> <span className="visually-hidden">Loading...</span> </Spinner> : <> Excluir</>}
+              </button>
+            </div>
+          </Modal.Body>
         </Modal>
 
       </section>
