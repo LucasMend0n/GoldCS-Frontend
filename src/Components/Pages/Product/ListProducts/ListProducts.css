@@ -18,14 +18,7 @@
     background-color: #D2E0FF;
 }
 
-.deleteButton {
-    background-color: transparent;
-    color: #CC1717;
-    border: none;
+#deleteButton {
     border-radius: .4em;
-    margin-left: 12em;
-}
-
-.deleteButton:hover {
-    opacity: 58%;
+    margin-left: 10em;
 }

@@ -80,11 +80,9 @@ const NewProduct = () => {
         }
       }
 
-      console.log(product)
       //request para api
       const productPost = await apiGold.post('/Product', product);
       if (productPost.data.success === true) {
-        console.log(productPost.data)
         toast.info("Produto adicionado!",
           {
             position: "top-right",
