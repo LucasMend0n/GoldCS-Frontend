@@ -4,7 +4,7 @@ import RDialog from "./Dialog/Dialog";
 import { useRef, useState } from "react";
 import { NumericFormat } from "react-number-format";
 import apiGold from "../../../../Services/api.js";
-import { ImBin2 } from 'react-icons/im'
+import { ImBin2 } from "react-icons/im";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getUserLocalStorage } from "../../../../context/util";
@@ -38,11 +38,16 @@ const NewOrderForm = () => {
   const handleAddProducts = (products) => {
     const selected = products.product.split("-");
     const productID = selected[0];
-    const existingProductIndex = orderProducts.findIndex((product) => product.id === productID);
+    const existingProductIndex = orderProducts.findIndex(
+      (product) => product.id === productID
+    );
 
     if (existingProductIndex !== -1) {
       const updatedProducts = [...orderProducts];
-      updatedProducts[existingProductIndex].quantity += parseInt(products.qtd, 10);
+      updatedProducts[existingProductIndex].quantity += parseInt(
+        products.qtd,
+        10
+      );
       setOrderProducts(updatedProducts);
     } else {
       const productObject = {
@@ -73,12 +78,12 @@ const NewOrderForm = () => {
           if (response.data.success === true) {
             formRef.current["cl-name"].value = response.data.result.name;
             formRef.current["cl-email"].value = response.data.result.email;
-            formRef.current["cl-celphone"].value = response.data.result.cellPhone;
-            formRef.current["cl-landPhone"].value = response.data.result.landlinePhone;
+            formRef.current["cl-celphone"].value =
+              response.data.result.cellPhone;
+            formRef.current["cl-landPhone"].value =
+              response.data.result.landlinePhone;
           }
-        } catch (e) {
-
-        }
+        } catch (e) {}
       };
 
       searchClient();
@@ -87,16 +92,15 @@ const NewOrderForm = () => {
 
   const limparForm = (e) => {
     e.preventDefault();
-    setOrderProducts([])
+    setOrderProducts([]);
     reset();
-  }
+  };
 
   const isEveryInputEmpty = () => {
-    var inputs = document.querySelectorAll('input');
-    for (const input of inputs)
-      if (input.value !== '') return false;
+    var inputs = document.querySelectorAll("input");
+    for (const input of inputs) if (input.value !== "") return false;
     return true;
-  }
+  };
 
   const postOrder = async (order) => {
     try {
@@ -122,14 +126,14 @@ const NewOrderForm = () => {
           console.log("Email enviado com sucesso!");
         }
       } catch (error) {
-        console.log("Erro na requisição de PostEmail: : ", error)
+        console.log("Erro na requisição de PostEmail: : ", error);
       }
     } catch (error) {
       console.log("Erro na requisição de postOrder", error);
     } finally {
       reset();
       window.scrollTo(0, 0);
-      setOrderProducts([])
+      setOrderProducts([]);
     }
   };
 
@@ -161,7 +165,7 @@ const NewOrderForm = () => {
           finalPrice: product.price,
         });
       });
-      const user = getUserLocalStorage()
+      const user = getUserLocalStorage();
       const orderObject = {
         paymentMethod: formRef.current["od-payment"].value,
         deliveryForecast: formRef.current["od-uptoDate"].value,
@@ -170,17 +174,27 @@ const NewOrderForm = () => {
         address: address,
         orderProducts: products,
       };
+
+      debugger;
+
+      if (new Date(orderObject.deliveryForecast) < new Date()) {
+        toast.error("Data de entrega menor que a data atual");
+        return;
+      }
       //chamada da função que faz o post para API
       postOrder(orderObject);
     } else {
-      toast.error("O formulário deve ser preenchido!")
+      toast.error("O formulário deve ser preenchido!");
       return;
     }
   };
 
   return (
     <>
-      <form className="newOrderForm d-flex flex-column justify-content-center my-5 p-5" ref={formRef}>
+      <form
+        className="newOrderForm d-flex flex-column justify-content-center my-5 p-5"
+        ref={formRef}
+      >
         <h1 className="mb-4">Novo Pedido</h1>
         <div className="form_section_horizontal  d-flex flex-column ">
           <h3 className="w-100 border-bottom mb-3 pb-3">Dados do cliente</h3>
@@ -194,11 +208,26 @@ const NewOrderForm = () => {
                 name="cl-id"
                 onBlur={checkCPF}
                 id="cl-id"
-                mask={[/\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "-", /\d/, /\d/]}
+                mask={[
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  ".",
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  ".",
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  "-",
+                  /\d/,
+                  /\d/,
+                ]}
                 guide={false}
               />
             </Form.Group>
-            <Form.Group className="d-flex w-25 flex-column px-2" >
+            <Form.Group className="d-flex w-25 flex-column px-2">
               <label htmlFor="cl-name"> Nome </label>
               <Form.Control
                 {...register("cl-name")}
@@ -220,7 +249,22 @@ const NewOrderForm = () => {
               <label htmlFor="cl-celphone"> Telefone celular </label>
               <Form.Control
                 as={MaskedInput}
-                mask={["(", /\d/, /\d/, ")", /\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/]}
+                mask={[
+                  "(",
+                  /\d/,
+                  /\d/,
+                  ")",
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  "-",
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                ]}
                 guide={false}
                 {...register("cl-celphone")}
                 type="text"
@@ -232,7 +276,21 @@ const NewOrderForm = () => {
               <label htmlFor="cl-landPhone"> Telefone Fixo </label>
               <Form.Control
                 as={MaskedInput}
-                mask={["(", /\d/, /\d/, ")", /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/]}
+                mask={[
+                  "(",
+                  /\d/,
+                  /\d/,
+                  ")",
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  "-",
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                ]}
                 guide={false}
                 {...register("cl-landPhone")}
                 type="text"
@@ -316,7 +374,9 @@ const NewOrderForm = () => {
           </div>
         </div>
         <div className="form_section_horizontal  d-flex flex-column">
-          <h3 className="w-100 border-bottom mb-3 pb-3">Carrinho de produtos</h3>
+          <h3 className="w-100 border-bottom mb-3 pb-3">
+            Carrinho de produtos
+          </h3>
           <div className="form_table_line d-flex justify-content-center align-items-center p-3 mb-4 ">
             {orderProducts.length === 0 ? (
               <p id="noProducts">Nenhum produto no carrinho</p>
@@ -345,7 +405,11 @@ const NewOrderForm = () => {
                       </td>
                       <td>{product.quantity}</td>
                       <td>
-                        <button type="button" className="btn-global btn-profile btn-hv" onClick={() => handleRemoveProduct(index)}>
+                        <button
+                          type="button"
+                          className="btn-global btn-profile btn-hv"
+                          onClick={() => handleRemoveProduct(index)}
+                        >
                           <ImBin2 />
                         </button>
                       </td>
@@ -366,9 +430,7 @@ const NewOrderForm = () => {
             </Form.Group>
             <Form.Group className="d-flex flex-column">
               <label htmlFor="od-payment">Forma de pagamento</label>
-              <Form.Select
-                {...register("od-payment")}
-              >
+              <Form.Select {...register("od-payment")}>
                 <option value={""}>Selecione a forma de pagamento...</option>
                 <option value={"Pix"}>Pix</option>
                 <option value={"Débito"}>Débito</option>
@@ -380,8 +442,19 @@ const NewOrderForm = () => {
           </div>
         </div>
         <div className="d-flex justify-content-end">
-          <button id='search_order' className="w-25 btn-global btn-profile" onClick={limparForm}>Limpar</button>
-          <button className="w-25 btn-global btn-profile mx-3" onClick={enviarPedido}>Enviar</button>
+          <button
+            id="search_order"
+            className="w-25 btn-global btn-profile"
+            onClick={limparForm}
+          >
+            Limpar
+          </button>
+          <button
+            className="w-25 btn-global btn-profile mx-3"
+            onClick={enviarPedido}
+          >
+            Enviar
+          </button>
         </div>
       </form>
       <ToastContainer />
