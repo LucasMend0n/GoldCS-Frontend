@@ -9,7 +9,7 @@ import { BsFillBoxSeamFill, BsFillArchiveFill, BsFillFileTextFill } from 'react-
 const Home = () => {
   const user = getUserLocalStorage()
   return (
-    <section className="HomePage">
+    <section className="HomePage d-flex flex-column justify-content-start align-items-center">
       <div className='display-user'>Bem vindo, {user.name}</div>
       <article className='buttons_section'>
         <div className='home_buttons'>
