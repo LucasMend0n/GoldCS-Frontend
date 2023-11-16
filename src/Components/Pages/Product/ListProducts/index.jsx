@@ -149,7 +149,7 @@ const ListProducts = () => {
       const putResonse = await apiGold.put(`/Product/${newProductID}`, newProduct);
       if (putResonse.data.success) {
         toast.info(
-          `Produto com id: ${newProductID}, foi atualizado com sucesso com sucesso!`,
+          `Produto id ${newProductID} foi atualizado com sucesso!`,
           {
             position: "top-right",
             autoClose: 3000,
@@ -183,7 +183,7 @@ const ListProducts = () => {
       const deleteResponse = await apiGold.delete(`/Product/${deleteProductID}`);
       if (deleteResponse.data.success) {
         toast.info(
-          ` Produto com id: ${deleteProductID}, foi deletado com sucesso`,
+          `Produto id ${deleteProductID} foi deletado com sucesso`,
           {
             position: "top-right",
             autoClose: 3000,

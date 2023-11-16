@@ -178,7 +178,7 @@ const NewOrderForm = () => {
       debugger;
 
       if (new Date(orderObject.deliveryForecast) < new Date()) {
-        toast.error("Data de entrega menor que a data atual");
+        toast.error("Data de entrega inválida!");
         return;
       }
       //chamada da função que faz o post para API

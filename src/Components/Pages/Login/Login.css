@@ -4,21 +4,6 @@
   background-color: #1e0fa0;
 }
 
-.btn-primary {
-  padding: 0.7em 1.2em;
-  text-decoration: none;
-  cursor: pointer;
-  color: white;
-  transition: 0.5s;
-  border: none;
-  border-radius: 0.6em;
-  background-color: #1e0fa0;
-}
-
-.btn-primary:hover {
-  background-color: #ffb703;
-}
-
 .btn-primary:disabled {
   background-color: #cccccc;
   color: #666666;

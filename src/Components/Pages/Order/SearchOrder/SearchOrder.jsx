@@ -52,7 +52,7 @@ const SearchOrder = () => {
           />
           <div className="search_buttons d-flex ">
             <button id='yellow_button' className='btn-global' onClick={handleSearch}>Buscar</button>
-            <button id='yellow_button' className='btn-global' onClick={deleteOrder}>Limpar</button>
+            <button id='clearButton' className='btn-global' onClick={deleteOrder}>Limpar</button>
           </div>
         </form>
 

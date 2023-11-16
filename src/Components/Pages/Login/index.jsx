@@ -118,13 +118,12 @@ function Login() {
                 required />
             </FloatingLabel>
             <Stack gap={3} className="col-md-7 mx-auto buttons">
-              <Button
-                className='btn'
+              <button
+                className='btn-global btn-hv'
                 type='submit'
-                variant="primary"
                 disabled={loading}
-              >{loading ? <Spinner> <span className="visually-hidden">Loading...</span> </Spinner> : <><span >ENTRAR</span></>}
-              </Button>
+              >{loading ? <Spinner> <span className="visually-hidden">Loading...</span> </Spinner> : <><span >Entrar</span></>}
+              </button>
             </Stack>
           </Form>
 

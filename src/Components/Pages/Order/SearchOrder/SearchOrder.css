@@ -1,16 +1,31 @@
 .searchOrderPage {
     width: 100%;
     gap: 4em;
-    min-height: 100vh;  
+    min-height: 100vh;
 }
 
 .searchForm {
     gap: 1em;
     width: 40%;
 }
-.search_buttons{
+
+.search_buttons {
     gap: 1em;
 }
-.error_message{
+
+.error_message {
     color: red;
+}
+
+#clearButton {
+    background-color: transparent;
+    border: 2px solid;
+    color: #FFB703;
+    font-weight: 700;
+    border-color: #FFB703;
+}
+
+#clearButton:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
 }
