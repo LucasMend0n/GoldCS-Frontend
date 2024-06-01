@@ -5,13 +5,15 @@ import apiGold from "../../../Services/api.js";
 // Toast
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Button, Form } from "react-bootstrap";
 
 const Amount = () => {
   const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState("");
 
   useEffect(() => {
     const getProducts = async () => {
-      const response = await apiGold.get("/Product");
+      const response = await apiGold.get("/Product/WithoutPagination");     
       setProducts(response.data.result);
     };
     getProducts();
@@ -27,9 +29,15 @@ const Amount = () => {
     e.preventDefault();
 
     const qtde = e.target.qtd.value;
+    if (selectedProduct === "") {
+      toast.error("Selecione um produto válido!");
+      setSelectedProduct("");
+      return;
+    }
     if (qtde <= 0) {
       toast.error("Quantidade inválida!");
       e.target.qtd.value = "";
+      setSelectedProduct("");
       return;
     }
 
@@ -37,8 +45,6 @@ const Amount = () => {
       productID: e.target.product.value,
       quantity: e.target.qtd.value,
     });
-    console.log(json);
-
     const postAmount = async () => {
       const response = await apiGold.post("/Product/insertAmount", json, {
         headers: {
@@ -59,6 +65,7 @@ const Amount = () => {
         });
 
         e.target.qtd.value = "";
+        setSelectedProduct("");
       }
     };
 
@@ -66,26 +73,45 @@ const Amount = () => {
   }
 
   return (
-    <section className="AmountPage">
-      <form onSubmit={submit}>
-        <h1>Inserir Estoque</h1>
-        <div className="formSelect">
-          <label htmlFor="product">Produto</label>
-          <select name="product">
-            {products.map((product) => (
-              <option key={product.productID} value={product.productID}>
-                {product.name} - {product.version}
-              </option>
-            ))}
-            ;
-          </select>
+    <section className="AmountPage d-flex flex-column mb-3 justify-content-start align-items-center">
+      <div className='display-user'><h2>Estoque</h2></div>
+
+      <form onSubmit={submit} className="d-flex flex-column my-3 justify-content-start p-5 w-50">
+        <div className="form_header d-flex flex-column mt-5 mb-3 justify-content-start align-items-center">
+          <h3>INSERIR ESTOQUE</h3>
         </div>
-        <label htmlFor="qtd">Quantidade</label>
-        <input type="number" name="qtd" />
-        <button>Enviar</button>
+        <div className="formContent d-flex flex-column justify-content-center align-items-center">
+          <div className="formSelect w-75">
+            <Form.Select
+              size="lg"
+              name="product"
+              id="product"
+              value={selectedProduct}
+              onChange={(e) => setSelectedProduct(e.target.value)}
+            >
+              <option value={""}>Produto...</option>
+              {products.map((product) => (
+                <option key={product.productID} value={product.productID}>
+                  {product.name} - {product.version}
+                </option>
+              ))}
+              ;
+            </Form.Select>
+          </div>
+          <div className="form_submit  w-75 d-flex ">
+
+            <Form.Control
+              id="qtd"
+              placeholder="Quantidade..."
+              type="number"
+              name="qtd"
+            />
+            <button className="btn-global btn-amount w-50 mx-3">ADICIONAR</button>
+          </div>
+        </div>
       </form>
       <ToastContainer />
-    </section>
+    </section >
   );
 };
 

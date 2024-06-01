@@ -1,4 +1,4 @@
-.newOrderForm{
+.OrderForm{
     background-color: #FFF5DB !important;
     border-radius: .8em;
     padding: 2em;
@@ -12,25 +12,21 @@
     padding-bottom: 0.5em;
     font-weight: 700;
 }
-.purchaseCart {
+.orderProductsTable {
     background-color: #F4F4F4;
     width: 60%;
     border-radius: .7em !important;
+    margin-right: 2em;
+
 }
 .form_table_line{
     gap: 2em;
 }
-.purchaseCart tr, th{
+.orderProductsTable tr, th{
     padding-top: 2em;
 }
 
-.purchaseCart td, thead {
+.orderProductsTable td, thead {
     text-align: center;
     padding: 2em 0;
-}
-#noProducts{
-    font-size: 12px;
-    text-align: center;
-    margin: 2em 0 ;
-    color: red;
 }

@@ -1,12 +1,14 @@
 /* eslint-disable react/prop-types */
 import { createContext, useEffect, useState } from "react";
 import { getUserLocalStorage, loginRequest, setUserLocalStorage } from "./util";
+import jwt from 'jwt-decode'
 
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState({});
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const user = getUserLocalStorage()
@@ -15,28 +17,58 @@ export const AuthProvider = ({ children }) => {
         }
     }, [])
 
+
+
     async function authenticate(email, password) {
+        try {
+            const response = await loginRequest(email, password);
+            if ('success' in response) {
+                const retLogin = {
+                    token: response.result.token,
+                    refreshToken: response.result.refreshToken
+                }
 
-        const response = await loginRequest(email, password); 
-        
-        const payload = {
-            token: response.result.token, 
-            email: response.result.email,
-            userID: response.result.userID,
-            name: response.result.name,
+                const payload = jwt(retLogin.token)
+                payload.token = retLogin.token
+                setUser(payload);
+                setUserLocalStorage(payload);
+                return true;
+            }
+            else if (response.response && response.response.data && response.response.data.StatusCode) {
+                const statusCode = response.response.data.StatusCode;
+                let errorMessage = ''
+                switch (statusCode) {
+                    case 404:
+                        errorMessage = 'Usuário não encontrado. Tente novamente'
+                        break;
+                    case 400:
+                        errorMessage = 'Usuário ou senha inválidos. Tente novamente'
+                        break;
+                    default:
+                        errorMessage = 'Ocorreu um erro, tente novamente mais tarde.'
+                        break;
+                }
+                setError(errorMessage);
+            } else {
+                setError('Erro desconhecido');
+            }
+        } catch (error) {
+            setError(error.message);
         }
-
-        setUser(payload)
-        setUserLocalStorage(payload)
     }
 
     function logout() {
         setUser(null)
         setUserLocalStorage(null)
+        setError(null)
+    }
+
+    function clearLoginError() {
+        setError(null);
     }
 
     return (
-        <AuthContext.Provider value={{ ...user, authenticate, logout }}>
+        <AuthContext.Provider value={{ ...user, error, authenticate, clearLoginError, logout }}>
             {children}
         </AuthContext.Provider>
     )

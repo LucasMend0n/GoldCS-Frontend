@@ -1,37 +1,46 @@
-.AmountPage{
-    min-height: 75vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.AmountPage {
+    gap: 5em;
+    width: 100%;
 }
 
-.AmountPage form{
-    display: flex;
-    flex-direction: column;
-    background-color: #f7f7f7;
+.AmountPage form {
+    gap:6em;
+    background-color: #e9e7f6;
     border-radius: .8em;
-    padding: 2em;
+    height: 60%;
     box-shadow: 0 1px 3px -2px #9098A9;
-    width: 20%;
-    margin: 3em 0;
+
 }
 
-.AmountPage form > button{
-    text-align: center;
-    margin: 1em 0;
-    padding: 1em;
+.AmountPage form>h1 {
+    font-size: 3em;
 }
 
-.AmountPage form >h1{
-    text-align: center;
-    margin-bottom: 1em;
-}
 
-.formSelect{
+
+.formSelect {
     display: flex;
     flex-direction: column;
     margin-bottom: 1em;
     margin-bottom: 1em;
 }
 
+.btn-amount {
+    border-radius: .4em;
+}
+.form_submit{
+    flex: 1;
+}
+
+.btn-amount:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s;
+}
+
+#qtd {
+    width: 15em;
+}
+
+#product {
+    width: 100%;
+}

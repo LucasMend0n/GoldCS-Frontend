@@ -1,15 +1,47 @@
-.HomePage{
+.HomePage {
     width: 100%;
-    min-height: 75vh;
-    display: flex; 
+    min-height: 100%;
+    display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
 
-.HomePage article{
+.HomePage article {
     text-align: center;
+    height: 70%;
 }
-.HomePage h1{
+
+.HomePage h1 {
     padding: 1em;
+}
+.home_buttons {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1em;
+}
+
+#order {
+    background-color: #FFB703;
+    width: 12em;
+    color: black;
+    font-weight: 700;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.btn-home {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5em;
+    font-size: 26px;
+    font-weight: 500;
+}
+
+.btn-home:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
 }

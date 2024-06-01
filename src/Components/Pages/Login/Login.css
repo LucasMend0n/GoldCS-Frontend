@@ -1,72 +1,41 @@
-.LoginPage {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    min-height: 80vh;
+.initialPage {
+  min-height: 100vh;
+  min-width: 100%;
+  background-color: #1e0fa0;
 }
 
-.form_control label {
-    margin: 0.5em 1em;
-    font-size: 18px;
+.btn-primary {
+  padding: 0.7em 1.2em;
+  text-decoration: none;
+  cursor: pointer;
+  color: white;
+  transition: 0.5s;
+  border: none;
+  border-radius: 0.6em;
+  background-color: #1e0fa0;
 }
 
-.form_control input {
-    width: 50%;
+.btn-primary:hover {
+  background-color: #ffb703;
 }
-.form_control button{
 
-    width: 40%;
+.btn-primary:disabled {
+  background-color: #cccccc;
+  color: #666666;
+  cursor: none;
 }
+
+.loginback {
+  min-height: 75vh;
+  max-width: 35%;
+}
+
 .LoginForm {
-    text-align: center;
-    margin: 2em 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 3em;
-    background-color: #f7f7f7;
-    border-radius: .7em;
-    gap: 1em;
-    min-width: 40%;
+  min-width: 75%;
+  margin-top: 1em;
+  margin-bottom: 3em;
 }
 
-.LoginForm h1{
-    margin-bottom: 1em;
-}
-
-.form_control {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-direction: column;
-}
-
-
-.errmsg {
-    color: red;
-}
-
-.ofscreen {
-    display: none;
-    ;
-}
-
-.hide {
-    display: none;
-}
-.valid {
-    color: limegreen;
-    margin-left: 0.25rem;
-}
-
-.instructions {
-    font-size: 0.75rem;
-    border-radius: 0.5rem;
-    background: lightcoral;
-    margin-bottom: 1em;
-    color: #fff;
-    padding: 0.25rem;
-    position: relative;
-    bottom: -10px;
+.buttons {
+  margin-top: 5em;
 }

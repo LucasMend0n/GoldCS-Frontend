@@ -1,0 +1,18 @@
+.ProductPage {
+    width: 100%;
+    gap: 10em;
+    min-height: 100vh;
+}
+#list_product{
+    background-color: transparent;
+    border: 2px solid;
+    color: #1E0FA0;
+    font-weight: 700;
+    border-color: #1E0FA0;
+}
+.product_buttons{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    gap: 2em;
+}
