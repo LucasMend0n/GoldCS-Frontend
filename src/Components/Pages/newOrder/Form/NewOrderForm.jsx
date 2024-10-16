@@ -8,8 +8,9 @@ import { ImBin2 } from "react-icons/im";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getUserLocalStorage } from "../../../../context/util";
-import MaskedInput from "react-text-mask";
 import { Form } from "react-bootstrap";
+import { IMaskInput } from "react-imask";
+import removeMasks from "../../../../util/removeMasks.js";
 
 const NewOrderForm = () => {
   const [orderProducts, setOrderProducts] = useState([]);
@@ -20,7 +21,7 @@ const NewOrderForm = () => {
   const formRef = useRef(null);
 
   const checkCEP = () => {
-    const cep = formRef.current["adr-postcode"].value.replace(/\D/g, "");
+    const cep = removeMasks(formRef.current["adr-postcode"].value);
 
     if (!cep) return;
 
@@ -70,7 +71,7 @@ const NewOrderForm = () => {
   const checkCPF = (e) => {
     e.preventDefault();
 
-    const cpf = formRef.current["cl-id"].value;
+    const cpf = removeMasks(formRef.current["cl-id"].value);
     if (cpf !== "") {
       const searchClient = async () => {
         try {
@@ -140,16 +141,15 @@ const NewOrderForm = () => {
   const enviarPedido = (e) => {
     e.preventDefault();
     if (!isEveryInputEmpty()) {
-      // valores do formulario para serem tratados como json
       const client = {
-        cpf: formRef.current["cl-id"].value,
+        cpf: removeMasks(formRef.current["cl-id"].value),
         name: formRef.current["cl-name"].value,
         email: formRef.current["cl-email"].value,
-        cellphone: formRef.current["cl-celphone"].value,
-        landlinePhone: formRef.current["cl-landPhone"].value,
+        cellphone: removeMasks(formRef.current["cl-celphone"].value),
+        landlinePhone: removeMasks(formRef.current["cl-landPhone"].value),
       };
       const address = {
-        cep: formRef.current["adr-postcode"].value,
+        cep: removeMasks(formRef.current["adr-postcode"].value),
         addressName: formRef.current["adr-street"].value,
         city: formRef.current["adr-city"].value,
         district: formRef.current["adr-district"].value,
@@ -174,8 +174,6 @@ const NewOrderForm = () => {
         address: address,
         orderProducts: products,
       };
-
-      debugger;
 
       if (new Date(orderObject.deliveryForecast) < new Date()) {
         toast.error("Data de entrega menor que a data atual");
@@ -204,27 +202,11 @@ const NewOrderForm = () => {
               <Form.Control
                 {...register("cl-id").required}
                 type="text"
-                as={MaskedInput}
+                as={IMaskInput}
+                mask="000.000.000-00"
                 name="cl-id"
                 onBlur={checkCPF}
                 id="cl-id"
-                mask={[
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  ".",
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  ".",
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  "-",
-                  /\d/,
-                  /\d/,
-                ]}
-                guide={false}
               />
             </Form.Group>
             <Form.Group className="d-flex w-25 flex-column px-2">
@@ -248,25 +230,9 @@ const NewOrderForm = () => {
             <Form.Group className="d-flex flex-column px-2">
               <label htmlFor="cl-celphone"> Telefone celular </label>
               <Form.Control
-                as={MaskedInput}
-                mask={[
-                  "(",
-                  /\d/,
-                  /\d/,
-                  ")",
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  "-",
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                ]}
-                guide={false}
                 {...register("cl-celphone")}
+                as={IMaskInput}
+                mask="(00)00000-0000"
                 type="text"
                 name="cl-celphone"
                 id="cl-celphone"
@@ -275,24 +241,9 @@ const NewOrderForm = () => {
             <Form.Group className="d-flex flex-column px-2">
               <label htmlFor="cl-landPhone"> Telefone Fixo </label>
               <Form.Control
-                as={MaskedInput}
-                mask={[
-                  "(",
-                  /\d/,
-                  /\d/,
-                  ")",
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  "-",
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                  /\d/,
-                ]}
-                guide={false}
                 {...register("cl-landPhone")}
+                as={IMaskInput}
+                mask="(00)0000-0000"
                 type="text"
                 name="cl-landPhone"
                 id="cl-landPhone"
@@ -308,9 +259,8 @@ const NewOrderForm = () => {
               <label htmlFor="adr-postcode">CEP</label>
               <Form.Control
                 {...register("adr-postcode")}
-                as={MaskedInput}
-                mask={[/\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/]}
-                guide={false}
+                as={IMaskInput}
+                mask="00000-000"
                 type="text"
                 id="adr-postcode"
                 onBlur={checkCEP}
