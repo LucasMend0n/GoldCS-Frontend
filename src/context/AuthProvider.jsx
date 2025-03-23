@@ -34,8 +34,8 @@ export const AuthProvider = ({ children }) => {
                 setUserLocalStorage(payload);
                 return true;
             }
-            else if (response.response && response.response.data && response.response.data.StatusCode) {
-                const statusCode = response.response.data.StatusCode;
+            else if (response.response && response.response.data.Result && response.response.data.Result.StatusCode) {
+                const statusCode = response.response.data.Result.StatusCode;
                 let errorMessage = ''
                 switch (statusCode) {
                     case 404:
